@@ -1,142 +1,311 @@
 # Requirements Document 
 
-Authors:
+Authors: Mattia Riola
 
-Date:
+Date: 07/04/2020
 
-Version:
+Version: 05
+
+Change history
+
+| Version | Changes | 
+| ----------------- |:-----------|
+| 01 | Creation of the TODO List  |
+| 02 | Adding Abstract section  |
+| 03 | Fixes: Abstract and TODO; Adding: Stakeholders, Context diagram, Interfaces |
+| 04 | Minor Fixes; Adding: Stories and personas, FR, NFR |
+| 05 | Minor Fixes; Adding: UC, UC diagram, Scenarios |
+
+
 
 # Contents
 
-- [Stakeholders](#stakeholders)
-- [Context Diagram and interfaces](#context-diagram-and-interfaces)
+ - //TEST [Abstract](#abstract)
+ - //TEST [Stakeholders](#stakeholders)
+ - //TEST [Context Diagram and interfaces](#context-diagram-and-interfaces)
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
-	
-- [Stories and personas](#stories-and-personas)
-- [Functional and non functional requirements](#functional-and-non-functional-requirements)
+ - //TEST [Stories and personas](#stories-and-personas)
+- //TEST [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
 	+ [Non functional requirements](#non-functional-requirements)
-- [Use case diagram and use cases](#use-case-diagram-and-use-cases)
+ - //TEST [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	+ [Use case diagram](#use-case-diagram)
 	+ [Use cases](#use-cases)
     	+ [Relevant scenarios](#relevant-scenarios)
-- [Glossary](#glossary)
-- [System design](#system-design)
-- [Deployment diagram](#deployment-diagram)
+ - //TODO [Glossary](#glossary)
+ - [System design](#system-design)
+ - [Deployment diagram](#deployment-diagram)
+
+
+
+# Abstract
+
+Some drivers don't know where the gas stations are and the price of each type of fuel. So a group of university students want to develop a crowdsourcing web application which allows the drivers to find the best gas station when they are running out of gas. The registered users of this app can add a new gas station or update the prices of an existing one. Unregistered users can only view gas stations on the map.
+
 
 
 # Stakeholders
 
-
 | Stakeholder name  | Description | 
 | ----------------- |:-----------:|
-|                   |             | 
+| Developer | Develops and fixes the software| 
+| User	| Uses the web application to find gas stations and classifies them|
+| Map provider |The application uses the map to share locations |
+
+
 
 # Context Diagram and interfaces
 
 ## Context Diagram
-\<Define here Context diagram using UML use case diagram>
+```plantuml
+@startuml
+left to right direction
+actor User as u
+actor "Map provider" as map
+u -- (EZGas)
+(EZGas) -- map
+@enduml
 
-\<actors are a subset of stakeholders>
+```
 
 ## Interfaces
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
-
-| Actor | Logical Interface | Physical Interface  |
+| 	Actor	 |		Logical interface	| Physical interface|
 | ------------- |:-------------:| -----:|
-|       |  |  |
+| User 		|	GUI 	| 	Screen 	|
+| Map API	|	Web interface	|	-	|
+
+
 
 # Stories and personas
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
+Mario is 27 years old. He works for an important industry and his job is particularly dynamic, so he and his colleagues often has to travel by car from one city to another. The company refunds to Mario all the money that he spends when traveling among cities, but Mario is particularly careful to save the company’s money and he knows that one of the most important cost when traveling is the fuel. Each time Mario goes to a new city he uses the EZGas application to find the cheapest station close to him. Sometimes happens that in the new city there aren’t any gas station recorded on the application, so Mario decides to go to the closest station and adds it to the EZGas application. This way his colleague Luigi can also find the cheapest gas station in that city.
 
-\<Persona is-an-instance-of actor>
-
-\<stories will be formalized later as use cases>
 
 
 # Functional and non functional requirements
 
 ## Functional Requirements
 
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
-
-\<will match to high level use cases>
-
 | ID        | Description  |
 | ------------- |:-------------:| 
-|  FR1     |  |
-|  FR2     |   |
+|  FR1.1   | Register a new user  |
+|  FR1.2   | Log in  |
+|  FR1.3   | Log out  |
+|  FR2     | Add a new gas station  |
+|  FR3     | Update prices of a gas station  |
+|  FR4.1   | Show the map and the user location |
+|  FR4.2   | Filter the gas station |
+|  FR4.3   | Sort the gas station |
+|  FR4.4   | Show the gas station in the map |
+|  FR4.5   | Show the prices of a selected gas station |
+|  FR5	   | Remove a gas station |
 
 ## Non Functional Requirements
 
-\<Describe constraints on functional requirements>
-
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
-|  NFR1     |   |  | |
-|  NFR2     | |  | |
-|  NFR3     | | | |
+|  NFR1     | Usability  | locate an user  | all FR |
+|  NFR2     | Performance | all the operation should complete in <0.5 s  | all FR |
+|  NFR3     | Portability | the app should run in every browsers | all FR |
+
 
 
 # Use case diagram and use cases
 
-
 ## Use case diagram
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
+```plantuml
+@startuml
+left to right direction
+actor User as u
+actor "Map Provider" as m
+(EZGAS) as eg
+(FR1.1 Register a new user) as FR1.1
+(FR1.2 Log in) as FR1.2
+(FR1.3 Log out) as FR1.3
+(FR2 Add a gas station) as FR2
+(FR3 Update prices of a gas station) as FR3
+(FR4 Find gas stations) as FR4
+(FR5 Remove a gas your gas station) as FR5
+u -- FR1.2
+u -- FR1.3
+u -- FR1.1
+FR1.1 --> eg
+FR1.2 --> eg
+FR1.3 --> eg
+u -- FR2
+FR2 --> eg
+u -- FR3
+FR3 --> eg
+u -- FR4
+FR4 --> eg
+u -- FR5
+FR5 --> eg
+eg --> m
+@enduml
+```
 
-
-\<next describe here each use case in the UCD>
-### Use case 1, UC1
+### Use case 1, UC1 - Register an user - Related to FR1.1
 | Actors Involved        |  |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the UC can start> |  
-|  Post condition     | \<Boolean expression, must evaluate to true after UC is finished> |
-|  Nominal Scenario     | \<Textual description of actions executed by the UC> |
-|  Variants     | \<other executions, ex in case of errors> |
+|  Precondition     | User isn't registered |  
+|  Post condition     | The user is registered |
+|  Nominal Scenario     | The user registers himself in EzGas with his credentials (id and password) |
+|  Variants     | If the wanted id is already been taken: repeat asking a new id |
 
-##### Scenario 1.1 
-
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-| Scenario 1.1 | |
+### Use case 2, UC2 - User log in - Related to FR1.2
+| Actors Involved        |  |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the scenario can start> |
-|  Post condition     | \<Boolean expression, must evaluate to true after scenario is finished> |
+|  Precondition     | User is registered |  
+|  Post condition     | The user is logged in  |
+|  Nominal Scenario     | The user logs in EzGas with his credentials (id and password) |
+|  Variants     | If another account is logged in with the user browser: Ask to log out, If the id or password are wrong: repeat asking the right credential |
+
+### Use case 3, UC3 - User log out - Related to FR1.3
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | The user is logged in |  
+|  Post condition     | The user is logged out  |
+|  Nominal Scenario     | The user logs out from that browser EzGas |
+|  Variants     | - |
+
+### Use case 4, UC4 - Add a new gas station - Related to FR2
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | The user is logged in, the gas station isn't registered yet |  
+|  Post condition     | The gas station is added on EzGas |
+|  Nominal Scenario     | The user add the gas station on EzGas |
+|  Variants     |  |
+
+### Use case 5, UC5 - Update the prices of an existing gas station - Related to FR3
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | The user is logged in, the gas station is registered |  
+|  Post condition     | The prices of the gas station are updated |
+|  Nominal Scenario     | The user updates the prices of the gas station |
+|  Variants     |  |
+
+### Use case 6, UC6 - Show the map and the user location - Related to FR4.1
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | The user's location is activated |  
+|  Post condition     | The user can see the map and where he/she is located |
+|  Nominal Scenario     | The user opens the map to see his/her position |
+|  Variants     | If the user's location is off: ask to the user to turn on his/her location |
+
+### Use case 7, UC7 - Select a filter and a sorting method - Related to FR4.2
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | - |  
+|  Post condition     | The user has selected his/her preferences |
+|  Nominal Scenario     | The user filters and sorts the gas stations |
+|  Variants     | - |
+
+### Use case 8, UC8 - Show the gas stations on the map - Related to UC7 FR4.3 FR4.4
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | The map is shown |  
+|  Post condition     | The user can see the gas stations on the map |
+|  Nominal Scenario     | The gas stations are shown on the map |
+|  Variants     | If there are no gas stations: error message |
+
+### Use case 9, UC9 - Select a gas station - Related to UC8 FR4.5
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | At least one gas station is shown on the map |  
+|  Post condition     | The user can see the details of a selected gas station |
+|  Nominal Scenario     | The user opens the details of a gas station by choosing one   |
+|  Variants     | - |
+
+### Use case 10, UC10 - Remove a gas station - Related to UC9 FR5
+| Actors Involved        |  |
+| ------------- |:-------------:| 
+|  Precondition     | The user is logged in, The user selected a gas station |  
+|  Post condition     | The selected gas station isn't shown on the map anymore |
+|  Nominal Scenario     | The user removes the gas station   |
+|  Variants     | - |
+
+
+
+##### Scenario  
+
+### Scenario 1 - User registration
+
+| Scenario 1 | Corrisponds to UC1 |
+| ------------- |:-------------:| 
+|  Precondition     | The user isn't registered, The wanted id isn't already been taken |
+|  Post condition     | The user is registered, the user can log in and log out|
 | Step#        | Description  |
-|  1     |  |  
-|  2     |  |
-|  ...     |  |
+|  1     | Start a registration |  
+|  2     | Insert id |
+|  3     | Insert password |
+|  4     | Commit the registration |
 
-##### Scenario 1.2
+### Scenario 2 - Find the gas station
 
-### Use case 2, UC2
-..
+| Scenario 2 | Corrisponds to UC6 UC7 UC8 UC9 |
+| ------------- |:-------------:| 
+|  Precondition     | The location is activated  |
+|  Post condition     | The user find the best gas station |
+| Step#        | Description  |
+|  1     | Load the map |  
+|  2     | The user select the filter and a sorting method (there is a default option) |
+|  3     | Load the gas stations that are within the chosen filter |
+|  4     | Sort the gas stations  |
+|  5     | Select a gas stations  |
+|  6     | Show the details of the selected gas stations  |
 
-### Use case
-..
+### Scenario 3 - Add a new gas station
+
+| Scenario 3 | Corrisponds to UC2 UC4 |
+| ------------- |:-------------:| 
+|  Precondition     | The user is registered |
+|  Post condition     | The user updates the informations adding a new gas station |
+| Step#        | Description  |
+|  1     | If the user is already logged in go to step 7 |  
+|  2     | Open the log in |
+|  3     | Insert your id |
+|  4     | Insert your password |
+|  5     | Commit your id and password |
+|  6     | If the id and/or the password are wrong go to step 2 and show an error message |
+|  7     | Start adding a new station |
+|  8     | Insert the address of the gas station |
+|  9     | Insert the prices of the gas station |
+|  10     | Commit |
+
+### Scenario 4 - Update the informations or remove a gas station
+
+| Scenario 4 | Corrisponds to UC2 UC5 UC10 |
+| ------------- |:-------------:| 
+|  Precondition     | The user is registered, a gas station has been selected |
+|  Post condition     | The user updates the informations updating the prices of an existing one or removing a closed down one |
+| Step#        | Description  |
+|  1     | If the user is already logged in go to step 7 |  
+|  2     | Open the log in |
+|  3     | Insert your id |
+|  4     | Insert your password |
+|  5     | Commit your id and password |
+|  6     | If the id and/or the password are wrong go to step 2 and show an error message |
+|  7     | Start updating |
+|  8     | Select the update between: Update prices, Remove |
+|  9     | If Remove has been selected go to step 11 |
+|  10    | Insert the prices of each fuel type |
+|  11     | Commit |
+
+### Scenario 5 - Log out
+
+| Scenario 5 | Corrisponds to UC3 |
+| ------------- |:-------------:| 
+|  Precondition     | The user is logged in |
+|  Post condition     | The user is logged out |
+| Step#        | Description  |
+|  1     |Start a log out|  
+|  2     | Commit |
 
 
 
 # Glossary
 
-\<use UML class diagram to define important concepts in the domain of the system, and their relationships> 
-
-\<concepts are used consistently all over the document, ex in use cases, requirements etc>
 
 # System Design
-\<describe here system design>
-
-\<must be consistent with Context diagram>
 
 # Deployment Diagram 
-
-\<describe here deployment diagram >
