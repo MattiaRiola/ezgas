@@ -4,7 +4,7 @@ Authors: Mattia Riola
 
 Date: 07/04/2020
 
-Version: 05
+Version: 06
 
 Change history
 
@@ -15,7 +15,7 @@ Change history
 | 03 | Fixes: Abstract and TODO; Adding: Stakeholders, Context diagram, Interfaces |
 | 04 | Minor Fixes; Adding: Stories and personas, FR, NFR |
 | 05 | Minor Fixes; Adding: UC, UC diagram, Scenarios |
-
+| 06 | Glossary |
 
 
 # Contents
@@ -33,7 +33,7 @@ Change history
 	+ [Use case diagram](#use-case-diagram)
 	+ [Use cases](#use-cases)
     	+ [Relevant scenarios](#relevant-scenarios)
- - //TODO [Glossary](#glossary)
+ - //TEST [Glossary](#glossary)
  - [System design](#system-design)
  - [Deployment diagram](#deployment-diagram)
 
@@ -305,6 +305,36 @@ eg --> m
 
 # Glossary
 
+```plantuml
+@startuml
+left to right direction
+Class User {
+	+ location
+}
+Class RegisteredUser {
+	+ id
+	+ password
+}
+Class EzGas {
+	+ GasStationList
+}
+Class GasStation{
+	+ location
+}
+Class Fuel{
+	+ price
+	+ aviability
+}
+GasStation -- "*" Fuel
+RegisteredUser -|> User
+EzGas -- "*" User : search <
+EzGas -- GasStation
+RegisteredUser -- "*" GasStation : add/remove >
+RegisteredUser -- "*" Fuel : update >
+RegisteredUser "*" -- EzGas : register >
+@enduml
+
+```
 
 # System Design
 
