@@ -4,7 +4,7 @@ Authors: Mattia Riola
 
 Date: 07/04/2020
 
-Version: 06
+Version: 07
 
 Change history
 
@@ -16,24 +16,24 @@ Change history
 | 04 | Minor Fixes; Adding: Stories and personas, FR, NFR |
 | 05 | Minor Fixes; Adding: UC, UC diagram, Scenarios |
 | 06 | Glossary |
-
+| 07 | Update TODO List|
 
 # Contents
 
- - //TEST [Abstract](#abstract)
- - //TEST [Stakeholders](#stakeholders)
- - //TEST [Context Diagram and interfaces](#context-diagram-and-interfaces)
+ - //COMPLETE [Abstract](#abstract)
+ - //COMPLETE [Stakeholders](#stakeholders)
+ - //COMPLETE [Context Diagram and interfaces](#context-diagram-and-interfaces)
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
- - //TEST [Stories and personas](#stories-and-personas)
-- //TEST [Functional and non functional requirements](#functional-and-non-functional-requirements)
+ - //UPDATE (Add stories) [Stories and personas](#stories-and-personas)
+- //UPDATE(Delete FR5, add NFR) [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
 	+ [Non functional requirements](#non-functional-requirements)
- - //TEST [Use case diagram and use cases](#use-case-diagram-and-use-cases)
+ - //UPDATE (Remove FR5) [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	+ [Use case diagram](#use-case-diagram)
 	+ [Use cases](#use-cases)
     	+ [Relevant scenarios](#relevant-scenarios)
- - //TEST [Glossary](#glossary)
+ - //UPDATE(Delete the remove label, insert fuel type and delate avaiability) [Glossary](#glossary)
  - [System design](#system-design)
  - [Deployment diagram](#deployment-diagram)
 
