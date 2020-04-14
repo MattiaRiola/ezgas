@@ -78,7 +78,14 @@ u -- (EZGas)
 
 
 # Stories and personas
-Mario is 27 years old. He works for an important industry and his job is particularly dynamic, so he and his colleagues often has to travel by car from one city to another. The company refunds to Mario all the money that he spends when traveling among cities, but Mario is particularly careful to save the company’s money and he knows that one of the most important cost when traveling is the fuel. Each time Mario goes to a new city he uses the EZGas application to find the cheapest station close to him. Sometimes happens that in the new city there aren’t any gas station recorded on the application, so Mario decides to go to the closest station and adds it to the EZGas application. This way his colleague Luigi can also find the cheapest gas station in that city.
+Ava is a young talented software system analyst who works in a software development company. The company has a geographical structure with branches in different cities. Ava is in charge of analysis for all branches of the company, so she has meetings with customers in different cities most of the meetings scheduled early in the morning. She travels to each city driving the company's car, with a defined fuel budget for travels. Hence it is so important for her to find the nearest stations in order to get to the meetings on time also, the station with the lowest price to satisfy the fuel budget.
+
+Once she woke up late and was rushing to the office which was 2 hours away from her home to attend an important meeting, in the middle of the road, she noticed that the car was run out of fuel or even electricity charge. As she is smart she used to take notes of the locations of stations with their latest fuel prices while traveling to cities. She spent 20 minutes finding the best station considering the distance and budget remainings.
+
+Since Ava could attend the meeting on time and get rewards due to her good job on the analysis, she decided to share her pleasant experience of using her notes with everyone whom the station issue is urgent for their work or daily life. She developed the proposal of EZGass that is the most famous application for drivers nowadays and delivered the proposal to her company.
+Moreover, Ava initialized the EZGass data of station locations with the latest prices using her notes. while the application became more famous she added new functions for registered users to update the latest prices of the stations. Also, she gathered the data on different kinds of fuel that each station has. 
+
+Nowadays, millions of drivers become the EZGass' users because as soon as they open the application, they are able to see stations around their location with the latest prices and fuel types. The users can fill out the parameters like radius, fuel type, and price to find out the proper station.
 
 
 
@@ -104,9 +111,14 @@ Mario is 27 years old. He works for an important industry and his job is particu
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
-|  NFR1     | Usability  | locate an user  | all FR |
-|  NFR2     | Performance | all the operation should complete in <0.5 s  | all FR |
-|  NFR3     | Portability | the app should run in every browsers | all FR |
+|  NFR1     | Usability | Application should be used with no training by any drivers | All FR |
+|  NFR2     | Performance | All functions should complete in < 0.4 sec  | All FR |
+|  NFR3     | Compatibility | Application runs on MS Windows (7 and more recent)  | All FR |
+|  NFR4     | Portability | Application (functions and data) should run properly on latest versions of Firefox, Google Chrome browsers | All FR |
+|  NFR5    | Reliability | Critical failures can not happen more than once a month for the application | All FR |
+|  NFR6    | Availability | Application should be available to users against downtimes not more than 8 seconds  | All FR |
+|  NFR7    | Localization | Application should have English language and use Euro currency    | All FR |
+|  NFR8    | Maintainability | Application should have 80 percent maintainability for 24 hours   | All FR |
 
 
 
