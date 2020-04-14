@@ -261,9 +261,9 @@ eg --> m
 |  9     | Insert the prices of the gas station |
 |  10     | Commit |
 
-### Scenario 4 - Update the informations or remove a gas station
+### Scenario 4 - Update the informations
 
-| Scenario 4 | Corrisponds to UC2 UC5 UC10 |
+| Scenario 4 | Corrisponds to UC2 UC5 |
 | ------------- |:-------------:| 
 |  Precondition     | The user is registered, a gas station has been selected |
 |  Post condition     | The user updates the informations updating the prices of an existing one or removing a closed down one |
@@ -275,8 +275,7 @@ eg --> m
 |  5     | Commit your id and password |
 |  6     | If the id and/or the password are wrong go to step 2 and show an error message |
 |  7     | Start updating |
-|  8     | Select the update between: Update prices, Remove |
-|  9     | If Remove has been selected go to step 11 |
+|  8     | Select update prices |
 |  10    | Insert the prices of each fuel type |
 |  11     | Commit |
 
