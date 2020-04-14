@@ -73,7 +73,7 @@ u -- (EZGas)
 | 	Actor	 |		Logical interface	| Physical interface|
 | ------------- |:-------------:| -----:|
 | User 		|	GUI 	| 	Screen 	|
-| Map API	|	Web interface	|	-	|
+| Map API	|	API	|	-	|
 
 
 
