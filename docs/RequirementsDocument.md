@@ -125,7 +125,6 @@ actor "Map Provider" as m
 (FR2 Add a gas station) as FR2
 (FR3 Update prices of a gas station) as FR3
 (FR4 Find gas stations) as FR4
-(FR5 Remove a gas your gas station) as FR5
 u -- FR1.2
 u -- FR1.3
 u -- FR1.1
@@ -138,8 +137,6 @@ u -- FR3
 FR3 --> eg
 u -- FR4
 FR4 --> eg
-u -- FR5
-FR5 --> eg
 eg --> m
 @enduml
 ```
@@ -214,14 +211,6 @@ eg --> m
 |  Precondition     | At least one gas station is shown on the map |  
 |  Post condition     | The user can see the details of a selected gas station |
 |  Nominal Scenario     | The user opens the details of a gas station by choosing one   |
-|  Variants     | - |
-
-### Use case 10, UC10 - Remove a gas station - Related to UC9 FR5
-| Actors Involved        |  |
-| ------------- |:-------------:| 
-|  Precondition     | The user is logged in, The user selected a gas station |  
-|  Post condition     | The selected gas station isn't shown on the map anymore |
-|  Nominal Scenario     | The user removes the gas station   |
 |  Variants     | - |
 
 
