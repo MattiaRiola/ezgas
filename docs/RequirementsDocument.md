@@ -287,9 +287,8 @@ eg --> m
 |  5     | Commit your id and password |
 |  6     | If the id and/or the password are wrong go to step 2 and show an error message |
 |  7     | Start updating |
-|  8     | Select update prices |
-|  10    | Insert the prices of each fuel type |
-|  11     | Commit |
+|  8    | Insert the prices of each fuel type |
+|  9     | Commit |
 
 ### Scenario 5 - Log out
 
