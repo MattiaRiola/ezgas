@@ -79,6 +79,9 @@ u -- (EZGas)
 
 # Stories and personas
 
+Mario is 27 years old. He works for an important industry and his job is particularly dynamic, so he and his colleagues often has to travel by car from one city to another. The company refunds to Mario all the money that he spends when traveling among cities, but Mario is particularly careful to save the company’s money and he knows that one of the most important cost when traveling is the fuel. Each time Mario goes to a new city he uses the EZGas application to find the cheapest station close to him. Sometimes happens that in the new city there aren’t any gas station recorded on the application, so Mario decides to go to the closest station and adds it to the EZGas application. This way his colleague Luigi can also find the cheapest gas station in that city.
+
+
 Ava is a young talented software system analyst who works in a software development company. The company has a geographical structure with branches in different cities. Ava is in charge of analysis for all branches of the company, so she has meetings with customers in different cities most of the meetings scheduled early in the morning. She travels to each city driving the company's car, with a defined fuel budget for travels. Hence it is so important for her to find the nearest stations in order to get to the meetings on time also, the station with the lowest price to satisfy the fuel budget.
 
 Once she woke up late and was rushing to the office which was 2 hours away from her home to attend an important meeting, in the middle of the road, she noticed that the car was run out of fuel or even electricity charge. As she is smart she used to take notes of the locations of stations with their latest fuel prices while traveling to cities. She spent 20 minutes finding the best station considering the distance and budget remainings.
@@ -87,7 +90,6 @@ Since Ava could attend the meeting on time and get rewards due to her good job o
 Moreover, Ava initialized the EZGas data of station locations with the latest prices using her notes. while the application became more famous she added new functions for registered users to update the latest prices of the stations or add new stations. Also, she gathered the data on different kinds of fuel that each station has. 
 
 Nowadays, millions of drivers become the EZGas' users because as soon as they open the application, they are able to see stations around their location with the latest prices and fuel types. The users can fill out the parameters like radius, fuel type, and price to find out the proper station.
-
 
 
 # Functional and non functional requirements
@@ -339,7 +341,9 @@ RegisteredUser "*" -- EzGas : register >
 # System Design
 
 
-<plantuml>
+```plantuml
+@startuml
+left to right direction
 
 database database [
 <b> database
@@ -361,10 +365,13 @@ database == WebServer
 WebServer == Client
 
 
-</plantuml>
+@enduml
+```
 
 # Deployment Diagram 
-<plantuml>
+```plantuml
+@startuml
+left to right direction
 
 node Login [
 <b>LogInSystem
@@ -470,4 +477,8 @@ User == UserRegistration
 User == SearchStation
 User == UpdatePrice
 User == AddStation
-</plantuml>
+
+@enduml
+```
+
+
