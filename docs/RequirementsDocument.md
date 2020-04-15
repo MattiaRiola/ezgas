@@ -78,14 +78,15 @@ u -- (EZGas)
 
 
 # Stories and personas
+
 Ava is a young talented software system analyst who works in a software development company. The company has a geographical structure with branches in different cities. Ava is in charge of analysis for all branches of the company, so she has meetings with customers in different cities most of the meetings scheduled early in the morning. She travels to each city driving the company's car, with a defined fuel budget for travels. Hence it is so important for her to find the nearest stations in order to get to the meetings on time also, the station with the lowest price to satisfy the fuel budget.
 
 Once she woke up late and was rushing to the office which was 2 hours away from her home to attend an important meeting, in the middle of the road, she noticed that the car was run out of fuel or even electricity charge. As she is smart she used to take notes of the locations of stations with their latest fuel prices while traveling to cities. She spent 20 minutes finding the best station considering the distance and budget remainings.
 
-Since Ava could attend the meeting on time and get rewards due to her good job on the analysis, she decided to share her pleasant experience of using her notes with everyone whom the station issue is urgent for their work or daily life. She developed the proposal of EZGass that is the most famous application for drivers nowadays and delivered the proposal to her company.
-Moreover, Ava initialized the EZGass data of station locations with the latest prices using her notes. while the application became more famous she added new functions for registered users to update the latest prices of the stations. Also, she gathered the data on different kinds of fuel that each station has. 
+Since Ava could attend the meeting on time and get rewards due to her good job on the analysis, she decided to share her pleasant experience of using her notes with everyone whom the station issue is urgent for their work or daily life. She developed the proposal of EZGas that is the most famous application for drivers nowadays and delivered the proposal to her company.
+Moreover, Ava initialized the EZGas data of station locations with the latest prices using her notes. while the application became more famous she added new functions for registered users to update the latest prices of the stations or add new stations. Also, she gathered the data on different kinds of fuel that each station has. 
 
-Nowadays, millions of drivers become the EZGass' users because as soon as they open the application, they are able to see stations around their location with the latest prices and fuel types. The users can fill out the parameters like radius, fuel type, and price to find out the proper station.
+Nowadays, millions of drivers become the EZGas' users because as soon as they open the application, they are able to see stations around their location with the latest prices and fuel types. The users can fill out the parameters like radius, fuel type, and price to find out the proper station.
 
 
 
@@ -337,4 +338,136 @@ RegisteredUser "*" -- EzGas : register >
 
 # System Design
 
+
+<plantuml>
+
+database database [
+<b> database
+----
+]
+
+node WebServer [
+<b> WebServer
+----
+]
+
+rectangle Client[
+<b> Client
+----
+]
+
+
+database == WebServer
+WebServer == Client
+
+
+</plantuml>
+
 # Deployment Diagram 
+<plantuml>
+
+node Login [
+<b>LogInSystem
+
+----
+LogIn
+====
+Initilizes UserPanel
+....
+Register User
+....
+Initilizes ForgetPassword
+]
+
+
+
+node User [
+<b>UserPanel
+
+----
+User
+====
+Initilizes Update Prices
+....
+Initilizes Search Station
+....
+LogOut
+]
+
+
+node LogOut[
+<b>LogOut
+
+----
+LogOut
+====
+Initilizes Login System
+]
+
+
+node ForgetPassword[
+<b>ForgetPassword
+
+----
+ForgetPassword
+====
+Initilizes ForgetPassword
+]
+
+Rectangle UpdatePassword[
+<b>UpdatePassword
+
+----
+UpdatePassword
+====
+UpdatePassword(String Email, String Password)void
+]
+
+
+
+Rectangle UserRegistration[
+<b>UserRegistration
+
+----
+UserRegistration
+====
+Registration(String FirstName, String LastName, String Email, String Password)void
+]
+
+Rectangle SearchStation[
+<b>SearchStation
+
+----
+SearchStation
+====
+Search(string FuelType, Decimal Price, Int Radius)void
+]
+
+Rectangle UpdatePrice[
+<b>UpdatePrice
+
+----
+UpdatePrice
+====
+UpdatePrice(Int Station, Decimal Price)void
+]
+
+
+Rectangle AddStation[
+<b>AddStation
+
+----
+AddStation
+====
+AddStation(String Address, Decimal Price, String StationName)void
+]
+
+Login == User
+User .. LogOut
+User == ForgetPassword
+ForgetPassword == UpdatePassword
+User == UserRegistration
+User == SearchStation
+User == UpdatePrice
+User == AddStation
+</plantuml>
