@@ -331,7 +331,7 @@ GasStation -- "*" Fuel
 RegisteredUser -|> User
 EzGas -- "*" User : search <
 EzGas -- GasStation
-RegisteredUser -- "*" GasStation : add/remove >
+RegisteredUser -- "*" GasStation : add >
 RegisteredUser -- "*" Fuel : update >
 RegisteredUser "*" -- EzGas : register >
 @enduml
