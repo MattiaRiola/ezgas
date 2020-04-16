@@ -25,7 +25,7 @@ Change history
  - //COMPLETE [Context Diagram and interfaces](#context-diagram-and-interfaces)
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
- - //UPDATE (Add stories) [Stories and personas](#stories-and-personas)
+ - //COMPLETE [Stories and personas](#stories-and-personas)
 - //UPDATE(Delete FR5, add NFR) [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
 	+ [Non functional requirements](#non-functional-requirements)
@@ -91,6 +91,7 @@ Moreover, Ava initialized the EZGas data of station locations with the latest pr
 
 Nowadays, millions of drivers become the EZGas' users because as soon as they open the application, they are able to see stations around their location with the latest prices and fuel types. The users can fill out the parameters like radius, fuel type, and price to find out the proper station.
 
+Luca is 47 years old and he has a strong passion for cars indeed he's ever looking for an offert or an occasion for a new one, and up to day he owns more than 20 cars in his garage. He does not care at the costs of the garage or the maintainece of the cars because the this is his greatest passion. The main issue for him is given by the different kind of fuel he need for each car, and in particular some cars use the methane that is not ever findable. His policy is that each time he decides to use a car he gets gas only if the fuel is under the half of the tank. Everityime he needs to get gas it uses the EZGas application to find the closest gas station compatible with his gas type, if possible he would like to find also the cheapest but not ever happend.
 
 # Functional and non functional requirements
 
