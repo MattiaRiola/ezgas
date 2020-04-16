@@ -26,10 +26,10 @@ Change history
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
  - //COMPLETE [Stories and personas](#stories-and-personas)
-- //UPDATE(Delete FR5, add NFR) [Functional and non functional requirements](#functional-and-non-functional-requirements)
+- //COMPLETE [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
 	+ [Non functional requirements](#non-functional-requirements)
- - //UPDATE (Remove FR5) [Use case diagram and use cases](#use-case-diagram-and-use-cases)
+ - //COMPLETE [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	+ [Use case diagram](#use-case-diagram)
 	+ [Use cases](#use-cases)
     	+ [Relevant scenarios](#relevant-scenarios)
@@ -109,7 +109,6 @@ Luca is 47 years old and he has a strong passion for cars indeed he's ever looki
 |  FR4.3   | Sort the gas station |
 |  FR4.4   | Show the gas station in the map |
 |  FR4.5   | Show the prices of a selected gas station |
-|  FR5	   | Remove a gas station |
 
 ## Non Functional Requirements
 
