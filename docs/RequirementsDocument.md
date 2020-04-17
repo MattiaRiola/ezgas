@@ -204,12 +204,12 @@ eg --> m
 |  Nominal Scenario     | The user opens the map to see his/her position |
 |  Variants     | If the user's location is off: ask to the user to turn on his/her location |
 
-### Use case 7, UC7 - Select a filter and a sorting method - Related to FR4.2
+### Use case 7, UC7 - Select search filters - Related to FR4.2
 | Actors Involved        |  |
 | ------------- |:-------------:| 
 |  Precondition     | - |  
 |  Post condition     | The user has selected his/her preferences |
-|  Nominal Scenario     | The user filters and sorts the gas stations |
+|  Nominal Scenario     | The user filters the gas stations |
 |  Variants     | - |
 
 ### Use case 8, UC8 - Show the gas stations on the map - Related to UC7 FR4.3 FR4.4
