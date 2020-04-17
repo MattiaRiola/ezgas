@@ -1,6 +1,6 @@
 # Requirements Document 
 
-Authors: Mattia Riola
+Authors: Group 21
 
 Date: 07/04/2020
 
@@ -33,7 +33,7 @@ Change history
 	+ [Use case diagram](#use-case-diagram)
 	+ [Use cases](#use-cases)
     	+ [Relevant scenarios](#relevant-scenarios)
- - //UPDATE(Delete the remove label, insert fuel type and delate avaiability) [Glossary](#glossary)
+ - //COMPLETE [Glossary](#glossary)
  - [System design](#system-design)
  - [Deployment diagram](#deployment-diagram)
 
@@ -325,7 +325,7 @@ Class GasStation{
 }
 Class Fuel{
 	+ price
-	+ aviability
+	+ Type
 }
 GasStation -- "*" Fuel
 RegisteredUser -|> User
