@@ -14,7 +14,7 @@ Change history
 
 # Contents
 
- - [Register an user, user log in](register-an-user,user-log-in)
+ - [Register an user, user log in](#register-an-user,-user-log-in)
     + [Variant username taken](#variant-username-taken)
     + [Variant wrong credentials](#variant-wrong-credentials)
     + [Variant user already logged in](#variant-user-already-logged-in)
