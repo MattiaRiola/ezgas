@@ -20,20 +20,20 @@ Change history
 
 # Contents
 
- - //COMPLETE [Abstract](#abstract)
- - //COMPLETE [Stakeholders](#stakeholders)
- - //COMPLETE [Context Diagram and interfaces](#context-diagram-and-interfaces)
+ - [Abstract](#abstract)
+ - [Stakeholders](#stakeholders)
+ - [Context Diagram and interfaces](#context-diagram-and-interfaces)
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
- - //COMPLETE [Stories and personas](#stories-and-personas)
-- //COMPLETE [Functional and non functional requirements](#functional-and-non-functional-requirements)
+ - [Stories and personas](#stories-and-personas)
+- [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
 	+ [Non functional requirements](#non-functional-requirements)
- - //COMPLETE [Use case diagram and use cases](#use-case-diagram-and-use-cases)
+ - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	+ [Use case diagram](#use-case-diagram)
 	+ [Use cases](#use-cases)
     	+ [Relevant scenarios](#relevant-scenarios)
- - //COMPLETE [Glossary](#glossary)
+ - [Glossary](#glossary)
  - [System design](#system-design)
  - [Deployment diagram](#deployment-diagram)
 
