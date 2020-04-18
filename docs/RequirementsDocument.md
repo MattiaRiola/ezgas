@@ -352,8 +352,8 @@ RegisteredUser "*" -- EzGas : register >
 @startuml
 left to right direction
 
-database database [
-<b> database
+database Database [
+<b> Database
 ----
 ]
 
@@ -368,7 +368,7 @@ rectangle Client[
 ]
 
 
-database == WebServer
+Database == WebServer
 WebServer == Client
 
 
