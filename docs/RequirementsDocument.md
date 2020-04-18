@@ -4,7 +4,7 @@ Authors: Group 21
 
 Date: 18/04/2020
 
-Version: 07
+Version: 09
 
 Change history
 
@@ -17,6 +17,8 @@ Change history
 | 05 | Minor Fixes; Adding: UC, UC diagram, Scenarios |
 | 06 | Glossary |
 | 07 | Update TODO List|
+| 08 | Adding: System Design, Deployment diagram, new stories |
+| 09 | Minor Fixes; Removing: TODO list from the index |
 
 # Contents
 
