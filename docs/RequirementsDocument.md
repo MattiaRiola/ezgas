@@ -2,7 +2,7 @@
 
 Authors: Group 21
 
-Date: 07/04/2020
+Date: 18/04/2020
 
 Version: 07
 
@@ -26,6 +26,9 @@ Change history
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
  - [Stories and personas](#stories-and-personas)
+ 	+ [Mario](#Mario)
+ 	+ [Ava](#Ava)
+ 	+ [Luca](#Luca)
 - [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
 	+ [Non functional requirements](#non-functional-requirements)
@@ -79,9 +82,10 @@ u -- (EZGas)
 
 # Stories and personas
 
+## Mario
 Mario is 27 years old. He works for an important industry and his job is particularly dynamic, so he and his colleagues often has to travel by car from one city to another. The company refunds to Mario all the money that he spends when traveling among cities, but Mario is particularly careful to save the company’s money and he knows that one of the most important cost when traveling is the fuel. Each time Mario goes to a new city he uses the EZGas application to find the cheapest station close to him. Sometimes happens that in the new city there aren’t any gas station recorded on the application, so Mario decides to go to the closest station and adds it to the EZGas application. This way his colleague Luigi can also find the cheapest gas station in that city.
 
-
+## Ava
 Ava is a young talented software system analyst who works in a software development company. The company has a geographical structure with branches in different cities. Ava is in charge of analysis for all branches of the company, so she has meetings with customers in different cities most of the meetings scheduled early in the morning. She travels to each city driving the company's car, with a defined fuel budget for travels. Hence it is so important for her to find the nearest stations in order to get to the meetings on time also, the station with the lowest price to satisfy the fuel budget.
 
 Once she woke up late and was rushing to the office which was 2 hours away from her home to attend an important meeting, in the middle of the road, she noticed that the car was run out of fuel or even electricity charge. As she is smart she used to take notes of the locations of stations with their latest fuel prices while traveling to cities. She spent 20 minutes finding the best station considering the distance and budget remainings.
@@ -91,6 +95,7 @@ Moreover, Ava initialized the EZGas data of station locations with the latest pr
 
 Nowadays, millions of drivers become the EZGas' users because as soon as they open the application, they are able to see stations around their location with the latest prices and fuel types. The users can fill out the parameters like radius, fuel type, and price to find out the proper station.
 
+## Luca
 Luca is 47 years old and he has a strong passion for cars indeed he's ever looking for an offert or an occasion for a new one, and up to day he owns more than 20 cars in his garage. He does not care at the costs of the garage or the maintainece of the cars because the this is his greatest passion. The main issue for him is given by the different kind of fuel he need for each car, and in particular some cars use the methane that is not ever findable. His policy is that each time he decides to use a car he gets gas only if the fuel is under the half of the tank. Everityime he needs to get gas it uses the EZGas application to find the closest gas station compatible with his gas type, if possible he would like to find also the cheapest but not ever happend.
 
 # Functional and non functional requirements
