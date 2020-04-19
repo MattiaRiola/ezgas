@@ -162,6 +162,7 @@ FR4 --> eg
 eg --> m
 @enduml
 ```
+## Use cases
 
 ### Use case 1, UC1 - Register an user - Related to FR1.1
 | Actors Involved        |  |
