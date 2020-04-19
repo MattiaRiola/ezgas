@@ -15,7 +15,7 @@ Change history
 # Contents
 
  - [Abstract](#abstract) 
- - [Register an user, user log in](#register-an-user,-user-log-in)
+ - [Register an user and user log in](#register-an-user-and-user-log-in)
     + [Variant username taken](#variant-username-taken)
     + [Variant wrong credentials](#variant-wrong-credentials)
     + [Variant user already logged in](#variant-user-already-logged-in)
@@ -32,7 +32,7 @@ Change history
 The following presentation is based on the content of the RequirementsDocument.md. It shows a possible UI for the use cases and/or scenarios.
 
 
-# Register an user, user log in
+# Register an user and user log in
 ![RegisterLoginUser](images/log_in_user_registation.png)
 
 
