@@ -236,7 +236,7 @@ eg --> m
 |  Nominal Scenario     | The user opens the details of a gas station by choosing one   |
 |  Variants     | - |
 
-
+## Relevant scenarios
 
 ##### Scenario  
 
