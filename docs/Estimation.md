@@ -1,23 +1,18 @@
 # Project Estimation  
 
-Authors:
+Authors: Group 21
 
-Date:
+Date: 30/04/2020
 
-Version:
+Version: 1.0
 
 # Contents
 
 
 
-- [Estimate by product decomposition]
-- [Estimate by activity decomposition ]
+- [Estimate by product decomposition](#Estimate-by-product-decomposition)
+- [Estimate by activity decomposition](#Estimate-by-activity-decomposition)
 
-
-
-# Estimation approach
-
-<Consider the EZGas  project as described in YOUR requirement document, assume that you are going to develop the project INDEPENDENT of the deadlines of the course>
 
 # Estimate by product decomposition
 
