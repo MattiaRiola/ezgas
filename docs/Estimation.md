@@ -25,14 +25,14 @@ Version:
 
 ### 
 
-|             | Estimate                        |             
+| Parameter            | Estimate                        |             
 | ----------- | ------------------------------- |  
-| NC =  Estimated number of classes to be developed   |                             |             
-|  A = Estimated average size per class, in LOC       |                            | 
-| S = Estimated size of project, in LOC (= NC * A) | |
-| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                                      |   
-| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | | 
-| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |                    |               
+| NC | 15 classes|                             |             
+|  A | 100 LOC/class      |                            | 
+| S | 1500 LOC | |
+| E | 150 person hour  |                                      |   
+| C | 4500€ | | 
+| Estimated calendar time| 1 week |                    |               
 
 
 # Estimate by activity decomposition
@@ -43,9 +43,34 @@ Version:
 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| Requirement | 33 |
+| Design | 90 |
+| Coding | 150 |
+| Unit testing | 100 |
+| Integration testing | 140 |
+| System testing | 170 |
 
 
 ###
-Insert here Gantt chart with above activities
+``` plantuml
+@startuml
+[Requirements] lasts 1 days
+
+[Design] lasts 3 days
+[Design] starts at [Requirements]'s end
+
+[Coding] lasts 5 days
+[Coding] starts at [Design]'s end
+
+[Unit testing] lasts 3 days
+[Unit testing] starts at [Coding]'s end
+
+[Integration testing] lasts 4 days
+[Integration testing] starts at [Unit testing]'s end
+
+[System testing] lasts 6 days
+[System testing] starts at [Integration testing]'s end
+
+@enduml
+```
 
