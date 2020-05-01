@@ -281,7 +281,6 @@ package "Backend" {
         class Administrator {
             +void addGasStation(GasStation newStation)
             +void delateGasStation(GasStation oldStation)
-            +void banUser (int userID)
         }
 
         GasStation *-up- PriceList
