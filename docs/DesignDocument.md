@@ -225,6 +225,67 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 @startuml
 package "Backend" {
 
+package "Entity package" {
+    class GasStation {
+    -Int: ID
+    -String: Name
+    -String: Address
+    -String: Brand
+    -String: CarSharing
+    -Double: Latitude
+    -Double: Longitude
+    -PriceList: Prices
+    +boolean hasDiesel()
+    +boolean hasGasoline()
+    +boolean hasPremiumDiesel()
+    +boolean hasPremiumGasoline()
+    +boolean hasLPG()
+    +boolean hasMethane()
+    +PriceList ShowPrices()
+    +void UpdatePrices(PriceList newPrices)
+    +double[] getPosition()
+    }
+
+    class PriceList {
+    -String: time_tag
+    -Double: dieselPrice
+    -Double: gasolinePrice
+    -Double: premiumDieselPrice
+    -Double: premiumGasolinePrice
+    -Double: LPGPrice
+    -Double: methanePrice
+    -int: trust_level
+    +void updateDiesel(double price)
+    +void updateGasoline(double price)
+    +void updatePremiumDiesel(double price)
+    +void updatePremiumGasoline(double price)
+    +void updateLPG(double price)
+    +void updateMethane(double price)
+    +void updateTrustLevel(int TL)
+    }
+
+    class User {
+    -String: account_name
+    -String: account_pwd
+    -String: email
+    -int: trust_level
+    -Double: Latitude
+    -Double: Longitude
+
+    +void setTrust_level(int TL)
+    +void updateEmail(String newMail)
+    +double[] getPosition()
+    }
+
+    class Administrator {
+    +void addGasStation(GasStation newStation)
+    +void delateGasStation(GasStation oldStation)
+    +void banUser (int userID)
+    }
+    GasStation *-up- PriceList
+    User <|-down- Administrator
+}
+
 package "service"  as s {
    interface "GasStationService" as gs {
        {field}
