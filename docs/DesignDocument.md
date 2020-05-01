@@ -286,6 +286,37 @@ package "Entity package" {
     User <|-down- Administrator
 }
 
+package "controller" as c {
+   class "GasStationController" as gsctrl {
+       {field}
+       - GasStationService: gs
+       {method}
+       - GasStationDto getGasStationById(Integer gasStationId)
+       - GasStationDto saveGasStation(GasStationDto gasStationDto)
+       - List<GasStationDto> getAllGasStations();
+       - Boolean deleteGasStation(Integer gasStationId)
+       - List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+       - List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+       - List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+       - List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+       - void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+       - List<GasStationDto> getGasStationByCarSharing(String carSharing)
+   }
+
+   class "UserController" as usctrl {
+       {field}
+       - UserService: us
+       {method}
+       - UserDto getUserById(Integer userId)
+       - UserDto saveUser(UserDto userDto)
+       - List<UserDto> getAllUsers()
+       - Boolean deleteUser(Integer userId)
+       - LoginDto login(IdPw credentials)
+       - Integer increaseUserReputation(Integer userId)
+       - Integer decreaseUserReputation(Integer userId)
+   }
+}
+
 package "service"  as s {
    interface "GasStationService" as gs {
        {field}
@@ -358,10 +389,3 @@ class usi implements us
 
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
-
-
-
-
-
-
-
