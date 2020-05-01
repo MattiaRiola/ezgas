@@ -221,154 +221,155 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 # Low level design
 
 <Based on the official requirements and on the Spring Boot design guidelines, define the required classes (UML class diagram) of the back-end in the proper packages described in the high-level design section.>
+
+# Entity
 ```plantuml
 @startuml
 package "Backend" {
+    package "entity" {
+        class GasStation {
+            -Int: ID
+            -String: Name
+            -String: Address
+            -String: Brand
+            -String: CarSharing
+            -Double: Latitude
+            -Double: Longitude
+            -PriceList: Prices
+            +boolean hasDiesel()
+            +boolean hasGasoline()
+            +boolean hasPremiumDiesel()
+            +boolean hasPremiumGasoline()
+            +boolean hasLPG()
+            +boolean hasMethane()
+            +PriceList ShowPrices()
+            +void UpdatePrices(PriceList newPrices)
+            +double[] getPosition()
+        }
 
-package "Entity package" {
-    class GasStation {
-    -Int: ID
-    -String: Name
-    -String: Address
-    -String: Brand
-    -String: CarSharing
-    -Double: Latitude
-    -Double: Longitude
-    -PriceList: Prices
-    +boolean hasDiesel()
-    +boolean hasGasoline()
-    +boolean hasPremiumDiesel()
-    +boolean hasPremiumGasoline()
-    +boolean hasLPG()
-    +boolean hasMethane()
-    +PriceList ShowPrices()
-    +void UpdatePrices(PriceList newPrices)
-    +double[] getPosition()
+        class PriceList {
+            -String: time_tag
+            -Double: dieselPrice
+            -Double: gasolinePrice
+            -Double: premiumDieselPrice
+            -Double: premiumGasolinePrice
+            -Double: LPGPrice
+            -Double: methanePrice
+            -int: trust_level
+            +void updateDiesel(double price)
+            +void updateGasoline(double price)
+            +void updatePremiumDiesel(double price)
+            +void updatePremiumGasoline(double price)
+            +void updateLPG(double price)
+            +void updateMethane(double price)
+            +void updateTrustLevel(int TL)
+        }
+
+        class User {
+            -String: account_name
+            -String: account_pwd
+            -String: email
+            -int: trust_level
+            -Double: Latitude
+            -Double: Longitude
+
+            +void setTrust_level(int TL)
+            +void updateEmail(String newMail)
+            +double[] getPosition()
+        }
+
+        class Administrator {
+            +void addGasStation(GasStation newStation)
+            +void delateGasStation(GasStation oldStation)
+            +void banUser (int userID)
+        }
+
+        GasStation *-up- PriceList
+        User <|-down- Administrator
     }
-
-    class PriceList {
-    -String: time_tag
-    -Double: dieselPrice
-    -Double: gasolinePrice
-    -Double: premiumDieselPrice
-    -Double: premiumGasolinePrice
-    -Double: LPGPrice
-    -Double: methanePrice
-    -int: trust_level
-    +void updateDiesel(double price)
-    +void updateGasoline(double price)
-    +void updatePremiumDiesel(double price)
-    +void updatePremiumGasoline(double price)
-    +void updateLPG(double price)
-    +void updateMethane(double price)
-    +void updateTrustLevel(int TL)
-    }
-
-    class User {
-    -String: account_name
-    -String: account_pwd
-    -String: email
-    -int: trust_level
-    -Double: Latitude
-    -Double: Longitude
-
-    +void setTrust_level(int TL)
-    +void updateEmail(String newMail)
-    +double[] getPosition()
-    }
-
-    class Administrator {
-    +void addGasStation(GasStation newStation)
-    +void delateGasStation(GasStation oldStation)
-    +void banUser (int userID)
-    }
-    GasStation *-up- PriceList
-    User <|-down- Administrator
 }
 
-package "controller" as c {
-   class "GasStationController" as gsctrl {
-       {field}
-       - GasStationService: gs
-       {method}
-       - GasStationDto getGasStationById(Integer gasStationId)
-       - GasStationDto saveGasStation(GasStationDto gasStationDto)
-       - List<GasStationDto> getAllGasStations();
-       - Boolean deleteGasStation(Integer gasStationId)
-       - List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
-       - List<GasStationDto> getGasStationsByProximity(double lat, double lon)
-       - List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-       - List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-       - void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-       - List<GasStationDto> getGasStationByCarSharing(String carSharing)
-   }
-
-   class "UserController" as usctrl {
-       {field}
-       - UserService: us
-       {method}
-       - UserDto getUserById(Integer userId)
-       - UserDto saveUser(UserDto userDto)
-       - List<UserDto> getAllUsers()
-       - Boolean deleteUser(Integer userId)
-       - LoginDto login(IdPw credentials)
-       - Integer increaseUserReputation(Integer userId)
-       - Integer decreaseUserReputation(Integer userId)
-   }
-}
-
-package "service"  as s {
-   interface "GasStationService" as gs {
-       {field}
-       {method}
-       - GasStationDto getGasStationById(Integer gasStationId)
-       - GasStationDto saveGasStation(GasStationDto gasStationDto)
-       - List<GasStationDto> getAllGasStations();
-       - Boolean deleteGasStation(Integer gasStationId)
-       - List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
-       - List<GasStationDto> getGasStationsByProximity(double lat, double lon)
-       - List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-       - List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-       - void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-       - List<GasStationDto> getGasStationByCarSharing(String carSharing)
-   }
-   interface "UserService" as us {
-       {field}
-       {method}
-       - UserDto getUserById(Integer userId)
-       - UserDto saveUser(UserDto userDto)
-       - List<UserDto> getAllUsers()
-       - Boolean deleteUser(Integer userId)
-       - LoginDto login(IdPw credentials)
-       - Integer increaseUserReputation(Integer userId)
-       - Integer decreaseUserReputation(Integer userId)
-   }
-   package "impl" as impl{
-       class "GasStationServiceimpl" as gsi{
-           {field}
-            + gsList : List<GastStationDto>
-           {method}
-       }
-       class "UserServiceimpl" as usi {
-           {field}
-           + userList : List<UserDto>
-           {method}
-       }
-       
-   }
-} 
-
-class gsi implements gs
-class usi implements us
 @enduml
 ```
 
+# Controller
+```plantuml
+@startuml
+package "backend" {
+    package "controller" as c {
+        class "GasStationController" as gsctrl {
+            - GasStationService: gs
+            + GasStationDto getGasStationById(Integer gasStationId)
+            + GasStationDto saveGasStation(GasStationDto gasStationDto)
+            + List<GasStationDto> getAllGasStations();
+            + Boolean deleteGasStation(Integer gasStationId)
+            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
+        }
 
+        class "UserController" as usctrl {
+            - UserService: us
+            + UserDto getUserById(Integer userId)
+            + UserDto saveUser(UserDto userDto)
+            + List<UserDto> getAllUsers()
+            + Boolean deleteUser(Integer userId)
+            + LoginDto login(IdPw credentials)
+            + Integer increaseUserReputation(Integer userId)
+            + Integer decreaseUserReputation(Integer userId)
+        }
+    }
+}
+@enduml
+```
 
+# Service
+```plantuml
+@startuml
+package "backend" {
+    package "service"  as s {
+        interface "GasStationService" as gs {
+            + GasStationDto getGasStationById(Integer gasStationId)
+            + GasStationDto saveGasStation(GasStationDto gasStationDto)
+            + List<GasStationDto> getAllGasStations();
+            + Boolean deleteGasStation(Integer gasStationId)
+            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
+        }
 
+        interface "UserService" as us {
+            + UserDto getUserById(Integer userId)
+            + UserDto saveUser(UserDto userDto)
+            + List<UserDto> getAllUsers()
+            + Boolean deleteUser(Integer userId)
+            + LoginDto login(IdPw credentials)
+            + Integer increaseUserReputation(Integer userId)
+            + Integer decreaseUserReputation(Integer userId)
+        }
 
+        package "impl" as impl {
+            class "GasStationServiceimpl" as gsi {
+                + gsList : List<GastStationDto>
+            }
 
+            class "UserServiceimpl" as usi {
+                + userList : List<UserDto>
+            }
+        }
+    }
 
+    class gsi implements gs
+    class usi implements us
+}
+@enduml
+```
 
 
 
@@ -406,3 +407,5 @@ class usi implements us
 
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
+
+
