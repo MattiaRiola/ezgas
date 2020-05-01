@@ -221,7 +221,55 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 # Low level design
 
 <Based on the official requirements and on the Spring Boot design guidelines, define the required classes (UML class diagram) of the back-end in the proper packages described in the high-level design section.>
+```plantuml
+@startuml
+package "Backend" {
 
+package "service"  as s {
+   interface "GasStationService" as gs {
+       {field}
+       {method}
+       - GasStationDto getGasStationById(Integer gasStationId)
+       - GasStationDto saveGasStation(GasStationDto gasStationDto)
+       - List<GasStationDto> getAllGasStations();
+       - Boolean deleteGasStation(Integer gasStationId)
+       - List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+       - List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+       - List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+       - List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+       - void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+       - List<GasStationDto> getGasStationByCarSharing(String carSharing)
+   }
+   interface "UserService" as us {
+       {field}
+       {method}
+       - UserDto getUserById(Integer userId)
+       - UserDto saveUser(UserDto userDto)
+       - List<UserDto> getAllUsers()
+       - Boolean deleteUser(Integer userId)
+       - LoginDto login(IdPw credentials)
+       - Integer increaseUserReputation(Integer userId)
+       - Integer decreaseUserReputation(Integer userId)
+   }
+   package "impl" as impl{
+       class "GasStationServiceimpl" as gsi{
+           {field}
+            + gsList : List<GastStationDto>
+           {method}
+       }
+       class "UserServiceimpl" as usi {
+           {field}
+           + userList : List<UserDto>
+           {method}
+       }
+       
+   }
+} 
+
+class gsi implements gs
+class usi implements us
+@enduml
+```
 
 
 
