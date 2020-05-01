@@ -408,4 +408,53 @@ package "backend" {
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
+# Scenario 7
+```plantuml
+@startuml
+actor UserActor
+    UserActor -> GasStationController: getAllGasStations
+    activate GasStationController
 
+    GasStationController -> GasStationService: getAllGasStations
+    activate GasStationService
+
+    GasStationService --> GasStationController: gasStations
+    deactivate GasStationService
+
+    GasStationController --> UserActor: gasStations
+    deactivate GasStationController
+
+    UserActor -> GasStationController: setReport
+    activate GasStationController
+
+    GasStationController -> GasStationService: setReport
+    activate GasStationService
+
+    GasStationService -> GasStation: updatePriceList 
+
+@enduml
+```
+
+# Scenario 10.1
+```plantuml
+@startuml
+actor UserActor
+    UserActor -> GasStationController: getGasStationById
+    activate GasStationController
+
+    GasStationController -> GasStationService: getGasStationById
+    activate GasStationService
+
+    GasStationService -> GasStation: showPrices
+    activate GasStation
+
+    GasStation --> GasStationService: priceList
+    deactivate GasStation
+
+    GasStationService -> UserService: increaseUSerReputation
+    activate UserService
+
+    UserService -> User: setTrustLevel
+    
+@enduml
+```
