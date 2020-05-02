@@ -429,6 +429,24 @@ actor UserActor
 @enduml
 ```
 
+# Scenario 8
+```plantuml
+@startuml
+actor UserActor
+    UserActor -> GasStationController: getGasStationWithCoordinates
+    activate GasStationController
+
+    GasStationController -> GasStationService: getGasStationWithCoordinates
+    activate GasStationService
+
+    GasStationService --> GasStationController: gasStationList
+    deactivate GasStationService
+
+    GasStationController --> UserActor: gasStationList
+    deactivate GasStationController
+@enduml
+```
+
 # Scenario 10.1
 ```plantuml
 @startuml
