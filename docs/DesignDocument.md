@@ -272,19 +272,14 @@ package "Backend" {
             -int: trust_level
             -Double: Latitude
             -Double: Longitude
-
+            -boolean: admin
             +void setTrust_level(int TL)
             +void updateEmail(String newMail)
             +double[] getPosition()
-        }
-
-        class Administrator {
-            +void addGasStation(GasStation newStation)
-            +void delateGasStation(GasStation oldStation)
+            +boolean isAdmin()
         }
 
         GasStation *-up- PriceList
-        User <|-down- Administrator
     }
 }
 
