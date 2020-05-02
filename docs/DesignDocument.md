@@ -1,11 +1,11 @@
 # Design Document 
 
 
-Authors: 
+Authors: Group 21
 
-Date:
+Date: 30/04/20
 
-Version:
+Version: 1
 
 
 # Contents
