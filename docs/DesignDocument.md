@@ -1,11 +1,11 @@
 # Design Document 
 
 
-Authors: 
+Authors: Group 21
 
-Date:
+Date: 30/04/20
 
-Version:
+Version: 1
 
 
 # Contents
@@ -222,20 +222,172 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 <Based on the official requirements and on the Spring Boot design guidelines, define the required classes (UML class diagram) of the back-end in the proper packages described in the high-level design section.>
 
+# Entity
+```plantuml
+@startuml
+package "Backend" {
+    package "entity" {
+        class GasStation {
+            -Int: ID
+            -String: Name
+            -String: Address
+            -String: Brand
+            -String: CarSharing
+            -Double: Latitude
+            -Double: Longitude
+            -PriceList: Prices
+            +boolean hasDiesel()
+            +boolean hasGasoline()
+            +boolean hasPremiumDiesel()
+            +boolean hasPremiumGasoline()
+            +boolean hasLPG()
+            +boolean hasMethane()
+            +PriceList ShowPrices()
+            +void UpdatePrices(PriceList newPrices)
+            +double[] getPosition()
+        }
 
+        class PriceList {
+            -String: time_tag
+            -Double: dieselPrice
+            -Double: gasolinePrice
+            -Double: premiumDieselPrice
+            -Double: premiumGasolinePrice
+            -Double: LPGPrice
+            -Double: methanePrice
+            -int: trust_level
+            +void updateDiesel(double price)
+            +void updateGasoline(double price)
+            +void updatePremiumDiesel(double price)
+            +void updatePremiumGasoline(double price)
+            +void updateLPG(double price)
+            +void updateMethane(double price)
+            +void updateTrustLevel(int TL)
+        }
 
+        class User {
+            -String: account_name
+            -String: account_pwd
+            -String: email
+            -int: trust_level
+            -Double: Latitude
+            -Double: Longitude
+            -boolean: admin
+            +void setTrust_level(int TL)
+            +void updateEmail(String newMail)
+            +double[] getPosition()
+            +boolean isAdmin()
+        }
 
+        GasStation *-up- PriceList
+    }
+}
 
+@enduml
+```
 
+# Controller
+```plantuml
+@startuml
+package "backend" {
+    package "controller" as c {
+        class "GasStationController" as gsctrl {
+            - GasStationService: gs
+            + GasStationDto getGasStationById(Integer gasStationId)
+            + GasStationDto saveGasStation(GasStationDto gasStationDto)
+            + List<GasStationDto> getAllGasStations();
+            + Boolean deleteGasStation(Integer gasStationId)
+            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
+        }
 
+        class "UserController" as usctrl {
+            - UserService: us
+            + UserDto getUserById(Integer userId)
+            + UserDto saveUser(UserDto userDto)
+            + List<UserDto> getAllUsers()
+            + Boolean deleteUser(Integer userId)
+            + LoginDto login(IdPw credentials)
+            + Integer increaseUserReputation(Integer userId)
+            + Integer decreaseUserReputation(Integer userId)
+        }
+    }
+}
+@enduml
+```
 
+# Service
+```plantuml
+@startuml
+package "backend" {
+    package "service"  as s {
+        interface "GasStationService" as gs {
+            + GasStationDto getGasStationById(Integer gasStationId)
+            + GasStationDto saveGasStation(GasStationDto gasStationDto)
+            + List<GasStationDto> getAllGasStations();
+            + Boolean deleteGasStation(Integer gasStationId)
+            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
+        }
+
+        interface "UserService" as us {
+            + UserDto getUserById(Integer userId)
+            + UserDto saveUser(UserDto userDto)
+            + List<UserDto> getAllUsers()
+            + Boolean deleteUser(Integer userId)
+            + LoginDto login(IdPw credentials)
+            + Integer increaseUserReputation(Integer userId)
+            + Integer decreaseUserReputation(Integer userId)
+        }
+
+        package "impl" as impl {
+            class "GasStationServiceimpl" as gsi {
+                + gsList : List<GastStationDto>
+            }
+
+            class "UserServiceimpl" as usi {
+                + userList : List<UserDto>
+            }
+        }
+    }
+
+    class gsi implements gs
+    class usi implements us
+}
+@enduml
+```
 
 
 
 
 # Verification traceability matrix
 
-\<for each functional requirement from the requirement document, list which classes concur to implement it>
+|       | GasStationServiceImpl | UserServiceImpl | Administrator | User | AnonymousUser | GasStation | PriceList | CarSharingCompany | GeoPoint |
+|-------|:---------------------:|:---------------:|:-------------:|:----:|:-------------:|:----------:|:---------:|:-----------------:|:--------:|
+| FR1.1 |                       |        X        |       X       |   X  |               |            |           |                   |          |
+| FR1.2 |                       |        X        |       X       |   X  |               |            |           |                   |          |
+| FR1.3 |                       |        X        |       X       |   X  |               |            |           |                   |          |
+| FR1.4 |                       |        X        |       X       |   X  |               |            |           |                   |          |
+| FR2   |                       |        X        |       X       |   X  |               |            |           |                   |          |
+| FR3.1 |           X           |                 |               |      |               |      X     |           |                   |          |
+| FR3.2 |           X           |                 |               |      |               |      X     |           |                   |          |
+| FR3.3 |           X           |                 |               |      |               |      X     |           |                   |          |
+| FR4.1 |           X           |                 |               |      |               |      X     |           |                   |     X    |
+| FR4.2 |           X           |                 |               |      |               |      X     |           |                   |     X    |
+| FR4.3 |           X           |                 |               |      |               |      X     |     X     |                   |     X    |
+| FR4.4 |           X           |                 |               |      |               |      X     |     X     |                   |          |
+| FR4.5 |           X           |                 |               |      |               |      X     |           |         X         |          |
+| FR5.1 |           X           |                 |               |   X  |               |      X     |     X     |                   |          |
+| FR5.2 |                       |                 |               |      |               |      X     |     X     |                   |          |
+| FR5.3 |           X           |                 |               |   X  |               |      X     |     X     |                   |          |
 
 
 
@@ -250,9 +402,71 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
+# Scenario 7
+```plantuml
+@startuml
+actor UserActor
+    UserActor -> GasStationController: getAllGasStations
+    activate GasStationController
 
+    GasStationController -> GasStationService: getAllGasStations
+    activate GasStationService
 
+    GasStationService --> GasStationController: gasStations
+    deactivate GasStationService
 
+    GasStationController --> UserActor: gasStations
+    deactivate GasStationController
 
+    UserActor -> GasStationController: setReport
+    activate GasStationController
 
+    GasStationController -> GasStationService: setReport
+    activate GasStationService
 
+    GasStationService -> GasStation: updatePriceList 
+
+@enduml
+```
+
+# Scenario 8
+```plantuml
+@startuml
+actor UserActor
+    UserActor -> GasStationController: getGasStationWithCoordinates
+    activate GasStationController
+
+    GasStationController -> GasStationService: getGasStationWithCoordinates
+    activate GasStationService
+
+    GasStationService --> GasStationController: gasStationList
+    deactivate GasStationService
+
+    GasStationController --> UserActor: gasStationList
+    deactivate GasStationController
+@enduml
+```
+
+# Scenario 10.1
+```plantuml
+@startuml
+actor UserActor
+    UserActor -> GasStationController: getGasStationById
+    activate GasStationController
+
+    GasStationController -> GasStationService: getGasStationById
+    activate GasStationService
+
+    GasStationService -> GasStation: showPrices
+    activate GasStation
+
+    GasStation --> GasStationService: priceList
+    deactivate GasStation
+
+    GasStationService -> UserService: increaseUSerReputation
+    activate UserService
+
+    UserService -> User: setTrustLevel
+    
+@enduml
+```
