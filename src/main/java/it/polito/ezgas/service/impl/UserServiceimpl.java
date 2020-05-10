@@ -43,7 +43,6 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public UserDto saveUser(UserDto userDto) {
-		// Missing check if userDto == null
 		if(userDto == null)
 			return null;
 		Converter<User, UserDto> userConverter = new UserConverter();
