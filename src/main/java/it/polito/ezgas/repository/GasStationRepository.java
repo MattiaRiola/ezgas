@@ -53,5 +53,11 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
     );
 
     @Query(value = "", nativeQuery = true)
-    List<GasStation> findByCarSharing(String carSharing);
+    List<GasStation> findByCarSharing(
+            Double latUL, Double lonUL, // Upper Left lat and lon
+            Double latUR, Double lonUR, // Upper Right lat and lon
+            Double latLL, Double lonLL, // Lower Left lat and lon
+            Double latLR, Double lonLR, // Lower Right lat and lon
+            String carSharing
+    );
 }
