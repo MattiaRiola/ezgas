@@ -26,15 +26,16 @@ public class UserServiceimpl implements UserService {
 	@Autowired
 	UserRepository UserRepo;
 
-	private Integer minReputation = -5;
-	private Integer maxReputation = 5;
+	private final Integer minReputation = -5;
+	private final Integer maxReputation = 5;
+
 	@Override
 	public UserDto getUserById(Integer userId) throws InvalidUserException {
 		if(userId == null)
 			throw new InvalidUserException("Invalid User id: user id is null");
 		if(userId < 0)
 			throw new InvalidUserException("Invalid User id: user id is < 0");
-		User user = UserRepo.findOne(userId);
+		User user = UserRepo.findById(userId);
 		if(user == null)
 			throw new InvalidUserException("Invalid User id: user id is not found");
 		Converter<User, UserDto> userConverter = new UserConverter();
@@ -47,7 +48,7 @@ public class UserServiceimpl implements UserService {
 			return null;
 		Converter<User, UserDto> userConverter = new UserConverter();
 		//TODO ? do we have to handle the case when an user try to register with an existing email?
-		User u = UserRepo.findOneByEmail(userDto.getEmail());
+		User u = UserRepo.findByEmail(userDto.getEmail());
 		if(u == null){
 			return null; // should it return null in that case?
 		}
@@ -59,6 +60,9 @@ public class UserServiceimpl implements UserService {
 	public List<UserDto> getAllUsers() {
 		Converter<User, UserDto> userConverter = new UserConverter();
 		List<User> listUser = UserRepo.findAll();
+		if (listUser == null) {
+			return new LinkedList<>();
+		}
 		List<UserDto> listUserDto = new LinkedList<>();
 		listUser.forEach( u -> {
 								UserDto uDto = userConverter.convertToDto(u);
@@ -74,7 +78,7 @@ public class UserServiceimpl implements UserService {
 		if(userId < 0)
 			throw new InvalidUserException("Invalid User id: user id is < 0");
 
-		User user = UserRepo.findOne(userId);
+		User user = UserRepo.findById(userId);
 		if(user == null){
 			//There aren't Users with that userId
 			return false;
@@ -86,7 +90,7 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public LoginDto login(IdPw credentials) throws InvalidLoginDataException {
-		User u = UserRepo.findOneByEmail(credentials.getUser());
+		User u = UserRepo.findByEmail(credentials.getUser());
 		if(u == null)
 			throw new InvalidLoginDataException("Wrong Username (email)");
 		if(u.getPassword().compareTo(credentials.getPw()) != 0)
@@ -106,14 +110,13 @@ public class UserServiceimpl implements UserService {
 			if(userId < 0)
 				throw new InvalidUserException("Invalid User id: user id is < 0");
 
-			User u = UserRepo.findOne(userId);
-			if(u.getReputation()>=maxReputation) //if the user reached the max reputation
+			User u = UserRepo.findById(userId);
+			if(u.getReputation() >= maxReputation) //if the user reached the max reputation
 				return u.getReputation();
 //			System.out.println("Reputation +1");
-			u.setReputation(u.getReputation()+1);
+			u.setReputation(u.getReputation() + 1);
 			//I've to save the change of the user's reputation in the Repository
-			UserRepo.delete(userId);
-			UserRepo.save(u);
+			UserRepo.updateUserReputation(userId, u.getReputation());
 
 			return u.getReputation();
 	}
@@ -126,15 +129,15 @@ public class UserServiceimpl implements UserService {
 			throw new InvalidUserException("Invalid User id: user id is < 0");
 
 
-		User u = UserRepo.findOne(userId);
-		if(u.getReputation()<=minReputation)
+		User u = UserRepo.findById(userId);
+		if(u.getReputation() <= minReputation)
 			return u.getReputation();
 
 //			System.out.println("Reputation -1");
-		u.setReputation(u.getReputation()-1);
+		u.setReputation(u.getReputation() - 1);
 		//I've to save the change of the user's reputation in the Repository
-		UserRepo.delete(userId);
-		UserRepo.save(u);
+		UserRepo.updateUserReputation(userId, u.getReputation());
+
 		return u.getReputation();
 	}
 	
