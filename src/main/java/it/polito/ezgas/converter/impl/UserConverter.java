@@ -8,13 +8,21 @@ public class UserConverter implements Converter<User, UserDto> {
 
     @Override
     public UserDto convertToDto(User user) {
-        UserDto dto = new UserDto(user.getUserId(), user.getUserName(), user.getPassword(), user.getEmail(), user.getReputation());
+        if(user == null) {
+            System.out.println("Conversion from user null to userDto");
+            return null;
+        }
+        UserDto dto = new UserDto(user.getUserId(), user.getUserName(), user.getPassword(), user.getEmail(), user.getReputation(), user.getAdmin());
         return dto;
     }
 
     @Override
     public User convertFromDto(UserDto userDto) {
-        User user = new User(userDto.getUserName(), userDto.getPassword(), userDto.getEmail(), userDto.getReputation());
+        if(userDto == null) {
+            System.out.println("Conversion from userDto null to user");
+            return null;
+        }
+        User user = new User(userDto.getUserName(), userDto.getPassword(), userDto.getEmail(), userDto.getReputation(), userDto.getAdmin());
         return user;
     }
 }

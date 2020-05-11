@@ -75,7 +75,15 @@ public class User implements Serializable{
         this.admin = false;
     }
 
-	public Integer getReputation() {
+    public User(String userName, String password, String email, Integer reputation, boolean admin) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.reputation = reputation;
+        this.admin = admin;
+    }
+
+    public Integer getReputation() {
 		return reputation;
 	}
 
