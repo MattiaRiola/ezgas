@@ -41,7 +41,7 @@ public class GasStationServiceimpl implements GasStationService{
 		
 		GasStation station = gasRepo.findById(gasStationId);
 		if (station == null) {
-			throw new InvalidGasStationException("No gas station could be found")
+			throw new InvalidGasStationException("No gas station could be found");
 		}
 
 		return gasConverter.convertToDto(station);
