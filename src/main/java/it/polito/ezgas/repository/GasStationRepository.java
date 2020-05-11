@@ -12,7 +12,13 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
     @Query(value = "SELECT * FROM GAS_STATION WHERE USER_ID = ?1", nativeQuery = true)
     GasStation findById(Integer id);
 
-    @Query(value = "SELECT * FROM GAS_STATION WHERE HAS_DIESEL = ?1 OR HAS_GAS = ?2 OR HAS_METHANE = ?3 OR HAS_SUPER = ?4 OR HAS_SUPER_PLUS = ?5", nativeQuery = true)
+    @Query(value = "UPDATE GAS_STATION SET DIESEL_PRICE = ?1, GAS_PRICE = ?2, METHANE_PRICE = ?3, SUPER_PRICE = ?4," +
+            " SUPER_PLUS_PRICE = ?5, REPORT_USER = ?6 WHERE GAS_STATION_ID = ?7", nativeQuery = true)
+    void updateReport(double dieselPrice, double gasPrice, double methanePrice, double superPrice, double superPlusPrice,
+                      Integer reportUser, Integer gasStationId);
+
+    @Query(value = "SELECT * FROM GAS_STATION WHERE HAS_DIESEL = ?1 OR HAS_GAS = ?2 OR HAS_METHANE = ?3 OR HAS_SUPER = ?4" +
+            " OR HAS_SUPER_PLUS = ?5", nativeQuery = true)
     List<GasStation> findByGasolineType(
             Boolean hasDiesel,
             Boolean hasGas,
@@ -22,7 +28,7 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
     );
 
     // TODO: Do we need all these points, or we can remove some of them?
-
+    /*
     @Query(value = "SELECT * FROM GAS_STATION WHERE LAT BETWEEN ?1 AND ?3 AND LON BETWEEN ?2 AND ?6", nativeQuery = true)
     List<GasStation> findByProximity(
             Double latUL, Double lonUL, // Upper Left lat and lon
@@ -43,8 +49,10 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
             Boolean hasSuper,
             Boolean hasSuperPlus
     );
+    */
 
-    @Query(value = "SELECT * FROM GAS_STATION WHERE (HAS_DIESEL = ?1 OR HAS_GAS = ?2 OR HAS_METHANE = ?3 OR HAS_SUPER = ?4 OR HAS_SUPER_PLUS = ?5) AND (CAR_SHARING = ?6)", nativeQuery = true)
+    @Query(value = "SELECT * FROM GAS_STATION WHERE (HAS_DIESEL = ?1 OR HAS_GAS = ?2 OR HAS_METHANE = ?3 OR HAS_SUPER = ?4" +
+            " OR HAS_SUPER_PLUS = ?5) AND (CAR_SHARING = ?6)", nativeQuery = true)
     List<GasStation> findWithoutCoordinates(
             Boolean hasDiesel,
             Boolean hasGas,
@@ -54,6 +62,7 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
             String carSharing
     );
 
+    /*
     @Query(value = "SELECT * FROM GAS_STATION WHERE (LAT BETWEEN ?1 AND ?3 AND LON BETWEEN ?2 AND ?6) AND (CAR_SHARING = ?7)", nativeQuery = true)
     List<GasStation> findByCarSharing(
             Double latUL, Double lonUL, // Upper Left lat and lon
@@ -62,4 +71,8 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
             Double latLR, Double lonLR, // Lower Right lat and lon
             String carSharing
     );
+    */
+
+    @Query(value = "SELECT * FROM GAS_STATION WHERE (CAR_SHARING = ?1)", nativeQuery = true)
+    List<GasStation> findByCarSharing (String carSharing);
 }
