@@ -28,9 +28,9 @@ import it.polito.ezgas.converter.impl.GasStationConverter;
 public class GasStationServiceimpl implements GasStationService{
 
 	@Autowired
-	GasStationRepository gasRepo;
+	private GasStationRepository gasRepo;
 
-	Converter<GasStation, GasStationDto> gasConverter = new GasStationConverter();
+	private final Converter<GasStation, GasStationDto> gasConverter = new GasStationConverter();
 
 	// TODO: the db could return empty lists or null "pointers", so to every call the return must be checked. If it corresponds to one of the two conditions described before we should act as the method specification requires
 
@@ -39,7 +39,11 @@ public class GasStationServiceimpl implements GasStationService{
 		if (gasStationId == null || gasStationId < 0)
 			throw new InvalidGasStationException("No gas station corresponds to Id");
 		
-		GasStation station = gasRepo.findOne(gasStationId);
+		GasStation station = gasRepo.findById(gasStationId);
+		if (station == null) {
+			throw new InvalidGasStationException("No gas station could be found")
+		}
+
 		return gasConverter.convertToDto(station);
 	}
 
@@ -60,6 +64,10 @@ public class GasStationServiceimpl implements GasStationService{
 	public List<GasStationDto> getAllGasStations() {
 		
 		List<GasStation> gasList = gasRepo.findAll();
+		if (gasList == null || gasList.isEmpty()) {
+			return new ArrayList<>();
+		}
+
 		List<GasStationDto> DtoGasList= new ArrayList<>();
 		for (GasStation gasStation : gasList) {
 			DtoGasList.add(gasConverter.convertToDto(gasStation));
@@ -84,20 +92,31 @@ public class GasStationServiceimpl implements GasStationService{
 		}
 
 		List<GasStation> gasList;
-		
-		if (gasolinetype.equals("Diesel"))
-			gasList = gasRepo.findByGasolineType(true,false,false,false,false);
-		else if	(gasolinetype.equals("Super"))
-			gasList = gasRepo.findByGasolineType(false,true,false,false,false);
-		else if (gasolinetype.equals("SuperPlus"))
-			gasList = gasRepo.findByGasolineType(false,false,true,false,false);
-		else if (gasolinetype.equals("Gas"))
-			gasList = gasRepo.findByGasolineType(false,false,false,true,false);
-		else if (gasolinetype.equals("Methane"))
-			gasList = gasRepo.findByGasolineType(false,false,false,false,true);
-		else
-			throw new InvalidGasTypeException ("Invalid gasoline type");
-		
+
+		switch (gasolinetype) {
+			case "Diesel":
+				gasList = gasRepo.findByGasolineType(true, false, false, false, false);
+				break;
+			case "Super":
+				gasList = gasRepo.findByGasolineType(false, true, false, false, false);
+				break;
+			case "SuperPlus":
+				gasList = gasRepo.findByGasolineType(false, false, true, false, false);
+				break;
+			case "Gas":
+				gasList = gasRepo.findByGasolineType(false, false, false, true, false);
+				break;
+			case "Methane":
+				gasList = gasRepo.findByGasolineType(false, false, false, false, true);
+				break;
+			default:
+				throw new InvalidGasTypeException("Invalid gasoline type");
+		}
+
+		if (gasList == null || gasList.isEmpty()) {
+			return new LinkedList<GasStationDto>();
+		}
+
 		List<GasStationDto> DtoGasList = new ArrayList<>();
 		for (GasStation gasStation : gasList) {
 			DtoGasList.add(gasConverter.convertToDto(gasStation));
@@ -109,13 +128,17 @@ public class GasStationServiceimpl implements GasStationService{
 	public List<GasStationDto> getGasStationsByProximity(double lat, double lon) throws GPSDataException {
 		if ((lat< -90 && lat > 90) || (lon< -180 && lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
-		// Aggiungere List<GasStationDto> findSquare(double lat, double lon, double radious)
-		List<GasStation> gasList = new LinkedList<>(); //GasRepo.findByProximity(lat, lon, 1.0); // TODO: added placeholder, the method must be reworked
+
+		List<GasStation> gasList = gasRepo.findAll();
+		if (gasList == null || gasList.isEmpty()) {
+			return new LinkedList<GasStationDto>();
+		}
 		
 		List<GasStationDto> DtoGasList= new ArrayList<>();
 		for (GasStation gas : gasList) {
-			if (Math.sqrt(Math.pow((gas.getLat() - lat), 2) + Math.pow(gas.getLon() - lon, 2)) < 1.0)
+			if (Haversine.distance(lat, lon, gas.getLat(), gas.getLon()) < 1.0) {
 				DtoGasList.add(gasConverter.convertToDto(gas));
+			}
 		}
 		return DtoGasList; 
 	}
@@ -123,52 +146,61 @@ public class GasStationServiceimpl implements GasStationService{
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException {
-		if (gasolinetype == null || carsharing == null || gasolinetype.isEmpty() || carsharing.isEmpty()) {
-			throw new InvalidGasTypeException("Invalid values"); // TODO: maybe it would be nice to have another exception? (we should open an issue then)
-		}
 		if ((lat < -90 && lat > 90) || (lon < -180 && lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
-		if (!gasolinetype.equals("Methane") && !gasolinetype.equals("Super") && !gasolinetype.equals("Diesel") && !gasolinetype.equals("SuperPlus"))
-			throw new InvalidGasTypeException ("Invalid gasoline type");
-		
-		// Aggiungere List<GasStationDto> findCoordinates(double lat, double lon, double radious, String gasolinetype, String carsharing)
-		List<GasStation> gasList = new LinkedList<>();//GasRepo.findByCoordinates(lat, lon, 1.0, gasolinetype, carsharing); // TODO: added placeholder, the method must be reworked
-		List<GasStationDto> DtoGasList= new ArrayList<>();
-		for (GasStation gas : gasList) {
-			if (Math.sqrt(Math.pow((gas.getLat() - lat), 2) + Math.pow(gas.getLon() - lon, 2)) < 1.0)
-				DtoGasList.add(gasConverter.convertToDto(gas));
+
+		List<GasStationDto> dtoGasList = getGasStationsWithoutCoordinates(gasolinetype, carsharing);
+		if (dtoGasList == null || dtoGasList.isEmpty()) {
+			return new ArrayList<>();
 		}
-		return DtoGasList; 
+
+		List<GasStationDto> toReturn = new ArrayList<>();
+		for (GasStationDto dtoGas : dtoGasList) {
+			if (Haversine.distance(lat, lon, dtoGas.getLat(), dtoGas.getLon()) < 1.0) {
+				toReturn.add(dtoGas);
+			}
+		}
+
+		return toReturn;
 	}
 
 	@Override
 	public List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
 			throws InvalidGasTypeException {
-		/*if (gasolinetype != "Methane" && gasolinetype != "Super" && gasolinetype != "Diesel" && gasolinetype !="SuperPlus")
-			throw new InvalidGasTypeException ("Invalid gasoline type");*/
-		
-		// Aggiungere List<GasStationDto> findWithoutCoordinatesProx(String gasolinetype, String carsharing)
-		List<GasStation> gasList = new ArrayList<>();
-		if (gasolinetype == null || gasolinetype.isEmpty())
-			throw new InvalidGasTypeException("Invalid gasoline type");
-		else if (gasolinetype.equals("Diesel"))
-			gasList = gasRepo.findWithoutCoordinates(true,false,false,false,false, carsharing);
-		else if	(gasolinetype.equals("Super"))
-			gasList = gasRepo.findWithoutCoordinates(false,false,false,true,false, carsharing);
-		else if (gasolinetype.equals("SuperPlus"))
-			gasList = gasRepo.findWithoutCoordinates(false,false,false,false,true, carsharing);
-		else if (gasolinetype.equals("Gas"))
-			gasList = gasRepo.findWithoutCoordinates(false,true,false,false,false, carsharing);
-		else if (gasolinetype.equals("Methane"))
-			gasList = gasRepo.findWithoutCoordinates(false,false,true,false,false, carsharing);
-		else
-			throw new InvalidGasTypeException ("Invalid gasoline type");
-		
-		//GasRepo.findWithoutCoordinates(gasolinetype, carsharing);
+		if (gasolinetype == null || carsharing == null || gasolinetype.isEmpty() || carsharing.isEmpty()) {
+			throw new InvalidGasTypeException("Invalid values"); // TODO: maybe it would be nice to have another exception? (we should open an issue then)
+		}
+
+		List<GasStation> gasList = null;
+		switch (gasolinetype) {
+			case "Diesel":
+				gasList = gasRepo.findWithoutCoordinates(true, false, false, false, false, carsharing);
+				break;
+			case "Super":
+				gasList = gasRepo.findWithoutCoordinates(false, true, false, false, false, carsharing);
+				break;
+			case "SuperPlus":
+				gasList = gasRepo.findWithoutCoordinates(false, false, true, false, false, carsharing);
+				break;
+			case "Gas":
+				gasList = gasRepo.findWithoutCoordinates(false, false, false, true, false, carsharing);
+				break;
+			case "Methane":
+				gasList = gasRepo.findWithoutCoordinates(false, false, false, false, true, carsharing);
+				break;
+			default:
+				throw new InvalidGasTypeException("Invalid gasoline type");
+		}
+
+		if (gasList == null || gasList.isEmpty()) {
+			return new LinkedList<GasStationDto>();
+		}
+
 		List<GasStationDto> DtoGasList = new ArrayList<>();
 		for (GasStation gasStation : gasList) {
 			DtoGasList.add(gasConverter.convertToDto(gasStation));
 		}
+
 		return DtoGasList; 
 	}
 
@@ -183,32 +215,27 @@ public class GasStationServiceimpl implements GasStationService{
 		if (userId == null || userId < 0)
 			throw new InvalidUserException("Invalid user id");
 		
-		GasStationDto station = getGasStationById(gasStationId);
-		if (station.getHasDiesel())
-			station.setDieselPrice(dieselPrice);
-		if (station.getHasMethane())
-			station.setMethanePrice(methanePrice);
-		if (station.getHasGas())
-			station.setGasPrice(gasPrice);
-		if (station.getHasSuper())
-			station.setSuperPrice(superPrice);
-		if (station.getHasSuperPlus())
-			station.setSuperPlusPrice(superPlusPrice);
-		station.setReportUser(userId);
-
-		// TODO: add a method in GasStationRepository to perform report's updates
+		gasRepo.updateReport(dieselPrice, gasPrice, methanePrice, superPrice, superPlusPrice, userId, gasStationId);
 	}
 
 	//What to DO?.
 	@Override
 	public List<GasStationDto> getGasStationByCarSharing(String carSharing) {
 		// Aggiungere List<GasStationDto> findCarSharing(double radious, String carsharing)
-		List<GasStation> gasList = new LinkedList<>();//GasRepo.findByCarSharing(1.0 carsharing); // TODO: added placeholder, the method must be reworked
+		if (carSharing == null || carSharing.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		List<GasStation> gasList = gasRepo.findByCarSharing(carSharing);
+		if (gasList == null || gasList.isEmpty()) {
+			return new ArrayList<>();
+		}
+
 		List<GasStationDto> DtoGasList = new ArrayList<>();
 		for (GasStation gas : gasList) {
-			//if (Math.sqrt(Math.pow((gas.getLat()-lat), 2) + Math.pow(gas.getLon()-lon , 2)) < 1.0)
 			DtoGasList.add(gasConverter.convertToDto(gas));
 		}
+
 		return DtoGasList;
 	}
 }
