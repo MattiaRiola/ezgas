@@ -9,12 +9,15 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    @Query(value = "SELECT * FROM USER WHERE USER_ID=?1", nativeQuery=true)
+    @Query(value = "SELECT * FROM USER WHERE USER_ID = ?1", nativeQuery = true)
     User findById(Integer id);
 
-    @Query(value = "SELECT * FROM USER WHERE EMAIL=?1", nativeQuery=true)
+    @Query(value = "SELECT * FROM USER WHERE EMAIL = ?1", nativeQuery = true)
     User findByEmail(String email);
 
-    @Query(value = "UPDATE USER SET REPUTATION = ?2 WHERE USER_ID=?1", nativeQuery=true)
+    @Query(value = "SELECT * FROM USER WHERE USER_NAME = ?1 AND PASSWORD = ?2 AND EMAIL = ?3", nativeQuery = true)
+    User findAdmin(String userName, String password, String email);
+
+    @Query(value = "UPDATE USER SET REPUTATION = ?2 WHERE USER_ID = ?1", nativeQuery = true)
     void updateUserReputation(Integer id, Integer reputation);
 }
