@@ -72,6 +72,7 @@ public class User implements Serializable{
         this.password = password;
         this.email = email;
         this.reputation = reputation;
+        this.admin = false;
     }
 
 	public Integer getReputation() {
