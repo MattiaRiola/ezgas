@@ -49,9 +49,10 @@ public class UserServiceimpl implements UserService {
 		Converter<User, UserDto> userConverter = new UserConverter();
 		//TODO ? do we have to handle the case when an user try to register with an existing email?
 		User u = UserRepo.findByEmail(userDto.getEmail());
-		if(u == null){
+		if(u != null) {
 			return null; // should it return null in that case?
 		}
+
 		User user = UserRepo.save(userConverter.convertFromDto(userDto));
 		return userConverter.convertToDto(user);
 	}
