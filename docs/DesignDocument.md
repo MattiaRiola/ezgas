@@ -220,7 +220,239 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 # Low level design
 
-<Based on the official requirements and on the Spring Boot design guidelines, define the required classes (UML class diagram) of the back-end in the proper packages described in the high-level design section.>
+```plantuml
+@startuml
+package "Backend" {
+package "it.polito.ezgas.service"  as ps {
+   interface "GasStationService"{
+      +getGasStationById(gasStationId)
+      +saveGasStation(gasStationDto)
+      +getAllGasStations()
+      +deleteGasStation(gasStationId)
+      +getGasStationsByGasolineType(gasolinetype)
+      +getGasStationsByProximity(lat,lon)
+      +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
+      +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
+      +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+      +getGasStationByCarSharing(carSharing)
+   }
+   interface "UserService"{
+      +getUserById(userId)
+      +saveUser(userDto)
+      +getAllUsers()
+      +deleteUser(userId)
+      +login(credentials)
+      +increaseUserReputation(userId)
+      +decreaseUserReputation(userId)
+   }
+   class "GasStationServiceimpl"{
+      +getGasStationById(gasStationId)
+      +saveGasStation(gasStationDto)
+      +getAllGasStations()
+      +deleteGasStation(gasStationId)
+      +getGasStationsByGasolineType(gasolinetype)
+      +getGasStationsByProximity(lat,lon)
+      +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
+      +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
+      +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+      +getGasStationByCarSharing(carSharing)
+   }
+   class "UserServiceimpl"{
+      +getUserById(userId)
+      +saveUser(userDto)
+      +getAllUsers()
+      +deleteUser(userId)
+      +login(credentials)
+      +increaseUserReputation(userId)
+      +decreaseUserReputation(userId)
+   }
+   class "Haversine"{
+    +distance(startLat,startLong,endLat,endLong)
+    +haversin(double val)
+   }
+   "GasStationServiceimpl" -|> "GasStationService"
+   "UserServiceimpl" -|> "UserService"
+
+}
+
+
+package "it.polito.ezgas.controller" as pc{
+   class "UserController"{
+      +getUserById(userId)
+      +getAllUsers()
+      +saveUser(userDto)
+      +deleteUser(userId)
+      +increaseUserReputation(userId)
+      +decreaseUserReputation(userId)
+      +login(credentials)
+   }
+   class "GasStationController"{
+      +getGasStationById(gasStationId)
+      +getAllGasStations()
+      +saveGasStation()
+      +deleteUser(gasStationId)
+      +getGasStationsByGasolineType(gasolinetype)
+      +getGasStationsByProximity(myLat,myLon)
+      +getGasStationsWithCoordinates(myLat,myLon,gasolineType,carSharing)
+      +setGasStationReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+   }
+   class "HomeController"{
+      +admin()
+      +index()
+      +map()
+      +login()
+      +update()
+      +signup()
+   }
+}
+
+package "it.polito.ezgas.converter" {
+   class "UserConverter"{
+      +tconvertToDto(user)
+      +convertFromDto(userDto)
+   }
+   class "GasStationConverter"{
+      +convertFromDto(gasStationDto)
+      +convertToDto(gasStation)
+   }
+}
+
+package "it.polito.ezgas.dto" {
+   class "UserDto"{
+      -userId
+      -userName
+      -password
+      -email
+      -reputation
+      -admin
+   }
+   class "GasStationDto"{
+      -gasStationId
+      -gasStationName
+      -gasStationAddress
+      -hasDiesel
+      -hasSuper
+      -hasSuperPlus
+      -hasGas
+      -hasMethane
+      -carSharing
+      -lat
+      -lon
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+      -methanePrice
+      -reportUser
+      -userDto
+      -reportTimestamp
+      -reportDependability
+   }
+   class "PriceReportDto"{
+      -priceReportId
+      -user
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+   }
+   class "LoginDto"{
+      -userId
+      -userName
+      -token
+      -email
+      -reputation
+      -admin
+   }
+   class "IdPw"{
+      -user
+      -pw
+   }
+}
+
+package "it.polito.ezgas.entity" {
+   class "User"{
+      -userId
+      -userName
+      -password
+      -email
+      -reputation
+      -admin
+
+   }
+   class "GasStation"{
+      -gasStationId
+      -gasStationName
+      -gasStationAddress
+      -hasDiesel
+      -hasSuper
+      -hasSuperPlus
+      -hasGas
+      -hasMethane
+      -carSharing
+      -lat
+      -lon
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+      -methanePrice
+      -reportUser
+      -reportTimestamp
+      -reportDependability
+
+   }
+   class "PriceReport"{
+      -priceReportId
+      -user
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+   }
+
+}
+
+package "it.polito.ezgas.repository" {
+   class "UserRepository"{
+      +findById(id)
+      +findByEmail(email)
+      +findAdmin(userName,password,email)
+      +updateUserReputation(id,reputation)
+   }
+   class "GasStationRepository"{
+      +findById(id)
+      +updateReport(dieselPrice,gasPrice,methanePrice,superPrice,superPlusPrice,reportUser,gasStationId)
+      +findByGasolineType(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus)
+      +findWithoutCoordinates(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus,carSharing)
+      +findByCarSharing (carSharing)
+   }
+}
+
+}
+
+"UserController" "1"-----"1" "UserService"
+"UserServiceimpl" "1"-----"1" "UserRepository"
+"UserServiceimpl" "1"-----"1" "UserConverter"
+"UserConverter" "1"-----"1" "UserDto"
+"UserConverter" "1"-----"1" "LoginDto"
+"UserServiceimpl" "1"-----"1" "IdPw"
+
+
+"GasStationController" "1"-----"1" "GasStationService"
+"GasStationServiceimpl" "1"-----"1" "GasStationRepository"
+"GasStationServiceimpl" "1"-----"1" "GasStationConverter"
+"GasStationConverter" "1"-----"1" "GasStationDto"
+
+"GasStationServiceimpl" "1"-----"1" "PriceReportConverter"
+"PriceReportConverter" "1"-----"1" "PriceReportDto"
+
+@enduml
+```
+
+
+
+
 
 # Entity
 ```plantuml
