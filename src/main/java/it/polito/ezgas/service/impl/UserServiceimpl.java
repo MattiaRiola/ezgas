@@ -101,6 +101,7 @@ public class UserServiceimpl implements UserService {
 		LoginDto loginDto = new LoginDto
 							(u.getUserId(),u.getUserName(),"",
 							u.getEmail(), u.getReputation());
+		loginDto.setAdmin(u.getAdmin());
 		return loginDto;
 	}
 
