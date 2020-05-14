@@ -4,6 +4,7 @@ import java.lang.Math;
 import it.polito.ezgas.repository.GasStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,13 +50,46 @@ public class GasStationServiceimpl implements GasStationService{
 
 	@Override
 	public GasStationDto saveGasStation(GasStationDto gasStationDto) throws PriceException, GPSDataException {
-		if (gasStationDto == null || gasStationDto.getDieselPrice() < 0|| gasStationDto.getGasPrice() < 0 ||
-				gasStationDto.getMethanePrice() < 0 || gasStationDto.getSuperPrice() < 0 || gasStationDto.getSuperPlusPrice() < 0)
+		if (gasStationDto == null)
 			throw new PriceException("Invalid prices in gas station");
 		if ((gasStationDto.getLat() < -90 && gasStationDto.getLat() > 90) ||
 				(gasStationDto.getLon() < -180 && gasStationDto.getLon() >= 180))
 			throw new GPSDataException("Invalid gas station position");
-		
+
+		if (gasStationDto.getDieselPrice() < -1 || (gasStationDto.getDieselPrice() > -1 && gasStationDto.getDieselPrice() < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else if (gasStationDto.getDieselPrice() == -1) {
+			gasStationDto.setDieselPrice(0); // Use 0 as a placeholder (no one gives free stuff)
+		}
+
+		if (gasStationDto.getGasPrice() < -1 || (gasStationDto.getGasPrice() > -1 && gasStationDto.getGasPrice() < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else if (gasStationDto.getGasPrice() == -1) {
+			gasStationDto.setGasPrice(0); // Use 0 as a placeholder (no one gives free stuff)
+		}
+
+		if (gasStationDto.getMethanePrice() < -1 || (gasStationDto.getMethanePrice() > -1 && gasStationDto.getMethanePrice() < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else if (gasStationDto.getMethanePrice() == -1) {
+			gasStationDto.setMethanePrice(0); // Use 0 as a placeholder (no one gives free stuff)
+		}
+
+		if (gasStationDto.getSuperPrice() < -1 || (gasStationDto.getSuperPrice() > -1 && gasStationDto.getSuperPrice() < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else if (gasStationDto.getSuperPrice() == -1) {
+			gasStationDto.setSuperPrice(0); // Use 0 as a placeholder (no one gives free stuff)
+		}
+
+		if (gasStationDto.getSuperPlusPrice() < -1 || (gasStationDto.getSuperPlusPrice() > -1 && gasStationDto.getSuperPlusPrice() < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else if (gasStationDto.getSuperPlusPrice() == -1) {
+			gasStationDto.setSuperPlusPrice(0); // Use 0 as a placeholder (no one gives free stuff)
+		}
+
+		if (gasRepo.findById(gasStationDto.getGasStationId()) != null) {
+			gasRepo.delete(gasStationDto.getGasStationId());
+		}
+
 		GasStation gasStation = gasRepo.save(gasConverter.convertFromDto(gasStationDto));
 		return gasConverter.convertToDto(gasStation);
 	}
@@ -87,30 +121,35 @@ public class GasStationServiceimpl implements GasStationService{
 
 	@Override
 	public List<GasStationDto> getGasStationsByGasolineType(String gasolinetype) throws InvalidGasTypeException {
-		if (gasolinetype == null || gasolinetype.isEmpty()) {
+		if (gasolinetype == null || gasolinetype.isEmpty() || gasolinetype.equals("null")) {
 			throw new InvalidGasTypeException("Invalid gasoline type");
 		}
 
 		List<GasStation> gasList;
 
-		switch (gasolinetype) {
-			case "Diesel":
-				gasList = gasRepo.findByGasolineType(true, false, false, false, false);
-				break;
-			case "Super":
-				gasList = gasRepo.findByGasolineType(false, true, false, false, false);
-				break;
-			case "SuperPlus":
-				gasList = gasRepo.findByGasolineType(false, false, true, false, false);
-				break;
-			case "Gas":
-				gasList = gasRepo.findByGasolineType(false, false, false, true, false);
-				break;
-			case "Methane":
-				gasList = gasRepo.findByGasolineType(false, false, false, false, true);
-				break;
-			default:
-				throw new InvalidGasTypeException("Invalid gasoline type");
+		try {
+			switch (gasolinetype) {
+				case "Diesel":
+					gasList = gasRepo.findByDiesel();
+					break;
+				case "Super":
+					gasList = gasRepo.findBySuper();
+					break;
+				case "SuperPlus":
+					gasList = gasRepo.findBySuperPlus();
+					break;
+				case "Gas":
+					gasList = gasRepo.findByGas();
+					break;
+				case "Methane":
+					gasList = gasRepo.findByMethane();
+					break;
+				default:
+					throw new InvalidGasTypeException("Invalid gasoline type");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ArrayList<>();
 		}
 
 		if (gasList == null || gasList.isEmpty()) {
@@ -172,24 +211,32 @@ public class GasStationServiceimpl implements GasStationService{
 		}
 
 		List<GasStation> gasList = null;
-		switch (gasolinetype) {
-			case "Diesel":
-				gasList = gasRepo.findWithoutCoordinates(true, false, false, false, false, carsharing);
-				break;
-			case "Super":
-				gasList = gasRepo.findWithoutCoordinates(false, true, false, false, false, carsharing);
-				break;
-			case "SuperPlus":
-				gasList = gasRepo.findWithoutCoordinates(false, false, true, false, false, carsharing);
-				break;
-			case "Gas":
-				gasList = gasRepo.findWithoutCoordinates(false, false, false, true, false, carsharing);
-				break;
-			case "Methane":
-				gasList = gasRepo.findWithoutCoordinates(false, false, false, false, true, carsharing);
-				break;
-			default:
-				throw new InvalidGasTypeException("Invalid gasoline type");
+		if (!gasolinetype.equals("null") && !carsharing.equals("null")) {
+			switch (gasolinetype) {
+				case "Diesel":
+					gasList = gasRepo.findByHasDieselAndCarSharing(carsharing);
+					break;
+				case "Super":
+					gasList = gasRepo.findBySuperAndCarSharing(carsharing);
+					break;
+				case "SuperPlus":
+					gasList = gasRepo.findBySuperPlusAndCarSharing(carsharing);
+					break;
+				case "Gas":
+					gasList = gasRepo.findByGasAndCarSharing(carsharing);
+					break;
+				case "Methane":
+					gasList = gasRepo.findByMethaneAndCarSharing(carsharing);
+					break;
+				default:
+					throw new InvalidGasTypeException("Invalid gasoline type");
+			}
+		} else if (carsharing.equals("null") && !gasolinetype.equals("null")) {
+			return getGasStationsByGasolineType(gasolinetype);
+		} else if (gasolinetype.equals("null") && !carsharing.equals("null")) {
+			return getGasStationByCarSharing(carsharing);
+		} else {
+			return getAllGasStations();
 		}
 
 		if (gasList == null || gasList.isEmpty()) {
@@ -210,19 +257,58 @@ public class GasStationServiceimpl implements GasStationService{
 			throws InvalidGasStationException, PriceException, InvalidUserException {
 		if (gasStationId == null || gasStationId < 0)
 			throw new InvalidGasStationException("No gas station corresponds to Id");
-		if (dieselPrice < 0 || superPrice < 0 || superPlusPrice < 0 || gasPrice < 0 || methanePrice < 0)
-			throw new PriceException("Invalid prices in gas station");
-		if (userId == null || userId < 0)
+
+		GasStation gasStation = gasRepo.findById(gasStationId);
+		if (gasStation == null) {
+			throw new InvalidGasStationException("No gas station corresponds to id");
+		}
+
+		if (dieselPrice < -1 || (dieselPrice > -1 && dieselPrice < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else {
+			gasStation.setDieselPrice(dieselPrice);
+		}
+
+		if (superPrice < -1 || (superPrice > -1 && superPrice < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else {
+			gasStation.setSuperPrice(superPrice);
+		}
+
+		if (superPlusPrice < -1 || (superPlusPrice > -1 && superPlusPrice < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else {
+			gasStation.setSuperPlusPrice(superPlusPrice);
+		}
+
+		if (gasPrice < -1 || (gasPrice > -1 && gasPrice < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else {
+			gasStation.setGasPrice(gasPrice);
+		}
+
+		if (methanePrice < -1 || (methanePrice > -1 && methanePrice < 0)) {
+			throw new PriceException("Invalid Diesel price");
+		} else {
+			gasStation.setMethanePrice(methanePrice);
+		}
+
+		if (userId == null || userId < 0) {
 			throw new InvalidUserException("Invalid user id");
-		
-		gasRepo.updateReport(dieselPrice, gasPrice, methanePrice, superPrice, superPlusPrice, userId, gasStationId);
+		} else {
+			gasStation.setReportUser(userId);
+		}
+
+		gasStation.setReportTimestamp(LocalDateTime.now().toString());
+		gasRepo.save(gasStation);
+		//gasRepo.updateReport(dieselPrice, gasPrice, methanePrice, superPrice, superPlusPrice, userId, gasStationId);
 	}
 
 	//What to DO?.
 	@Override
 	public List<GasStationDto> getGasStationByCarSharing(String carSharing) {
 		// Aggiungere List<GasStationDto> findCarSharing(double radious, String carsharing)
-		if (carSharing == null || carSharing.isEmpty()) {
+		if (carSharing == null || carSharing.isEmpty() || carSharing.equals("null")) {
 			return new ArrayList<>();
 		}
 

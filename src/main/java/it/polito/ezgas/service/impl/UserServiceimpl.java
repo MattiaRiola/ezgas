@@ -118,8 +118,7 @@ public class UserServiceimpl implements UserService {
 //			System.out.println("Reputation +1");
 			u.setReputation(u.getReputation() + 1);
 			//I've to save the change of the user's reputation in the Repository
-			UserRepo.updateUserReputation(userId, u.getReputation());
-
+			UserRepo.save(u);
 			return u.getReputation();
 	}
 
@@ -138,8 +137,7 @@ public class UserServiceimpl implements UserService {
 //			System.out.println("Reputation -1");
 		u.setReputation(u.getReputation() - 1);
 		//I've to save the change of the user's reputation in the Repository
-		UserRepo.updateUserReputation(userId, u.getReputation());
-
+		UserRepo.save(u);
 		return u.getReputation();
 	}
 	
