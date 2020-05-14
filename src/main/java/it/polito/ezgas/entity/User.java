@@ -15,11 +15,11 @@ import javax.persistence.Id;
 public class User implements Serializable{
 
     private static final long serialVersionUID = 0x62A6DA99AABDA8A8L;
-	
-	@Column
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Id
-	private Integer userId;
+
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private Integer userId;
     @Column
     private String userName;
     @Column
@@ -46,21 +46,21 @@ public class User implements Serializable{
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    
+
     public String getPassword() {
-    	return password;
+        return password;
     }
-    
+
     public void setPassword(String password) {
-    	this.password = password;
+        this.password = password;
     }
-    
+
     public String getEmail() {
-    	return email;
+        return email;
     }
-    
+
     public void setEmail(String email) {
-    	this.email = email;
+        this.email = email;
     }
 
 
@@ -72,30 +72,21 @@ public class User implements Serializable{
         this.password = password;
         this.email = email;
         this.reputation = reputation;
-        this.admin = false;
-    }
-
-    public User(String userName, String password, String email, Integer reputation, boolean admin) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.reputation = reputation;
-        this.admin = admin;
     }
 
     public Integer getReputation() {
-		return reputation;
-	}
-
-	public void setReputation(Integer reputation) {
-		this.reputation = reputation;
-	}
-    
-    public Boolean getAdmin() {
-    	return admin;
+        return reputation;
     }
-    
+
+    public void setReputation(Integer reputation) {
+        this.reputation = reputation;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
     public void setAdmin(Boolean admin) {
-    	this.admin = admin;
+        this.admin = admin;
     }
 }
