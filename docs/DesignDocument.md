@@ -213,11 +213,6 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 
 
-
-
-
-
-
 # Low level design
 
 ```plantuml
@@ -245,30 +240,32 @@ package "it.polito.ezgas.service"  as ps {
       +increaseUserReputation(userId)
       +decreaseUserReputation(userId)
    }
-   class "GasStationServiceimpl"{
-      +getGasStationById(gasStationId)
-      +saveGasStation(gasStationDto)
-      +getAllGasStations()
-      +deleteGasStation(gasStationId)
-      +getGasStationsByGasolineType(gasolinetype)
-      +getGasStationsByProximity(lat,lon)
-      +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
-      +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
-      +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
-      +getGasStationByCarSharing(carSharing)
-   }
-   class "UserServiceimpl"{
-      +getUserById(userId)
-      +saveUser(userDto)
-      +getAllUsers()
-      +deleteUser(userId)
-      +login(credentials)
-      +increaseUserReputation(userId)
-      +decreaseUserReputation(userId)
-   }
-   class "Haversine"{
-    +distance(startLat,startLong,endLat,endLong)
-    +haversin(double val)
+   package "it.polito.ezgas.service.impl"{
+        class "GasStationServiceimpl"{
+            +getGasStationById(gasStationId)
+            +saveGasStation(gasStationDto)
+            +getAllGasStations()
+            +deleteGasStation(gasStationId)
+            +getGasStationsByGasolineType(gasolinetype)
+            +getGasStationsByProximity(lat,lon)
+            +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
+            +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
+            +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+            +getGasStationByCarSharing(carSharing)
+        }
+        class "UserServiceimpl"{
+            +getUserById(userId)
+            +saveUser(userDto)
+            +getAllUsers()
+            +deleteUser(userId)
+            +login(credentials)
+            +increaseUserReputation(userId)
+            +decreaseUserReputation(userId)
+        }
+        class "Haversine"{
+            +distance(startLat,startLong,endLat,endLong)
+            +haversin(double val)
+        }
    }
    "GasStationServiceimpl" -|> "GasStationService"
    "UserServiceimpl" -|> "UserService"
@@ -454,150 +451,6 @@ package "it.polito.ezgas.repository" {
 
 
 
-# Entity
-```plantuml
-@startuml
-package "Backend" {
-    package "entity" {
-        class GasStation {
-            -Int: ID
-            -String: Name
-            -String: Address
-            -String: Brand
-            -String: CarSharing
-            -Double: Latitude
-            -Double: Longitude
-            -PriceList: Prices
-            +boolean hasDiesel()
-            +boolean hasGasoline()
-            +boolean hasPremiumDiesel()
-            +boolean hasPremiumGasoline()
-            +boolean hasLPG()
-            +boolean hasMethane()
-            +PriceList ShowPrices()
-            +void UpdatePrices(PriceList newPrices)
-            +double[] getPosition()
-        }
-
-        class PriceList {
-            -String: time_tag
-            -Double: dieselPrice
-            -Double: gasolinePrice
-            -Double: premiumDieselPrice
-            -Double: premiumGasolinePrice
-            -Double: LPGPrice
-            -Double: methanePrice
-            -int: trust_level
-            +void updateDiesel(double price)
-            +void updateGasoline(double price)
-            +void updatePremiumDiesel(double price)
-            +void updatePremiumGasoline(double price)
-            +void updateLPG(double price)
-            +void updateMethane(double price)
-            +void updateTrustLevel(int TL)
-        }
-
-        class User {
-            -String: account_name
-            -String: account_pwd
-            -String: email
-            -int: trust_level
-            -Double: Latitude
-            -Double: Longitude
-            -boolean: admin
-            +void setTrust_level(int TL)
-            +void updateEmail(String newMail)
-            +double[] getPosition()
-            +boolean isAdmin()
-        }
-
-        GasStation *-up- PriceList
-    }
-}
-
-@enduml
-```
-
-# Controller
-```plantuml
-@startuml
-package "backend" {
-    package "controller" as c {
-        class "GasStationController" as gsctrl {
-            - GasStationService: gs
-            + GasStationDto getGasStationById(Integer gasStationId)
-            + GasStationDto saveGasStation(GasStationDto gasStationDto)
-            + List<GasStationDto> getAllGasStations();
-            + Boolean deleteGasStation(Integer gasStationId)
-            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
-            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
-            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
-        }
-
-        class "UserController" as usctrl {
-            - UserService: us
-            + UserDto getUserById(Integer userId)
-            + UserDto saveUser(UserDto userDto)
-            + List<UserDto> getAllUsers()
-            + Boolean deleteUser(Integer userId)
-            + LoginDto login(IdPw credentials)
-            + Integer increaseUserReputation(Integer userId)
-            + Integer decreaseUserReputation(Integer userId)
-        }
-    }
-}
-@enduml
-```
-
-# Service
-```plantuml
-@startuml
-package "backend" {
-    package "service"  as s {
-        interface "GasStationService" as gs {
-            + GasStationDto getGasStationById(Integer gasStationId)
-            + GasStationDto saveGasStation(GasStationDto gasStationDto)
-            + List<GasStationDto> getAllGasStations();
-            + Boolean deleteGasStation(Integer gasStationId)
-            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
-            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
-            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
-        }
-
-        interface "UserService" as us {
-            + UserDto getUserById(Integer userId)
-            + UserDto saveUser(UserDto userDto)
-            + List<UserDto> getAllUsers()
-            + Boolean deleteUser(Integer userId)
-            + LoginDto login(IdPw credentials)
-            + Integer increaseUserReputation(Integer userId)
-            + Integer decreaseUserReputation(Integer userId)
-        }
-
-        package "impl" as impl {
-            class "GasStationServiceimpl" as gsi {
-                + gsList : List<GastStationDto>
-            }
-
-            class "UserServiceimpl" as usi {
-                + userList : List<UserDto>
-            }
-        }
-    }
-
-    class gsi implements gs
-    class usi implements us
-}
-@enduml
-```
-
-
 
 
 # Verification traceability matrix
@@ -620,12 +473,6 @@ package "backend" {
 | FR5.1 |           X           |                 |               |   X  |               |      X     |     X     |                   |          |
 | FR5.2 |                       |                 |               |      |               |      X     |     X     |                   |          |
 | FR5.3 |           X           |                 |               |   X  |               |      X     |     X     |                   |          |
-
-
-
-
-
-
 
 
 
