@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class) 
 @SpringBootTest
-@SelectClasses({GasStationEntityTest.class})
+@SelectClasses({GasStationEntityTest.class , UserEntityTest.class})
 public class EZGasApplicationTests {	
 	
 	@Test
