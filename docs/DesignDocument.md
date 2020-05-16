@@ -228,7 +228,7 @@ package "it.polito.ezgas.service"  as ps {
       +getGasStationsByProximity(lat,lon)
       +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
       +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
-      +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+          +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
       +getGasStationByCarSharing(carSharing)
    }
    interface "UserService"{
@@ -426,6 +426,75 @@ package "it.polito.ezgas.repository" {
    }
 }
 
+
+
+package "test.java.it.polito.ezgas" {
+
+   class "EZGasApplicationTests"{
+      +contextLoads()
+   }
+
+   class "GasStationEntityTest"{
+      -gasStationName 
+      -gasStationAddress 
+      -hasDiesel 
+      -hasSuper
+      -hasSuperPlus
+      -hasGas 
+      -hasMethane 
+      -carSharing 
+      -lat 
+      -lon
+      -dieselPrice 
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+      -methanePrice
+      -reportUser
+      -reportTimestamp 
+      -reportDependability
+    
+      +testReportDependability() 	
+      +testReportUser() 
+      +testReportTimeStamp
+      +testCarSharing() 
+      +testFuelTypes() 
+      +testCoordinates() 
+      +testPrices() 
+   }
+
+   class "HaversineTest"{
+      -lat1 
+      -lon1
+      -lat2
+      -lon2
+      -debug
+    
+      +testDistanceTest()
+   }
+
+   class "UserEntityTest"{
+      -userId 
+      -userName 
+      -password
+      -email 
+      -reputation 
+      -admin 
+      -User
+
+    
+      +testUserId()
+      +testUserName()
+      +testPassword()
+      +testEmail()
+      +testReputation()
+      +testAdmin()
+   }
+
+
+}
+
+
 }
 
 "UserController" "1"-----"1" "UserService"
@@ -443,6 +512,10 @@ package "it.polito.ezgas.repository" {
 
 "GasStationServiceimpl" "1"-----"1" "PriceReportConverter"
 "PriceReportConverter" "1"-----"1" "PriceReportDto"
+
+"GasStationEntityTest" "1"-----"1" "GasStation"
+"HaversineTest" "1"-----"1" "Haversine"
+"UserEntityTest" "1"-----"1" "User"
 
 @enduml
 ```
