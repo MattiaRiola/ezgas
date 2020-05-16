@@ -45,7 +45,34 @@ public class GasStationServiceimpl implements GasStationService{
 	private final Converter<GasStation, GasStationDto> gasConverter = new GasStationConverter();
 
 	// TODO: the db could return empty lists or null "pointers", so to every call the return must be checked. If it corresponds to one of the two conditions described before we should act as the method specification requires
-
+	
+	/**
+	 *  Standard constructor
+	 * @param gasRepository
+	 * @param userRepository
+	 */
+	public GasStationServiceimpl() {	}
+	
+	/**
+	 * constructor for Mockito
+	 * @param gasRepository
+	 * @param userRepository
+	 */
+	public GasStationServiceimpl(GasStationRepository gasRepository, UserRepository userRepository) {
+		this.gasRepo = gasRepository;
+		this.userRepo = userRepository;
+	}
+	
+	/**
+	 * constructor for Mockito
+	 * @param gasRepository
+	 * @param userRepository
+	 */
+	public GasStationServiceimpl(GasStationRepository gasRepository) {
+		this.gasRepo = gasRepository;
+	}
+	
+	
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
 		if (gasStationId == null || gasStationId < 0)

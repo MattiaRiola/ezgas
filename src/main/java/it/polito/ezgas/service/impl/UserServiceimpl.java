@@ -24,18 +24,30 @@ import it.polito.ezgas.service.UserService;
 public class UserServiceimpl implements UserService {
 
 	@Autowired
-	UserRepository UserRepo;
+	UserRepository userRepo;
 
 	private final Integer minReputation = -5;
 	private final Integer maxReputation = 5;
 
+	/**
+	 * Default Constructor
+	 */
+	public UserServiceimpl() { }
+	/**
+	 * Constructor for Mockito
+	 * @param userRepository
+	 */
+	public UserServiceimpl(UserRepository userRepository) {
+		this.userRepo = userRepository;
+	}
+	
 	@Override
 	public UserDto getUserById(Integer userId) throws InvalidUserException {
 		if(userId == null)
 			throw new InvalidUserException("Invalid User id: user id is null");
 		if(userId < 0)
 			throw new InvalidUserException("Invalid User id: user id is < 0");
-		User user = UserRepo.findById(userId);
+		User user = userRepo.findById(userId);
 		if(user == null)
 			throw new InvalidUserException("Invalid User id: user id is not found");
 		Converter<User, UserDto> userConverter = new UserConverter();
@@ -48,19 +60,19 @@ public class UserServiceimpl implements UserService {
 			return null;
 		Converter<User, UserDto> userConverter = new UserConverter();
 		//TODO ? do we have to handle the case when an user try to register with an existing email?
-		User u = UserRepo.findByEmail(userDto.getEmail());
+		User u = userRepo.findByEmail(userDto.getEmail());
 		if(u != null) {
 			return null; // should it return null in that case?
 		}
 
-		User user = UserRepo.save(userConverter.convertFromDto(userDto));
+		User user = userRepo.save(userConverter.convertFromDto(userDto));
 		return userConverter.convertToDto(user);
 	}
 
 	@Override
 	public List<UserDto> getAllUsers() {
 		Converter<User, UserDto> userConverter = new UserConverter();
-		List<User> listUser = UserRepo.findAll();
+		List<User> listUser = userRepo.findAll();
 		if (listUser == null) {
 			return new LinkedList<>();
 		}
@@ -79,19 +91,19 @@ public class UserServiceimpl implements UserService {
 		if(userId < 0)
 			throw new InvalidUserException("Invalid User id: user id is < 0");
 
-		User user = UserRepo.findById(userId);
+		User user = userRepo.findById(userId);
 		if(user == null){
 			//There aren't Users with that userId
 			return false;
 		}
 
-		UserRepo.delete(userId);
+		userRepo.delete(userId);
 		return true;
 	}
 
 	@Override
 	public LoginDto login(IdPw credentials) throws InvalidLoginDataException {
-		User u = UserRepo.findByEmail(credentials.getUser());
+		User u = userRepo.findByEmail(credentials.getUser());
 		if(u == null)
 			throw new InvalidLoginDataException("Wrong Username (email)");
 		if(u.getPassword().compareTo(credentials.getPw()) != 0)
@@ -112,13 +124,13 @@ public class UserServiceimpl implements UserService {
 			if(userId < 0)
 				throw new InvalidUserException("Invalid User id: user id is < 0");
 
-			User u = UserRepo.findById(userId);
+			User u = userRepo.findById(userId);
 			if(u.getReputation() >= maxReputation) //if the user reached the max reputation
 				return u.getReputation();
 //			System.out.println("Reputation +1");
 			u.setReputation(u.getReputation() + 1);
 			//I've to save the change of the user's reputation in the Repository
-			UserRepo.save(u);
+			userRepo.save(u);
 			return u.getReputation();
 	}
 
@@ -130,14 +142,14 @@ public class UserServiceimpl implements UserService {
 			throw new InvalidUserException("Invalid User id: user id is < 0");
 
 
-		User u = UserRepo.findById(userId);
+		User u = userRepo.findById(userId);
 		if(u.getReputation() <= minReputation)
 			return u.getReputation();
 
 //			System.out.println("Reputation -1");
 		u.setReputation(u.getReputation() - 1);
 		//I've to save the change of the user's reputation in the Repository
-		UserRepo.save(u);
+		userRepo.save(u);
 		return u.getReputation();
 	}
 	
