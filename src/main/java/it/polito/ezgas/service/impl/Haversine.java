@@ -17,10 +17,25 @@ package it.polito.ezgas.service.impl;
 
 public class Haversine {
     private static final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
-
+    /**
+     * The coordinates must be <360 and >-360
+     * @param startLat the latitude of the starting point
+     * @param startLong the longitude of the starting point
+     * @param endLat the latitude of the ending point
+     * @param endLong the longitude of the ending point
+     * @return the distance in km, -1 if coordinates are out of boundaries
+     */
     public static double distance(double startLat, double startLong,
                                   double endLat, double endLong) {
-
+    	boolean debug = false;
+    	if		(	   startLat > 360  || startLat < -360 
+    				|| startLong > 360 || startLong < -360
+    				|| endLat > 360    || endLat < -360
+    				|| endLong >360    || endLong < -360	) {
+    		if(debug)
+    			System.err.println("Coordinates out of range (use coordinates >-360 and <360");
+    		return -1;
+    	}
         double dLat  = Math.toRadians((endLat - startLat));
         double dLong = Math.toRadians((endLong - startLong));
 
