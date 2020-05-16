@@ -71,6 +71,7 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>
