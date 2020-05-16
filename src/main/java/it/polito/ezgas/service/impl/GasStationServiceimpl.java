@@ -1,13 +1,18 @@
 package it.polito.ezgas.service.impl;
 
 import java.lang.Math;
+
+import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
+import it.polito.ezgas.repository.UserRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.time.temporal.ChronoUnit.*;
 import java.util.ListIterator;
 
 import org.springframework.stereotype.Service;
@@ -22,6 +27,9 @@ import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.service.GasStationService;
 import it.polito.ezgas.converter.*;
 import it.polito.ezgas.converter.impl.GasStationConverter;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+
 /**
  * Created by softeng on 27/4/2020.
  */
@@ -31,6 +39,9 @@ public class GasStationServiceimpl implements GasStationService{
 	@Autowired
 	private GasStationRepository gasRepo;
 
+	@Autowired
+	private UserRepository userRepo;
+
 	private final Converter<GasStation, GasStationDto> gasConverter = new GasStationConverter();
 
 	// TODO: the db could return empty lists or null "pointers", so to every call the return must be checked. If it corresponds to one of the two conditions described before we should act as the method specification requires
@@ -39,7 +50,8 @@ public class GasStationServiceimpl implements GasStationService{
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
 		if (gasStationId == null || gasStationId < 0)
 			throw new InvalidGasStationException("No gas station corresponds to Id");
-		
+
+		refreshDependability();
 		GasStation station = gasRepo.findById(gasStationId);
 		if (station == null) {
 			throw new InvalidGasStationException("No gas station could be found");
@@ -91,12 +103,13 @@ public class GasStationServiceimpl implements GasStationService{
 		}
 
 		GasStation gasStation = gasRepo.save(gasConverter.convertFromDto(gasStationDto));
+		refreshDependability();
 		return gasConverter.convertToDto(gasStation);
 	}
 
 	@Override
 	public List<GasStationDto> getAllGasStations() {
-		
+		refreshDependability();
 		List<GasStation> gasList = gasRepo.findAll();
 		if (gasList == null || gasList.isEmpty()) {
 			return new ArrayList<>();
@@ -116,6 +129,7 @@ public class GasStationServiceimpl implements GasStationService{
 		if (getGasStationById(gasStationId) == null)
 			return false;
 		gasRepo.delete(gasStationId);
+		refreshDependability();
 		return true;
 	}
 
@@ -126,6 +140,8 @@ public class GasStationServiceimpl implements GasStationService{
 		}
 
 		List<GasStation> gasList;
+
+		refreshDependability();
 
 		try {
 			switch (gasolinetype) {
@@ -168,6 +184,7 @@ public class GasStationServiceimpl implements GasStationService{
 		if ((lat< -90 && lat > 90) || (lon< -180 && lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
 
+		refreshDependability();
 		List<GasStation> gasList = gasRepo.findAll();
 		if (gasList == null || gasList.isEmpty()) {
 			return new LinkedList<GasStationDto>();
@@ -188,6 +205,7 @@ public class GasStationServiceimpl implements GasStationService{
 		if ((lat < -90 && lat > 90) || (lon < -180 && lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
 
+		refreshDependability();
 		List<GasStationDto> dtoGasList = getGasStationsWithoutCoordinates(gasolinetype, carsharing);
 		if (dtoGasList == null || dtoGasList.isEmpty()) {
 			return new ArrayList<>();
@@ -212,6 +230,7 @@ public class GasStationServiceimpl implements GasStationService{
 
 		List<GasStation> gasList = null;
 		if (!gasolinetype.equals("null") && !carsharing.equals("null")) {
+			refreshDependability();
 			switch (gasolinetype) {
 				case "Diesel":
 					gasList = gasRepo.findByHasDieselAndCarSharing(carsharing);
@@ -302,6 +321,7 @@ public class GasStationServiceimpl implements GasStationService{
 		gasStation.setReportTimestamp(LocalDateTime.now().toString());
 		gasRepo.save(gasStation);
 		//gasRepo.updateReport(dieselPrice, gasPrice, methanePrice, superPrice, superPlusPrice, userId, gasStationId);
+		refreshDependability();
 	}
 
 	//What to DO?.
@@ -312,6 +332,7 @@ public class GasStationServiceimpl implements GasStationService{
 			return new ArrayList<>();
 		}
 
+		refreshDependability();
 		List<GasStation> gasList = gasRepo.findByCarSharing(carSharing);
 		if (gasList == null || gasList.isEmpty()) {
 			return new ArrayList<>();
@@ -323,5 +344,32 @@ public class GasStationServiceimpl implements GasStationService{
 		}
 
 		return DtoGasList;
+	}
+
+	/**
+	 * Refresh the dependability value of the gas stations inside the db
+	 */
+	private void refreshDependability() {
+		List<GasStation> gasStations = gasRepo.findAll();
+		for (GasStation gasStation : gasStations) {
+			if (gasStation.getReportTimestamp() == null || gasStation.getReportTimestamp().isEmpty()) {
+				continue;
+			}
+
+			User reportUser = userRepo.findById(gasStation.getReportUser());
+			if (reportUser == null) {
+				continue;
+			}
+
+			long days = DAYS.between(LocalDateTime.parse(gasStation.getReportTimestamp()), LocalDateTime.now());
+			double obsolescence = 0.0;
+			if (days <= 7) {
+				obsolescence = 1.0 - (double)days/7.0;
+			}
+
+			double trustLevel = 50.0 * ((double)reportUser.getReputation() + 5.0)/10.0 + 50.0 * obsolescence;
+			gasStation.setReportDependability(trustLevel);
+			gasRepo.save(gasStation);
+		}
 	}
 }
