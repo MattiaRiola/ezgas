@@ -110,9 +110,9 @@ Version: 1
 
 | Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|
-|other|-|Invalid|it is noy possibe to set uniqueidentifier instead of int it is not well formed parameter| T1 {setUserId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’);-> Error}|
-|string|-|Invalid|it is noy possibe to set string instead of int it is not well formed parameter| T2 {setUserId("A");-> Error}|
-||-|Invalid|it is noy possibe to set float instead of int it is not well formed parameter|T3 {setUserId(2.1);-> Error}|
+|other|-|Invalid|it is not possibe to set uniqueidentifier instead of int it is not well formed parameter| T1 {setUserId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’);-> Error}|
+|string|-|Invalid|it is not possibe to set string instead of int it is not well formed parameter| T2 {setUserId("A");-> Error}|
+||-|Invalid|it is not possibe to set float instead of int it is not well formed parameter|T3 {setUserId(2.1);-> Error}|
 |int|minint|valid|set minint value as input parameter|T4 {setUserId(minint);getUserId()-> minint}|
 ||minint+1|valid|set minint+1 value as input parameter|T5 {setUserId(minint+1);getUserId()-> minint+1}|
 ||-1|valid|set -1  as input parameter|T6 {setUserId(-1);getUserId(); ->-1}|
@@ -122,9 +122,41 @@ Version: 1
 ||maxint-1|valid|set maxint-1 value as input parameter|T10 {setUserId(maxint-1);getUserId() -> maxint-1}|
 
 
+### **Class *GasStation* - method *getGasStationId()***
 
 
+**Combination of predicates**:
 
+| Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+|other|-|Invalid|it is not possibe to set uniqueidentifier instead of int it is not well formed parameter| T1 {setGasStationId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’);-> Error}|
+|string|-|Invalid|it is not possibe to set string instead of int it is not well formed parameter| T2 {setGasStationId("G");-> Error}|
+||-|Invalid|it is not possibe to set float instead of int it is not well formed parameter|T3 {setGasStationId(9.1);-> Error}|
+|int|minint|valid|set minint value as input parameter|T4 {setGasStationId(minint);getGasStationId()-> minint}|
+||minint+1|valid|set minint+1 value as input parameter|T5 {setGasStationId(minint+1);getGasStationId()-> minint+1}|
+||-1|valid|set -1  as input parameter|T6 {setGasStationId(-1);getGasStationId(); ->-1}|
+||0|valid|set 0  as input parameter|T7 {setGasStationId(0);getGasStationId() -> 0}|
+||10|valid|set 10  as input parameter|T8 {setGasStationId(10);getGasStationId() -> 10}|
+||maxint|valid|set maxint value as input parameter|T9 {setGasStationId(maxint);getGasStationId() -> maxint}|
+||maxint-1|valid|set maxint-1 value as input parameter|T10 {setGasStationId(maxint-1);getGasStationId() -> maxint-1}|
+
+
+### **Class *Haversine* - method *testDistanceTest()***
+
+note that the computations are based on :
+[sismogrammi.com/calcolo-distanze](https://www.sismogrammi.com/calcolo-distanze.php)
+**Combination of predicates**:
+
+| Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+|other|-|Invalid|it is not possibe to set uniqueidentifier instead of double it is not well formed parameter| T1 {testDistanceTest(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’,‘631c400c-b535-48ab-97e6-4e57e7001eff’,‘3794a41e-30af-4858-96d5-637852c57ec8’,‘30b3b77c-8b16-4379-ba82-857ddae9f347’);-> Error}|
+|string|-|Invalid|it is not possibe to set string instead of double it is not well formed parameter| T2 {testDistanceTest("lat1", "lon1", "lat2", "lon2");-> Error}|
+|double|-|valid|| T3 {testDistanceTest(0,0,90,180);testDistanceTest() -> 10007.543 *1000 }|
+|double|-|valid|| T4 {testDistanceTest(-25-30,-26,35);testDistanceTest() -> 513.947 *1000  }|
+|double|-|valid|| T5 {testDistanceTest(-25.45,-30,-26.03,-35);testDistanceTest() -> 504.910 *1000  }|
+|double|-|valid|| T6 {testDistanceTest(380,-390,380.02,-391);testDistanceTest() -> 104.506*1000  }|
+|double|-|Invalid|| T7 {testDistanceTest(360,360,360,360);testDistanceTest() -> -1  }|
+|double|-|Invalid|| T8 {testDistanceTest(-360,-360,-360,-360);testDistanceTest() -> -1  }|
 # White Box Unit Tests
 
 ### Test cases definition
