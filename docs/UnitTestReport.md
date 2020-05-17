@@ -145,6 +145,8 @@ Version: 1
 
 note that the computations are based on :
 [sismogrammi.com/calcolo-distanze](https://www.sismogrammi.com/calcolo-distanze.php)
+
+
 **Combination of predicates**:
 
 | Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
