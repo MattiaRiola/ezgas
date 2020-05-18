@@ -87,16 +87,16 @@ Version: 1
 
 | Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|
-|other|-|Invalid|passing not int like uniqueidentifier parameter not well formed input| T1('0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong')-> Error|
-|srring|-|Invalid|passing not int like string as input parameter not well formed input	| T2("A")-> Error|
-||-|Invalid|passing not int like float as input parameter not well formed input| T3(2.1)-> Error|
-|int|minint|valid|passing minint that is not valid as input parameter |T4(minint)-> minint|
-||minint+1|valid|passing minint+1 that is not valid as input parameter|T5(minint+1) -> minint+1|
-||-1|valid|passing -1 that is not valid as input parameter|T6(-1)-> -1|
-||0|valid|passing 0 as input parameter|T7(0)-> 0|
-||10|valid|passing 10 as input parameter|T8(10)-> 10|
-||maxint|valid|passing maxint as input parameter|T9(maxint)-> maxint|
-||maxint-1|valid|passing maxint-1 as input parameter|T10(maxint-1)-> maxint-1|
+|string|-|Invalid|T1('0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong')-> Error|it.polito.ezgas.entity.User.tc1|
+|srring|-|Invalid|T2("A")-> Error	| it.polito.ezgas.entity.User.tc2|
+||-|Invalid|T3(2.1)-> Error| it.polito.ezgas.entity.User.tc3|
+|int|minint|valid|T4(minint)-> minint |it.polito.ezgas.entity.User.tc4|
+||minint+1|valid|T5(minint+1) -> minint+1|it.polito.ezgas.entity.User.tc5|
+||-1|valid|T6(-1)-> -1|it.polito.ezgas.entity.User.tc6|
+||0|valid|T7(0)-> 0|it.polito.ezgas.entity.User.tc7|
+||10|valid|T8(10)-> 10|it.polito.ezgas.entity.User.tc8|
+||maxint|valid|T9(maxint)-> maxint|it.polito.ezgas.entity.User.tc9|
+||maxint-1|valid|T10(maxint-1)-> maxint-1|it.polito.ezgas.entity.User.tc10|
 
 
 
@@ -110,16 +110,16 @@ Version: 1
 
 | Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|
-|other|-|Invalid|it is not possibe to set uniqueidentifier instead of int it is not well formed parameter| T1 {setUserId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’);-> Error}|
-|string|-|Invalid|it is not possibe to set string instead of int it is not well formed parameter| T2 {setUserId("A");-> Error}|
-||-|Invalid|it is not possibe to set float instead of int it is not well formed parameter|T3 {setUserId(2.1);-> Error}|
-|int|minint|valid|set minint value as input parameter|T4 {setUserId(minint);getUserId()-> minint}|
-||minint+1|valid|set minint+1 value as input parameter|T5 {setUserId(minint+1);getUserId()-> minint+1}|
-||-1|valid|set -1  as input parameter|T6 {setUserId(-1);getUserId(); ->-1}|
-||0|valid|set 0  as input parameter|T7 {setUserId(0);getUserId() -> 0}|
-||10|valid|set 10  as input parameter|T8 {setUserId(10);getUserId() -> 10}|
-||maxint|valid|set maxint value as input parameter|T9 {setUserId(maxint);getUserId() -> maxint}|
-||maxint-1|valid|set maxint-1 value as input parameter|T10 {setUserId(maxint-1);getUserId() -> maxint-1}|
+|string|-|Invalid|T1 {setUserId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’);-> Error}| it.polito.ezgas.entity.User.tc1|
+|string|-|Invalid|T2 {setUserId("A");-> Error}| it.polito.ezgas.entity.User.tc2|
+||-|Invalid|T3 {setUserId(2.1);-> Error}|it.polito.ezgas.entity.User.tc3|
+|int|minint|valid|T4 {setUserId(minint);getUserId()-> minint}|it.polito.ezgas.entity.User.tc4|
+||minint+1|valid|T5 {setUserId(minint+1);getUserId()-> minint+1}|it.polito.ezgas.entity.User.tc5|
+||-1|valid|T6 {setUserId(-1);getUserId(); ->-1}|it.polito.ezgas.entity.User.tc6|
+||0|valid|T7 {setUserId(0);getUserId() -> 0}|	it.polito.ezgas.entity.User.tc7|
+||10|valid|T8 {setUserId(10);getUserId() -> 10}|it.polito.ezgas.entity.User.tc8|
+||maxint|valid|T9 {setUserId(maxint);getUserId() -> maxint}|it.polito.ezgas.entity.User.tc9|
+||maxint-1|valid|T10 {setUserId(maxint-1);getUserId() -> maxint-1}|it.polito.ezgas.entity.User.tc10|
 
 
 ### **Class *GasStation* - method *getGasStationId()***
@@ -129,16 +129,16 @@ Version: 1
 
 | Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|
-|other|-|Invalid|it is not possibe to set uniqueidentifier instead of int it is not well formed parameter| T1 {setGasStationId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’);-> Error}|
-|string|-|Invalid|it is not possibe to set string instead of int it is not well formed parameter| T2 {setGasStationId("G");-> Error}|
-||-|Invalid|it is not possibe to set float instead of int it is not well formed parameter|T3 {setGasStationId(9.1);-> Error}|
-|int|minint|valid|set minint value as input parameter|T4 {setGasStationId(minint);getGasStationId()-> minint}|
-||minint+1|valid|set minint+1 value as input parameter|T5 {setGasStationId(minint+1);getGasStationId()-> minint+1}|
-||-1|valid|set -1  as input parameter|T6 {setGasStationId(-1);getGasStationId(); ->-1}|
-||0|valid|set 0  as input parameter|T7 {setGasStationId(0);getGasStationId() -> 0}|
-||10|valid|set 10  as input parameter|T8 {setGasStationId(10);getGasStationId() -> 10}|
-||maxint|valid|set maxint value as input parameter|T9 {setGasStationId(maxint);getGasStationId() -> maxint}|
-||maxint-1|valid|set maxint-1 value as input parameter|T10 {setGasStationId(maxint-1);getGasStationId() -> maxint-1}|
+|string|-|Invalid|T1 {setGasStationId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’);-> Error}| it.polito.ezgas.entity.GasStation.tc1|
+|string|-|Invalid|T2 {setGasStationId("G");-> Error}|it.polito.ezgas.entity.GasStation.tc2 |
+||-|Invalid|T3 {setGasStationId(9.1);-> Error}|it.polito.ezgas.entity.GasStation.tc3|
+|int|minint|valid|T4 {setGasStationId(minint);getGasStationId()-> minint}|it.polito.ezgas.entity.GasStation.tc4|
+||minint+1|valid|T5 {setGasStationId(minint+1);getGasStationId()-> minint+1}|it.polito.ezgas.entity.GasStation.tc5|
+||-1|valid|T6 {setGasStationId(-1);getGasStationId(); ->-1}|it.polito.ezgas.entity.GasStation.tc6|
+||0|valid|T7 {setGasStationId(0);getGasStationId() -> 0}|it.polito.ezgas.entity.GasStation.tc7|
+||10|valid|T8 {setGasStationId(10);getGasStationId() -> 10}|it.polito.ezgas.entity.GasStation.tc8|
+||maxint|valid|T9 {setGasStationId(maxint);getGasStationId() -> maxint}|it.polito.ezgas.entity.GasStation.tc9|
+||maxint-1|valid|T10 {setGasStationId(maxint-1);getGasStationId() -> maxint-1}|it.polito.ezgas.entity.GasStation.tc10|
 
 
 ### **Class *Haversine* - method *testDistanceTest()***
@@ -151,14 +151,14 @@ note that the computations are based on :
 
 | Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|
-|other|-|Invalid|it is not possibe to set uniqueidentifier instead of double it is not well formed parameter| T1 {testDistanceTest(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’,‘631c400c-b535-48ab-97e6-4e57e7001eff’,‘3794a41e-30af-4858-96d5-637852c57ec8’,‘30b3b77c-8b16-4379-ba82-857ddae9f347’);-> Error}|
-|string|-|Invalid|it is not possibe to set string instead of double it is not well formed parameter| T2 {testDistanceTest("lat1", "lon1", "lat2", "lon2");-> Error}|
-|double|-|valid|| T3 {testDistanceTest(0,0,90,180);testDistanceTest() -> 10007.543 *1000 }|
-|double|-|valid|| T4 {testDistanceTest(-25-30,-26,35);testDistanceTest() -> 513.947 *1000  }|
-|double|-|valid|| T5 {testDistanceTest(-25.45,-30,-26.03,-35);testDistanceTest() -> 504.910 *1000  }|
-|double|-|valid|| T6 {testDistanceTest(380,-390,380.02,-391);testDistanceTest() -> 104.506*1000  }|
-|double|-|Invalid|| T7 {testDistanceTest(360,360,360,360);testDistanceTest() -> -1  }|
-|double|-|Invalid|| T8 {testDistanceTest(-360,-360,-360,-360);testDistanceTest() -> -1  }|
+|string|-|Invalid|T1 {testDistanceTest(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’,‘631c400c-b535-48ab-97e6-4e57e7001eff’,‘3794a41e-30af-4858-96d5-637852c57ec8’,‘30b3b77c-8b16-4379-ba82-857ddae9f347’);-> Error}| it.polito.ezgas.service.impl.Haversine.tc1|
+|string|-|Invalid|T2 {testDistanceTest("lat1", "lon1", "lat2", "lon2");-> Error}| it.polito.ezgas.service.impl.Haversine.tc2|
+|double|-|valid|T3 {testDistanceTest(0,0,90,180);testDistanceTest() -> 10007.543 *1000 }| it.polito.ezgas.service.impl.Haversine.tc3|
+|double|-|valid|T4 {testDistanceTest(-25-30,-26,35);testDistanceTest() -> 513.947 *1000  }| it.polito.ezgas.service.impl.Haversine.tc4|
+|double|-|valid|T5 {testDistanceTest(-25.45,-30,-26.03,-35);testDistanceTest() -> 504.910 *1000  }| it.polito.ezgas.service.impl.Haversine.tc5|
+|double|-|valid|T6 {testDistanceTest(380,-390,380.02,-391);testDistanceTest() -> 104.506*1000  }|it.polito.ezgas.service.impl.Haversine.tc6 |
+|double|-|Invalid|T7 {testDistanceTest(360,360,360,360);testDistanceTest() -> -1  }| it.polito.ezgas.service.impl.Haversine.tc7|
+|double|-|Invalid|T8 {testDistanceTest(-360,-360,-360,-360);testDistanceTest() -> -1  }| it.polito.ezgas.service.impl.Haversine.tc8|
 # White Box Unit Tests
 
 ### Test cases definition
