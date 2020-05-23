@@ -1,5 +1,6 @@
 package it.polito.ezgas.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,22 +25,27 @@ import it.polito.ezgas.service.UserService;
 public class UserServiceimpl implements UserService {
 
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
 
 	private final Integer minReputation = -5;
 	private final Integer maxReputation = 5;
-
+	
+	private Converter<User,UserDto> userConverter = new UserConverter();
+	
 	/**
 	 * Default Constructor
 	 */
 	public UserServiceimpl() { }
+
 	/**
 	 * Constructor for Mockito
 	 * @param userRepository
 	 */
-	public UserServiceimpl(UserRepository userRepository) {
+	public UserServiceimpl(UserRepository userRepository, Converter<User, UserDto> userConverter) {
 		this.userRepo = userRepository;
+		this.userConverter = userConverter;
 	}
+	
 	
 	@Override
 	public UserDto getUserById(Integer userId) throws InvalidUserException {
@@ -50,7 +56,7 @@ public class UserServiceimpl implements UserService {
 		User user = userRepo.findById(userId);
 		if(user == null)
 			throw new InvalidUserException("Invalid User id: user id is not found");
-		Converter<User, UserDto> userConverter = new UserConverter();
+
 		return userConverter.convertToDto(user);
 	}
 
@@ -58,7 +64,6 @@ public class UserServiceimpl implements UserService {
 	public UserDto saveUser(UserDto userDto) {
 		if(userDto == null)
 			return null;
-		Converter<User, UserDto> userConverter = new UserConverter();
 		User u = userRepo.findByEmail(userDto.getEmail());
 		if(u != null && !u.getUserId().equals(userDto.getUserId())) {
 			return null;
@@ -70,12 +75,11 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		Converter<User, UserDto> userConverter = new UserConverter();
 		List<User> listUser = userRepo.findAll();
-		if (listUser == null) {
-			return new LinkedList<>();
+		if (listUser == null || listUser.isEmpty()) {
+			return new ArrayList<>();
 		}
-		List<UserDto> listUserDto = new LinkedList<>();
+		List<UserDto> listUserDto = new ArrayList<>();
 		listUser.forEach( u -> {
 								UserDto uDto = userConverter.convertToDto(u);
 								listUserDto.add(uDto);
