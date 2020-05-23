@@ -1,8 +1,8 @@
 # Integration and API Test Documentation
 
-Authors:
+Authors: Group  21
 
-Date:
+Date: 23/05/2020
 
 Version:
 
@@ -23,7 +23,42 @@ Version:
 
 # Dependency graph 
 
-     <report the here the dependency graph of the classes in it/polito/Ezgas, using plantuml>
+    ```plantuml
+
+
+@startuml
+package "Frontend" {}
+
+package "Backend" 
+{
+interface "GasStationRepository"
+interface "UserRepository"
+GasStationController -down-> GasStationServiceImpl
+GasStationServiceImpl-down-> GasStationConverter
+GasStationServiceImpl-down->  GasStationRepository
+GasStationServiceImpl-down-> UserServiceImpl
+UserController-down-> UserServiceImpl
+GasStationConverter-down-> GasStationDto
+GasStationConverter-down-> GasStation
+GasStationRepository-down->  GasStation
+UserServiceImpl-down-> LoginConverter
+UserServiceImpl-down->UserRepository
+UserServiceImpl-down->UserConverter
+UserServiceImpl-down->IdPw
+LoginConverter-down->LoginDto
+LoginConverter-down->User
+UserRepository-down->User
+UserConverter-down->UserDto
+}
+
+
+
+
+Frontend -down-> Backend
+
+@enduml
+
+```
      
 # Integration approach
 
