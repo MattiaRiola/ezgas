@@ -23,9 +23,7 @@ Version:
 
 # Dependency graph 
 
-    ```plantuml
-
-
+```plantuml
 @startuml
 package "Frontend" {}
 
