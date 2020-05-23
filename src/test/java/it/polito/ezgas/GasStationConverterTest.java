@@ -17,7 +17,7 @@ public class GasStationConverterTest {
         gasStation.setGasStationId(1);
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
         GasStationDto gasStationDto = converter.convertToDto(gasStation);
-        assertEquals(1, gasStationDto.getGasStationId());
+        assertEquals((Integer)1, gasStationDto.getGasStationId());
         assertEquals("Minmus", gasStationDto.getGasStationName(), "dto name is wrong");
         assertEquals("Via Kerbal Space Program", gasStationDto.getGasStationAddress(), "dto address is wrong");
         assertTrue(gasStationDto.getHasDiesel(), "dto hasdiesel is wrong");
@@ -45,7 +45,7 @@ public class GasStationConverterTest {
                 5, "10/12/20", 76);
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
         GasStation gasStation = converter.convertFromDto(gasStationDto);
-        assertEquals(10, gasStation.getGasStationId());
+        assertEquals((Integer)10, gasStation.getGasStationId());
         assertEquals("Minmus", gasStation.getGasStationName(), "entity name is wrong");
         assertEquals("Via Kerbal Space Program", gasStation.getGasStationAddress(), "entity address is wrong");
         assertTrue(gasStation.getHasDiesel(), "entity hasdiesel is wrong");
