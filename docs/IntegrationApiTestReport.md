@@ -42,13 +42,15 @@ Version:
 ## Step 1
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|GasStationServiceImpl||
+|UserServiceImpl||
 
 
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|Converter||
+|Repository||
 
 
 ## Step n API Tests
@@ -57,7 +59,8 @@ Version:
 
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|GasStationServiceImpl||
+|UserServiceImpl||
 
 
 
