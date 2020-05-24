@@ -54,9 +54,10 @@ public class UserServiceimpl implements UserService {
 		if(userId < 0)
 			throw new InvalidUserException("Invalid User id: user id is < 0");
 		User user = userRepo.findById(userId);
-		if(user == null)
-			throw new InvalidUserException("Invalid User id: user id is not found");
-
+		if(user == null) {
+//			System.err.println("User not found");
+			return null;
+		}
 		return userConverter.convertToDto(user);
 	}
 
@@ -64,13 +65,15 @@ public class UserServiceimpl implements UserService {
 	public UserDto saveUser(UserDto userDto) {
 		if(userDto == null)
 			return null;
+		
 		User u = userRepo.findByEmail(userDto.getEmail());
-		if(u != null && !u.getUserId().equals(userDto.getUserId())) {
-			return null;
+		if(u==null) {
+			User user;
+			user = userRepo.save(userConverter.convertFromDto(userDto));
+			return userConverter.convertToDto(user);	
 		}
-
-		User user = userRepo.save(userConverter.convertFromDto(userDto));
-		return userConverter.convertToDto(user);
+		//It return null if the userRepo find an user with that email
+		return null;
 	}
 
 	@Override
@@ -97,6 +100,7 @@ public class UserServiceimpl implements UserService {
 		User user = userRepo.findById(userId);
 		if(user == null){
 			//There aren't Users with that userId
+//			System.err.println("User not found");
 			return false;
 		}
 
@@ -128,6 +132,10 @@ public class UserServiceimpl implements UserService {
 				throw new InvalidUserException("Invalid User id: user id is < 0");
 
 			User u = userRepo.findById(userId);
+			if(u==null) {
+//				System.err.println("User not found");
+				return null;
+			}
 			if(u.getReputation() >= maxReputation) //if the user reached the max reputation
 				return u.getReputation();
 //			System.out.println("Reputation +1");
@@ -146,6 +154,10 @@ public class UserServiceimpl implements UserService {
 
 
 		User u = userRepo.findById(userId);
+		if(u==null) {
+//			System.err.println("User not found");
+			return null;
+		}
 		if(u.getReputation() <= minReputation)
 			return u.getReputation();
 
