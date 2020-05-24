@@ -25,9 +25,11 @@ import it.polito.ezgas.service.impl.UserServiceimpl;
 
 public class UserServiceTestMock {
 	
-	UserRepository userRep;
-	Converter<User,UserDto> converter;
+	private UserRepository userRep;
+	private Converter<User,UserDto> converter;
 
+	
+	
 	private List<User> testUserList ;
 	
 	private User testUser;
@@ -44,12 +46,40 @@ public class UserServiceTestMock {
 	private IdPw credentials2;
 	private IdPw credentials3;
 	
-	LoginDto loginDto;
-	LoginDto loginDto0;
-	LoginDto loginDto2;
-	LoginDto loginDto3;
+	private LoginDto loginDto;
+	private LoginDto loginDto0;
+	private LoginDto loginDto2;
+	private LoginDto loginDto3;
 	
 	private UserService testUserService;
+	
+	private void compareUsers(User expected,User actual, String note) {
+		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
+		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
+		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
+		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
+		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+	}
+	private void compareUsers(UserDto expected,UserDto actual,String note) {
+		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
+		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
+		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
+		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
+		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+	}
+	private void compareLogin(LoginDto expected, LoginDto actual,String note) {
+		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
+		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
+		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
+		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+//		assertEquals(expected.getToken(),actual.getToken(),"Error - " + note + " : user token is wrong");
+	}
+	
+	
+	
 	
 	@BeforeEach
 	public void setUp() {
@@ -88,10 +118,14 @@ public class UserServiceTestMock {
 		credentials2 = new IdPw("tes2t@test2.test2","password2");
 		credentials3 = new IdPw("test3@test3.test3","password3");
 		
-		loginDto = new LoginDto(6,"test0","","test@test.test",-3);
+		loginDto = new LoginDto(6,"test","","test@test.test",-3);
+		loginDto.setAdmin(true);
 		loginDto0 = new LoginDto(0,"test0","","test0@test0.test0",0);
+		loginDto0.setAdmin(false);
 		loginDto2 = new LoginDto(2,"test2","","test2@test2.test2",2);
+		loginDto2.setAdmin(false);
 		loginDto3 = new LoginDto(3,"test3","","test3@test3.test3",3);
+		loginDto3.setAdmin(false);
 		
 
 		testUserService = new UserServiceimpl(userRep,converter);
@@ -135,14 +169,13 @@ public class UserServiceTestMock {
 		testUserList.add(testUser0);
 		testUserList.add(testUser2);
 		testUserList.add(testUser3);
-		
 		try {
-		assertEquals(testUser.getUserId(),testUserService.getUserById(6).getUserId(),"Error: The User doesn't match");
+			compareUsers(testUserDto,testUserService.getUserById(6),"search UserById 6");
 		}catch( InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws an invalidUserException");
 		}
 		try {
-			assertEquals(testUser0.getUserId(),testUserService.getUserById(0).getUserId(),"Error: The User (id=0) doesn't match");
+			compareUsers(testUserDto0,testUserService.getUserById(0),"search UserById 0");
 			}catch( InvalidUserException invalidUserException) {
 				fail("Error: User Id is valid but the method throws an invalidUserException");
 			}
@@ -171,7 +204,7 @@ public class UserServiceTestMock {
 		assertNull("Error: saved a null User and the saveUser method doesn't return null",testUserService.saveUser(null));
 		testUserList.add(testUser);
 		assertNull("Error: saved an user with a duplicate email",testUserService.saveUser(testUserDto));
-		assertEquals(testUserDto0.getUserId(),testUserService.saveUser(testUserDto0).getUserId(),"Error: the method doesn't return the user to save");
+		compareUsers(testUserDto0,testUserService.saveUser(testUserDto0),"saving user doesn't return the saved user");
 		
 	}
 	@Test
@@ -224,8 +257,7 @@ public class UserServiceTestMock {
 		String correctUserName = credentials.getUser();
 		String correctPassword = credentials.getPw();
 		try { //findByEmail with the email of the testUser return the testUser
-			assertEquals(testUser.getEmail(),testUserService.login(credentials).getEmail(),"Error: login returned a LoginDto with an account with different email");
-			assertEquals(testUser.getUserId(),testUserService.login(credentials).getUserId(),"Error: login returned a LoginDto with an account with different Id");
+			compareLogin(loginDto,testUserService.login(credentials), "Login testUser");
 		}catch(InvalidLoginDataException invalidLoginDataException) {
 			fail("Error: Credentials are correct but the method trows the invalidLoginDataException");
 		}
@@ -254,8 +286,7 @@ public class UserServiceTestMock {
 		credentials.setUser(correctUserName);
 		credentials.setPw(correctPassword);
 		try { //findByEmail with the email of the testUser return the testUser
-			assertEquals(testUser.getEmail(),testUserService.login(credentials).getEmail(),"Error: login returned a LoginDto with an account with different email");
-			assertEquals(testUser.getUserId(),testUserService.login(credentials).getUserId(),"Error: login returned a LoginDto with an account with different Id");
+			compareLogin(loginDto,testUserService.login(credentials), "Login testUser");
 		}catch(InvalidLoginDataException invalidLoginDataException) {
 			fail("Error: Credentials are correct but the method trows the invalidLoginDataException");
 		}
