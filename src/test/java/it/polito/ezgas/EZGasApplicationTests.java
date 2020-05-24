@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class) 
 @SpringBootTest
-@SelectClasses({GasStationEntityTest.class , UserEntityTest.class, HaversineTest.class, GasStationConverterTest.class, UserConverterTest.class, GasStationRepository.class, UserRepository.class, UserServiceTest.class, GasStationServiceTestMock.class})
+@SelectClasses({GasStationEntityTest.class , UserEntityTest.class, HaversineTest.class, GasStationConverterTest.class, UserConverterTest.class, GasStationRepository.class, UserRepository.class, UserServiceTestMock.class, GasStationServiceTestMock.class, UserServiceTest.class, GasStationServiceTest.class})
 public class EZGasApplicationTests {	
 	
 	@Test

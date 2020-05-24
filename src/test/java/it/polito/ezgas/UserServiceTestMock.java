@@ -23,7 +23,7 @@ import it.polito.ezgas.service.UserService;
 import it.polito.ezgas.service.impl.UserServiceimpl;
 
 
-public class UserServiceTest {
+public class UserServiceTestMock {
 	
 	UserRepository userRep;
 	Converter<User,UserDto> converter;
