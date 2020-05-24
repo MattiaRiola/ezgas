@@ -105,15 +105,13 @@ Finally, in step n API test GasStationServiceTest and UserServiceTest are classe
  referring the UC they detail>
 
 ## Scenario UCx.y
-Search GasStation
 | Scenario |  name |
 | ------------- |:-------------:| 
-|  Precondition| test |
-| Step# | Description  |
-|  1     |  U opens the Search page  |  
-|  2     |  U select CSH, GT fill out Lat, lon  |
-|  3     |  CSH, GT, lat, lon are validated  list of  GasStation G is shown that contain GT and CSH also distance(lat, lon, Glat, Glon) < 1.0 |
-
+|  Precondition     |  |
+|  Post condition     |   |
+| Step#        | Description  |
+|  1     |  ... |  
+|  2     |  ... |
 
 
 # Coverage of Scenarios and FR
