@@ -108,8 +108,7 @@ Finally, in step n API test GasStationServiceTest and UserServiceTest are classe
 Search GasStation
 | Scenario |  name |
 | ------------- |:-------------:| 
-|  Precondition| user U exists, GasStation G exists, U input the  -90<lat<90 and -180<lon<180 , G has Carsharing CSH, H has GasolineType GT, G has -360<Glat<360 , G has -360<Glon<360 , EARTH_RADIUS = 6371 |
-|Post condition|  list of GasStation G is found that contain GT and CSH also distance(lat, lon, Glat, Glon) < 1.0 |
+|  Precondition| test |
 | Step# | Description  |
 |  1     |  U opens the Search page  |  
 |  2     |  U select CSH, GT fill out Lat, lon  |
