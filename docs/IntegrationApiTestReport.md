@@ -25,17 +25,19 @@ Version:
 
 ```plantuml
 @startuml
-package "Frontend" {}
-
 package "Backend" 
 {
 interface "GasStationRepository"
 interface "UserRepository"
-GasStationController -down-> GasStationServiceImpl
+interface "GasStationService"
+interface "UserService"
+GasStationController -down-> GasStationService
+UserController -down-> UserService
+GasStationService -down-> GasStationServiceImpl
+UserService -down-> UserServiceImpl
 GasStationServiceImpl-down-> GasStationConverter
 GasStationServiceImpl-down->  GasStationRepository
-GasStationServiceImpl-down-> UserServiceImpl
-UserController-down-> UserServiceImpl
+GasStationServiceImpl-down-> UserRepository
 GasStationConverter-down-> GasStationDto
 GasStationConverter-down-> GasStation
 GasStationRepository-down->  GasStation
@@ -48,11 +50,6 @@ LoginConverter-down->User
 UserRepository-down->User
 UserConverter-down->UserDto
 }
-
-
-
-
-Frontend -down-> Backend
 
 @enduml
 
