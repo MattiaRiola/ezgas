@@ -353,14 +353,6 @@ package "it.polito.ezgas.dto" {
       -reportTimestamp
       -reportDependability
    }
-   class "PriceReportDto"{
-      -priceReportId
-      -user
-      -dieselPrice
-      -superPrice
-      -superPlusPrice
-      -gasPrice
-   }
    class "LoginDto"{
       -userId
       -userName
@@ -446,9 +438,10 @@ package "it.polito.ezgas.repository" {
 "UserController" "0..1" ----- "*" "LoginDto"
 "UserController" "0..1" ----- "*" "IdPw"
 "UserController" "0..1" ----- "0..1" "UserDto"
-"PriceReportDto" "*" ----- "0..1" "GasStationDto"
 "UserRepository" "1" ----- "1" "GasStationServiceimpl"
 "UserDto" "*" ----- "0..1" "UserServiceimpl"
+"User" "*" ----- "0..1" "UserServiceimpl"
+"User" "*" ----- "0..1" "GasStationServiceimpl"
 "User" "*" ----- "0..1" "UserRepository" 
 "GasStation" "*" ----- "1" "GasStationRepository"
 @enduml
