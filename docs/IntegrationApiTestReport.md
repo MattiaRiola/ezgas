@@ -135,9 +135,9 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |UC7 - Report fuel price for a gas station| FR4.3 |src.test.java.it.polito.ezgas.GasStationServiceTest|  
 |UC8 - Obtain price of fuel for gas stations in a certain geographic area| FR4.3 |src.test.java.it.polito.ezgas.GasStationServiceTest| 
 |UC9 - Update trust level of price list|FR5 |src.test.java.it.polito.ezgas.GasStationServiceTest| 
-|Use case 10, UC10 - Evaluate price| FR5.3 |src.test.java.it.polito.ezgas.GasStationServiceTest| 
-|Use case 10, UC10.1 - price is correct| FR5.2 |src.test.java.it.polito.ezgas.UserServiceTest.UserServiceTest.testIncreaseUserReputation| 
-|Use case 10, UC10.2 - price is wrong| FR5.2 |src.test.java.it.polito.ezgas.UserServiceTest.UserServiceTest.testDcreaseUserReputation| 
+|UC10 - Evaluate price| FR5.3 |src.test.java.it.polito.ezgas.GasStationServiceTest| 
+|UC10.1 - price is correct| FR5.2 |src.test.java.it.polito.ezgas.UserServiceTest.UserServiceTest.testIncreaseUserReputation| 
+|UC10.2 - price is wrong| FR5.2 |src.test.java.it.polito.ezgas.UserServiceTest.UserServiceTest.testDcreaseUserReputation| 
 
 
 # Coverage of Non Functional Requirements
