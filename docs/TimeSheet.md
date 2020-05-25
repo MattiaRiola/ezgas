@@ -1,11 +1,12 @@
 # Timesheet
+Upgrades: May 18-24 : Mattia
 
 Report in this table the effort (in person hours) spent per week, per activity, per team. 
 This means that you have to sum the working hours of each component of the team.
 Count only effort spent on EZGas (so do not count effort spent in virtual labs 1 to 4)
 
 These figures will not be used to evaluate neither the project nor the team
-Upgrades: May 18-24 : Mattia
+
 | Week | requirement engineering | design | coding | unit testing | integration testing | acceptance testing | management | git maven |
 |:-----------:|:--------:|:-----------:|:-----------:|:----------:|:------------:|:---------------:|:-------------:|:--------------:|
 | apr 13 - 19| 33 | 0 | 0 | 0 | 0 | 0 | 13 | 1 | 
