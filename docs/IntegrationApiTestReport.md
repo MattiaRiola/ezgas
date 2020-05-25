@@ -2,9 +2,9 @@
 
 Authors: Group  21
 
-Date: 23/05/2020
+Date: 25/05/2020
 
-Version: 1
+Version: 2
 
 # Contents
 
@@ -41,12 +41,12 @@ GasStationServiceImpl-down-> UserRepository
 GasStationConverter-down-> GasStationDto
 GasStationConverter-down-> GasStation
 GasStationRepository-down->  GasStation
-UserServiceImpl-down-> LoginConverter
+UserServiceImpl-down-> LoginDto
+UserServiceImpl-down-> User
 UserServiceImpl-down->UserRepository
 UserServiceImpl-down->UserConverter
 UserServiceImpl-down->IdPw
-LoginConverter-down->LoginDto
-LoginConverter-down->User
+
 UserRepository-down->User
 UserConverter-down->UserDto
 }
