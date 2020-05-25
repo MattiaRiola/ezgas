@@ -36,7 +36,15 @@ public class UserServiceimpl implements UserService {
 	 * Default Constructor
 	 */
 	public UserServiceimpl() { }
-
+	
+	/**
+	 * Constructor for API
+	 * @param userRepository
+	 */
+	public UserServiceimpl(UserRepository userRepository) {
+		this.userRepo = userRepository;
+	}
+	
 	/**
 	 * Constructor for Mockito
 	 * @param userRepository

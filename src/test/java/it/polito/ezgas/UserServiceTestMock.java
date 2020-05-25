@@ -152,6 +152,7 @@ public class UserServiceTestMock {
 		
 		when(userRep.findByEmail("test@test.test")).thenReturn(testUser); //"present in the repository"
 		when(userRep.findByEmail("test3@test3.test3")).thenReturn(null); //"not present in the repository"
+		when(userRep.findByEmail("WrongUser@WrongUser.WrongUser")).thenReturn(null); //"not present in the repository"
 		
 		when(userRep.save(testUser0)).thenReturn(testUser0);
 		when(userRep.save(testUser)).thenReturn(testUser);
@@ -164,7 +165,7 @@ public class UserServiceTestMock {
 	
 	
 	@Test
-	void testgetUserById() {
+	public void testgetUserById() {
 		testUserList.add(testUser);
 		testUserList.add(testUser0);
 		testUserList.add(testUser2);
@@ -200,7 +201,7 @@ public class UserServiceTestMock {
 		
 	}
 	@Test
-	void testSaveUser(){
+	public void testSaveUser(){
 		assertNull("Error: saved a null User and the saveUser method doesn't return null",testUserService.saveUser(null));
 		testUserList.add(testUser);
 		assertNull("Error: saved an user with a duplicate email",testUserService.saveUser(testUserDto));
@@ -208,7 +209,7 @@ public class UserServiceTestMock {
 		
 	}
 	@Test
-	void testGetAllUsers() {
+	public void testGetAllUsers() {
 		assertEquals(0,testUserService.getAllUsers().size(),"Error: not empty List");
 		testUserList.add(testUser);
 		assertEquals(1,testUserService.getAllUsers().size(),"Error: wrong size of the List");
@@ -224,7 +225,7 @@ public class UserServiceTestMock {
 	}
 		
 	@Test
-	void testDeleteUser() {
+	public void testDeleteUser() {
 		try {
 			testUserService.deleteUser(-560);
 			fail("Error: User Id is invalid (<0) but the method doesn't throw the invalidUserException");
@@ -252,7 +253,7 @@ public class UserServiceTestMock {
 	}
 	
 	@Test
-	void testLogin(){
+	public void testLogin(){
 		testUserList.add(testUser);
 		String correctUserName = credentials.getUser();
 		String correctPassword = credentials.getPw();
@@ -269,7 +270,7 @@ public class UserServiceTestMock {
 		}
 		
 		credentials.setPw("WrongPassword");
-		try { //findByEmail with the email of the testUser3 return null 
+		try { 
 			testUserService.login(credentials);
 			fail("Error: login works even if the credentials aren't correct (password is worng)");
 		}catch(InvalidLoginDataException invalidLoginDataException) {
@@ -277,7 +278,7 @@ public class UserServiceTestMock {
 		}
 		credentials.setPw(correctPassword);
 		credentials.setUser("WrongUser@WrongUser.WrongUser");
-		try { //findByEmail with the email of the testUser3 return null 
+		try { 
 			testUserService.login(credentials);
 			fail("Error: login works even if the credentials aren't correct (UserName is worng)");
 		}catch(InvalidLoginDataException invalidLoginDataException) {
@@ -285,7 +286,7 @@ public class UserServiceTestMock {
 		}
 		credentials.setUser(correctUserName);
 		credentials.setPw(correctPassword);
-		try { //findByEmail with the email of the testUser return the testUser
+		try { 
 			compareLogin(loginDto,testUserService.login(credentials), "Login testUser");
 		}catch(InvalidLoginDataException invalidLoginDataException) {
 			fail("Error: Credentials are correct but the method trows the invalidLoginDataException");
@@ -295,7 +296,7 @@ public class UserServiceTestMock {
 		
 	}
 	@Test
-	void testIncreaseUserReputation() {
+	public void testIncreaseUserReputation() {
 		testUserList.add(testUser);
 		testUserList.add(testUser0);
 		try {
@@ -342,7 +343,7 @@ public class UserServiceTestMock {
 		
 	}
 	@Test
-	void testDcreaseUserReputation() {
+	public void testDcreaseUserReputation() {
 		testUserList.add(testUser);
 		testUserList.add(testUser0);
 		try {
@@ -374,7 +375,7 @@ public class UserServiceTestMock {
 		}
 		testUser.setReputation(-5);
 		try {
-			assertEquals(testUser.getReputation(),testUserService.decreaseUserReputation(6),"Error: the Reputation is at the max value and it doesn't have to decrease");
+			assertEquals(testUser.getReputation(),testUserService.decreaseUserReputation(6),"Error: the Reputation is at the min value and it doesn't have to decrease");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
