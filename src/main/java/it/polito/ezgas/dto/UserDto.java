@@ -17,7 +17,7 @@ public class UserDto {
         this.password = password;
         this.email = email;
         this.reputation = reputation;
-        admin = false;
+        this.admin = false;
     }
     
     public UserDto(Integer userId, String userName, String password, String email, Integer reputation, Boolean admin) {

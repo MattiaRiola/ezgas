@@ -213,157 +213,242 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 
 
-
-
-
-
-
 # Low level design
 
-<Based on the official requirements and on the Spring Boot design guidelines, define the required classes (UML class diagram) of the back-end in the proper packages described in the high-level design section.>
-
-# Entity
 ```plantuml
 @startuml
 package "Backend" {
-    package "entity" {
-        class GasStation {
-            -Int: ID
-            -String: Name
-            -String: Address
-            -String: Brand
-            -String: CarSharing
-            -Double: Latitude
-            -Double: Longitude
-            -PriceList: Prices
-            +boolean hasDiesel()
-            +boolean hasGasoline()
-            +boolean hasPremiumDiesel()
-            +boolean hasPremiumGasoline()
-            +boolean hasLPG()
-            +boolean hasMethane()
-            +PriceList ShowPrices()
-            +void UpdatePrices(PriceList newPrices)
-            +double[] getPosition()
+package "it.polito.ezgas.service"  as ps {
+   interface "GasStationService"{
+      +getGasStationById(gasStationId)
+      +saveGasStation(gasStationDto)
+      +getAllGasStations()
+      +deleteGasStation(gasStationId)
+      +getGasStationsByGasolineType(gasolinetype)
+      +getGasStationsByProximity(lat,lon)
+      +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
+      +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
+      +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+      +getGasStationByCarSharing(carSharing)
+   }
+   interface "UserService"{
+      +getUserById(userId)
+      +saveUser(userDto)
+      +getAllUsers()
+      +deleteUser(userId)
+      +login(credentials)
+      +increaseUserReputation(userId)
+      +decreaseUserReputation(userId)
+   }
+   package "it.polito.ezgas.service.impl"{
+        class "GasStationServiceimpl"{
+            +getGasStationById(gasStationId)
+            +saveGasStation(gasStationDto)
+            +getAllGasStations()
+            +deleteGasStation(gasStationId)
+            +getGasStationsByGasolineType(gasolinetype)
+            +getGasStationsByProximity(lat,lon)
+            +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
+            +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
+            +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+            +getGasStationByCarSharing(carSharing)
         }
-
-        class PriceList {
-            -String: time_tag
-            -Double: dieselPrice
-            -Double: gasolinePrice
-            -Double: premiumDieselPrice
-            -Double: premiumGasolinePrice
-            -Double: LPGPrice
-            -Double: methanePrice
-            -int: trust_level
-            +void updateDiesel(double price)
-            +void updateGasoline(double price)
-            +void updatePremiumDiesel(double price)
-            +void updatePremiumGasoline(double price)
-            +void updateLPG(double price)
-            +void updateMethane(double price)
-            +void updateTrustLevel(int TL)
+        class "UserServiceimpl"{
+            +getUserById(userId)
+            +saveUser(userDto)
+            +getAllUsers()
+            +deleteUser(userId)
+            +login(credentials)
+            +increaseUserReputation(userId)
+            +decreaseUserReputation(userId)
         }
-
-        class User {
-            -String: account_name
-            -String: account_pwd
-            -String: email
-            -int: trust_level
-            -Double: Latitude
-            -Double: Longitude
-            -boolean: admin
-            +void setTrust_level(int TL)
-            +void updateEmail(String newMail)
-            +double[] getPosition()
-            +boolean isAdmin()
+        class "Haversine"{
+            +distance(startLat,startLong,endLat,endLong)
+            +haversin(double val)
         }
+   }
+   "GasStationServiceimpl" -|> "GasStationService"
+   "UserServiceimpl" -|> "UserService"
 
-        GasStation *-up- PriceList
-    }
 }
+
+
+package "it.polito.ezgas.controller" as pc{
+   class "UserController"{
+      +getUserById(userId)
+      +getAllUsers()
+      +saveUser(userDto)
+      +deleteUser(userId)
+      +increaseUserReputation(userId)
+      +decreaseUserReputation(userId)
+      +login(credentials)
+   }
+   class "GasStationController"{
+      +getGasStationById(gasStationId)
+      +getAllGasStations()
+      +saveGasStation()
+      +deleteUser(gasStationId)
+      +getGasStationsByGasolineType(gasolinetype)
+      +getGasStationsByProximity(myLat,myLon)
+      +getGasStationsWithCoordinates(myLat,myLon,gasolineType,carSharing)
+      +setGasStationReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+   }
+   class "HomeController"{
+      +admin()
+      +index()
+      +map()
+      +login()
+      +update()
+      +signup()
+   }
+}
+
+package "it.polito.ezgas.converter" {
+   class "UserConverter"{
+      +tconvertToDto(user)
+      +convertFromDto(userDto)
+   }
+   class "GasStationConverter"{
+      +convertFromDto(gasStationDto)
+      +convertToDto(gasStation)
+   }
+}
+
+package "it.polito.ezgas.dto" {
+   class "UserDto"{
+      -userId
+      -userName
+      -password
+      -email
+      -reputation
+      -admin
+   }
+   class "GasStationDto"{
+      -gasStationId
+      -gasStationName
+      -gasStationAddress
+      -hasDiesel
+      -hasSuper
+      -hasSuperPlus
+      -hasGas
+      -hasMethane
+      -carSharing
+      -lat
+      -lon
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+      -methanePrice
+      -reportUser
+      -userDto
+      -reportTimestamp
+      -reportDependability
+   }
+   class "PriceReportDto"{
+      -priceReportId
+      -user
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+   }
+   class "LoginDto"{
+      -userId
+      -userName
+      -token
+      -email
+      -reputation
+      -admin
+   }
+   class "IdPw"{
+      -user
+      -pw
+   }
+}
+
+package "it.polito.ezgas.entity" {
+   class "User"{
+      -userId
+      -userName
+      -password
+      -email
+      -reputation
+      -admin
+
+   }
+   class "GasStation"{
+      -gasStationId
+      -gasStationName
+      -gasStationAddress
+      -hasDiesel
+      -hasSuper
+      -hasSuperPlus
+      -hasGas
+      -hasMethane
+      -carSharing
+      -lat
+      -lon
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+      -methanePrice
+      -reportUser
+      -reportTimestamp
+      -reportDependability
+
+   }
+   class "PriceReport"{
+      -priceReportId
+      -user
+      -dieselPrice
+      -superPrice
+      -superPlusPrice
+      -gasPrice
+   }
+
+}
+
+package "it.polito.ezgas.repository" {
+   class "UserRepository"{
+      +findById(id)
+      +findByEmail(email)
+      +findAdmin(userName,password,email)
+      +updateUserReputation(id,reputation)
+   }
+   class "GasStationRepository"{
+      +findById(id)
+      +updateReport(dieselPrice,gasPrice,methanePrice,superPrice,superPlusPrice,reportUser,gasStationId)
+      +findByGasolineType(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus)
+      +findWithoutCoordinates(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus,carSharing)
+      +findByCarSharing (carSharing)
+   }
+}
+
+}
+
+"UserController" "1"-----"1" "UserService"
+"UserServiceimpl" "1"-----"1" "UserRepository"
+"UserServiceimpl" "1"-----"1" "UserConverter"
+"UserConverter" "1"-----"1" "UserDto"
+"UserConverter" "1"-----"1" "LoginDto"
+"UserServiceimpl" "1"-----"1" "IdPw"
+
+
+"GasStationController" "1"-----"1" "GasStationService"
+"GasStationServiceimpl" "1"-----"1" "GasStationRepository"
+"GasStationServiceimpl" "1"-----"1" "GasStationConverter"
+"GasStationConverter" "1"-----"1" "GasStationDto"
+
+"GasStationServiceimpl" "1"-----"1" "PriceReportConverter"
+"PriceReportConverter" "1"-----"1" "PriceReportDto"
 
 @enduml
 ```
 
-# Controller
-```plantuml
-@startuml
-package "backend" {
-    package "controller" as c {
-        class "GasStationController" as gsctrl {
-            - GasStationService: gs
-            + GasStationDto getGasStationById(Integer gasStationId)
-            + GasStationDto saveGasStation(GasStationDto gasStationDto)
-            + List<GasStationDto> getAllGasStations();
-            + Boolean deleteGasStation(Integer gasStationId)
-            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
-            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
-            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
-        }
 
-        class "UserController" as usctrl {
-            - UserService: us
-            + UserDto getUserById(Integer userId)
-            + UserDto saveUser(UserDto userDto)
-            + List<UserDto> getAllUsers()
-            + Boolean deleteUser(Integer userId)
-            + LoginDto login(IdPw credentials)
-            + Integer increaseUserReputation(Integer userId)
-            + Integer decreaseUserReputation(Integer userId)
-        }
-    }
-}
-@enduml
-```
 
-# Service
-```plantuml
-@startuml
-package "backend" {
-    package "service"  as s {
-        interface "GasStationService" as gs {
-            + GasStationDto getGasStationById(Integer gasStationId)
-            + GasStationDto saveGasStation(GasStationDto gasStationDto)
-            + List<GasStationDto> getAllGasStations();
-            + Boolean deleteGasStation(Integer gasStationId)
-            + List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
-            + List<GasStationDto> getGasStationsByProximity(double lat, double lon)
-            + List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-            + List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-            + void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-            + List<GasStationDto> getGasStationByCarSharing(String carSharing)
-        }
-
-        interface "UserService" as us {
-            + UserDto getUserById(Integer userId)
-            + UserDto saveUser(UserDto userDto)
-            + List<UserDto> getAllUsers()
-            + Boolean deleteUser(Integer userId)
-            + LoginDto login(IdPw credentials)
-            + Integer increaseUserReputation(Integer userId)
-            + Integer decreaseUserReputation(Integer userId)
-        }
-
-        package "impl" as impl {
-            class "GasStationServiceimpl" as gsi {
-                + gsList : List<GastStationDto>
-            }
-
-            class "UserServiceimpl" as usi {
-                + userList : List<UserDto>
-            }
-        }
-    }
-
-    class gsi implements gs
-    class usi implements us
-}
-@enduml
-```
 
 
 
@@ -388,12 +473,6 @@ package "backend" {
 | FR5.1 |           X           |                 |               |   X  |               |      X     |     X     |                   |          |
 | FR5.2 |                       |                 |               |      |               |      X     |     X     |                   |          |
 | FR5.3 |           X           |                 |               |   X  |               |      X     |     X     |                   |          |
-
-
-
-
-
-
 
 
 

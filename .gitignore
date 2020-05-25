@@ -3,6 +3,8 @@
 target/
 .classpath
 .project
+.idea
+ezgas.iml
 bin/
 tmp/
 *.tmp
