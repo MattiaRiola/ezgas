@@ -317,24 +317,24 @@ public class UserServiceTestMock {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(testUser.getReputation()+1,testUserService.increaseUserReputation(6),"Error: the Reputation doesn't match");
+			assertEquals((int)testUser.getReputation()+1, (int)testUserService.increaseUserReputation(6),"Error: the Reputation doesn't match");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(testUser0.getReputation()+1,testUserService.increaseUserReputation(0),"Error: the Reputation doesn't match");
+			assertEquals((int)testUser0.getReputation()+1, (int)testUserService.increaseUserReputation(0),"Error: the Reputation doesn't match");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		testUser.setReputation(5);
 		try {
-			assertEquals(testUser.getReputation(),testUserService.increaseUserReputation(6),"Error: the Reputation is at the max value and it doesn't have to increase");
+			assertEquals((int)testUser.getReputation(),(int)testUserService.increaseUserReputation(6),"Error: the Reputation is at the max value and it doesn't have to increase");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		testUser.setReputation(-5);
 		try {
-			assertEquals(testUser.getReputation()+1,testUserService.increaseUserReputation(6),"Error: the Reputation doesn't match");
+			assertEquals((int)testUser.getReputation()+1,(int)testUserService.increaseUserReputation(6),"Error: the Reputation doesn't match");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
@@ -364,24 +364,24 @@ public class UserServiceTestMock {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(testUser.getReputation()-1,testUserService.decreaseUserReputation(6),"Error: the Reputation doesn't match");
+			assertEquals((int)testUser.getReputation()-1,(int)testUserService.decreaseUserReputation(6),"Error: the Reputation doesn't match");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(testUser0.getReputation()-1,testUserService.decreaseUserReputation(0),"Error: the Reputation doesn't match");
+			assertEquals((int)testUser0.getReputation()-1,(int)testUserService.decreaseUserReputation(0),"Error: the Reputation doesn't match");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		testUser.setReputation(-5);
 		try {
-			assertEquals(testUser.getReputation(),testUserService.decreaseUserReputation(6),"Error: the Reputation is at the min value and it doesn't have to decrease");
+			assertEquals((int)testUser.getReputation(),(int)testUserService.decreaseUserReputation(6),"Error: the Reputation is at the min value and it doesn't have to decrease");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		testUser.setReputation(5);
 		try {
-			assertEquals(testUser.getReputation()-1,testUserService.decreaseUserReputation(6),"Error: the Reputation doesn't match");
+			assertEquals((int)testUser.getReputation()-1,(int)testUserService.decreaseUserReputation(6),"Error: the Reputation doesn't match");
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
