@@ -4,8 +4,8 @@ import it.polito.ezgas.converter.Converter;
 import it.polito.ezgas.converter.impl.GasStationConverter;
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class GasStationConverterTest {
     @Test
@@ -17,24 +17,24 @@ public class GasStationConverterTest {
         gasStation.setGasStationId(1);
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
         GasStationDto gasStationDto = converter.convertToDto(gasStation);
-        assertEquals((Integer)1, gasStationDto.getGasStationId());
-        assertEquals("Minmus", gasStationDto.getGasStationName(), "dto name is wrong");
-        assertEquals("Via Kerbal Space Program", gasStationDto.getGasStationAddress(), "dto address is wrong");
-        assertTrue(gasStationDto.getHasDiesel(), "dto hasdiesel is wrong");
-        assertFalse(gasStationDto.getHasSuper(), "dto hassuper is wrong");
-        assertTrue(gasStationDto.getHasSuperPlus(), "dto hassuperplus is wrong");
-        assertFalse(gasStationDto.getHasGas(), "dto hasgas is wrong");
-        assertTrue(gasStationDto.getHasMethane(), "dto hasmethane is wrong");
-        assertNull(gasStationDto.getCarSharing(), "dto carsharing is wrong");
-        assertEquals(10.32, gasStationDto.getLat(), "dto latitude is wrong");
-        assertEquals(-26.11, gasStationDto.getLon(), "dto longitude is wrong");
-        assertEquals(1.1, gasStationDto.getDieselPrice(), "dto diesel price is wrong");
-        assertEquals(-1, gasStationDto.getSuperPrice(), "dto super price is wrong");
-        assertEquals(1.2, gasStationDto.getSuperPlusPrice(), "dto superplus price is wrong");
-        assertEquals(-1, gasStationDto.getGasPrice(), "dto gas price is wrong");
-        assertEquals(1.3, gasStationDto.getMethanePrice(), "dto methane price is wrong");
-        assertEquals("10/12/20", gasStationDto.getReportTimestamp(), "dto timestamp is wrong");
-        assertEquals(76, gasStationDto.getReportDependability(), "dto dependability is wrong");
+        assertEquals("dto id is wrong", 1, (int)gasStationDto.getGasStationId());
+        assertEquals("dto name is wrong", "Minmus", gasStationDto.getGasStationName());
+        assertEquals("dto address is wrong", "Via Kerbal Space Program", gasStationDto.getGasStationAddress());
+        assertTrue("dto hasdiesel is wrong", gasStationDto.getHasDiesel());
+        assertFalse("dto hassuper is wrong", gasStationDto.getHasSuper());
+        assertTrue("dto hassuperplus is wrong", gasStationDto.getHasSuperPlus());
+        assertFalse("dto hasgas is wrong", gasStationDto.getHasGas());
+        assertTrue("dto hasmethane is wrong", gasStationDto.getHasMethane());
+        assertNull("dto carsharing is wrong", gasStationDto.getCarSharing());
+        assertEquals("dto latitude is wrong", 10.32, gasStationDto.getLat(), 0.0);
+        assertEquals("dto longitude is wrong", -26.11, gasStationDto.getLon(), 0.0);
+        assertEquals("dto diesel price is wrong", 1.1, gasStationDto.getDieselPrice(), 0.0);
+        assertEquals("dto super price is wrong", -1, gasStationDto.getSuperPrice(), 0.0);
+        assertEquals("dto superplus price is wrong", 1.2, gasStationDto.getSuperPlusPrice(), 0.0);
+        assertEquals("dto gas price is wrong", -1, gasStationDto.getGasPrice(), 0.0);
+        assertEquals("dto methane price is wrong", 1.3, gasStationDto.getMethanePrice(), 0.0);
+        assertEquals("dto timestamp is wrong", "10/12/20", gasStationDto.getReportTimestamp());
+        assertEquals("dto dependability is wrong", 76, gasStationDto.getReportDependability());
     }
 
     @Test
@@ -46,22 +46,22 @@ public class GasStationConverterTest {
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
         GasStation gasStation = converter.convertFromDto(gasStationDto);
         assertEquals((Integer)10, gasStation.getGasStationId());
-        assertEquals("Minmus", gasStation.getGasStationName(), "entity name is wrong");
-        assertEquals("Via Kerbal Space Program", gasStation.getGasStationAddress(), "entity address is wrong");
-        assertTrue(gasStation.getHasDiesel(), "entity hasdiesel is wrong");
-        assertFalse(gasStation.getHasSuper(), "entity hassuper is wrong");
-        assertTrue(gasStation.getHasSuperPlus(), "entity hassuperplus is wrong");
-        assertFalse(gasStation.getHasGas(), "entity hasgas is wrong");
-        assertTrue(gasStation.getHasMethane(), "entity hasmethane is wrong");
-        assertNull(gasStation.getCarSharing(), "entity carsharing is wrong");
-        assertEquals(10.32, gasStation.getLat(), "entity latitude is wrong");
-        assertEquals(-26.11, gasStation.getLon(), "entity longitude is wrong");
-        assertEquals(1.1, gasStation.getDieselPrice(), "entity diesel price is wrong");
-        assertEquals(-1, gasStation.getSuperPrice(), "entity super price is wrong");
-        assertEquals(1.2, gasStation.getSuperPlusPrice(), "entity superplus price is wrong");
-        assertEquals(-1, gasStation.getGasPrice(), "entity gas price is wrong");
-        assertEquals(1.3, gasStation.getMethanePrice(), "entity methane price is wrong");
-        assertEquals("10/12/20", gasStation.getReportTimestamp(), "entity timestamp is wrong");
-        assertEquals(76, gasStation.getReportDependability(), "entity dependability is wrong");
+        assertEquals("entity name is wrong", "Minmus", gasStation.getGasStationName());
+        assertEquals("entity address is wrong", "Via Kerbal Space Program", gasStation.getGasStationAddress());
+        assertTrue("entity hasdiesel is wrong", gasStation.getHasDiesel());
+        assertFalse("entity hassuper is wrong", gasStation.getHasSuper());
+        assertTrue("entity hassuperplus is wrong", gasStation.getHasSuperPlus());
+        assertFalse("entity hasgas is wrong", gasStation.getHasGas());
+        assertTrue("entity hasmethane is wrong", gasStation.getHasMethane());
+        assertNull("entity carsharing is wrong", gasStation.getCarSharing());
+        assertEquals("entity latitude is wrong", 10.32, gasStation.getLat(), 0.0);
+        assertEquals("entity longitude is wrong", -26.11, gasStation.getLon(), 0.0);
+        assertEquals("entity diesel price is wrong", 1.1, gasStation.getDieselPrice(), 0.0);
+        assertEquals("entity super price is wrong", -1, gasStation.getSuperPrice(), 0.0);
+        assertEquals("entity superplus price is wrong", 1.2, gasStation.getSuperPlusPrice(), 0.0);
+        assertEquals("entity gas price is wrong", -1, gasStation.getGasPrice(), 0.0);
+        assertEquals("entity methane price is wrong", 1.3, gasStation.getMethanePrice(), 0.0);
+        assertEquals("entity timestamp is wrong", "10/12/20", gasStation.getReportTimestamp());
+        assertEquals("entity dependability is wrong", 76, gasStation.getReportDependability());
     }
 }
