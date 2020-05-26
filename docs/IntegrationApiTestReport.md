@@ -59,11 +59,11 @@ UserConverter-down->UserDto
 
 Top-down technique is implemented in integration testing approach to simulate the behaviour of the lower-level modules that are not yet integrated. 
 
-In step 1  calsses GasStationServiceTestMock and UserServiceTestMock are developed that contain stubs in order to test the GasStationServiceImpl and UserServiceImpl classes.
+In step 1 classes GasStationServiceTestMock and UserServiceTestMock have been developed that contain stubs in order to test the GasStationServiceImpl and UserServiceImpl classes.
 
-In step 2  UserConverterTest and GasStationConverterTest are classes to test the converter. Furthurmore, the classes UserRepositoryTest and GasStationRepositoryTest are developed for the Repository test.
+In step 2 UserConverterTest and GasStationConverterTest are the classes used to test the converters. Furthermore, the classes UserRepositoryTest and GasStationRepositoryTest have been developed to test the repository package.
 
-Finally, in step n API test GasStationServiceTest and UserServiceTest are classes without using mockito.
+Finally, in step n API GasStationServiceTest and UserServiceTest are the classes that test the service package without mockito.
 
 
 #  Tests
@@ -82,8 +82,10 @@ Finally, in step n API test GasStationServiceTest and UserServiceTest are classe
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|Converter|src.test.java.it.polito.ezgas.UserConverterTest      src.test.java.it.polito.ezgas.GasStationConverterTest|
-|Repository|src.test.java.it.polito.ezgas.UserRepositoryTest  src.test.java.it.polito.ezgas.GasStationRepositoryTest|
+|GasStationConverter|src.test.java.it.polito.ezgas.GasStationConverterTest|
+|UserConverter|src.test.java.it.polito.ezgas.UserConverterTest|
+|GasStationRepository|src.test.java.it.polito.ezgas.GasStationRepositoryTest|
+|UserConverter|src.test.java.it.polito.ezgas.UserRepositoryTest|
 
 
 ## Step n API Tests
@@ -104,10 +106,10 @@ Finally, in step n API test GasStationServiceTest and UserServiceTest are classe
 <If needed, define here additional scenarios for the application. Scenarios should be named
  referring the UC they detail>
 
-## Scenario UCx.y
+## Scenario UC8
 | Scenario |  name |
 | ------------- |:-------------:| 
-|  Precondition     | user U exists, GasStation G exists, U input the -90<lat<90 and -180<lon<180 , G has Carsharing CSH, H has GasolineType GT, G has -360<Glat<360 , G has -360<Glon<360 , EARTH_RADIUS = 6371 |
+|  Precondition     | user U exists, GasStation G exists, U input the -90<lat<90 and -180<lon<180 , G has Carsharing CSH, H has GasolineType GT, G has -360<Glat<360 , G has -360<Glon<360 |
 |  Post condition     |list of GasStation G is found that contain GT and CSH also distance(lat, lon, Glat, Glon) < 1.0   |
 | Step#        | Description  |
 |  1     |  U opens the Search page |  
@@ -132,12 +134,10 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |UC4 - Create Gas Station| FR3.1 |src.test.java.it.polito.ezgas.GasStationServiceTest.TestSaveGasStation|      
 |UC5 - Modify Gas Station information| FR3.1 |src.test.java.it.polito.ezgas.GasStationServiceTest.TestSaveGasStation|      
 |UC6 - Delete Gas Station| FR3.2 |src.test.java.it.polito.ezgas.GasStationServiceTest.TestDeleteGasStation |     
-|UC7 - Report fuel price for a gas station| FR4.3 |src.test.java.it.polito.ezgas.GasStationServiceTest|  
-|UC8 - Obtain price of fuel for gas stations in a certain geographic area| FR4.3 |src.test.java.it.polito.ezgas.GasStationServiceTest| 
+|UC7 - Report fuel price for a gas station| FR4.3 |src.test.java.it.polito.ezgas.GasStationServiceTest.TestGetGasStationsWithoutCoordinates|  
+|UC8 - Obtain price of fuel for gas stations in a certain geographic area| FR4.3 |src.test.java.it.polito.ezgas.GasStationServiceTest.TestGetGasStationsWithCoordinates| 
 |UC9 - Update trust level of price list|FR5 |src.test.java.it.polito.ezgas.GasStationServiceTest| 
-|UC10 - Evaluate price| FR5.3 |src.test.java.it.polito.ezgas.GasStationServiceTest| 
-|UC10.1 - price is correct| FR5.2 |src.test.java.it.polito.ezgas.UserServiceTest.UserServiceTest.testIncreaseUserReputation| 
-|UC10.2 - price is wrong| FR5.2 |src.test.java.it.polito.ezgas.UserServiceTest.UserServiceTest.testDcreaseUserReputation| 
+|UC10 - Evaluate price| FR5.3 |src.test.java.it.polito.ezgas.UserServiceTest.testIncreaseUserReputation src.test.java.it.polito.ezgas.UserServiceTest.testDecreaseUserReputation|
 
 
 # Coverage of Non Functional Requirements
