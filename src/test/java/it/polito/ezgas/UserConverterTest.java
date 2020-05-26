@@ -5,7 +5,7 @@ import it.polito.ezgas.converter.impl.UserConverter;
 import it.polito.ezgas.dto.UserDto;
 import it.polito.ezgas.entity.User;
 import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 
 public class UserConverterTest {
@@ -16,12 +16,12 @@ public class UserConverterTest {
         user.setAdmin(true);
         user.setUserId(1);
         UserDto userDto = converter.convertToDto(user);
-        assertEquals((Integer)1, userDto.getUserId(), "admin dto userdId is wrong");
-        assertEquals("admin", userDto.getUserName(), "admin dto username is wrong");
-        assertEquals("adminpw", userDto.getPassword(), "admin dto password is wrong");
-        assertEquals("admin@ezgas.com", userDto.getEmail(), "admin dto email is wrong");
-        assertEquals((Integer)5, userDto.getReputation(), "admin dto reputation is wrong");
-        assertTrue(userDto.getAdmin(), "admin dto admin is wrong");
+        assertEquals("admin dto userdId is wrong", (Integer)1, userDto.getUserId());
+        assertEquals("admin dto username is wrong", "admin", userDto.getUserName());
+        assertEquals("admin dto password is wrong", "adminpw", userDto.getPassword());
+        assertEquals("admin dto email is wrong", "admin@ezgas.com", userDto.getEmail());
+        assertEquals("admin dto reputation is wrong", (Integer)5, userDto.getReputation());
+        assertTrue("admin dto admin is wrong", userDto.getAdmin());
     }
 
     @Test
@@ -30,11 +30,11 @@ public class UserConverterTest {
         UserDto userDto = new UserDto(1, "admin", "adminpw", "admin@ezgas.com", 5);
         userDto.setAdmin(true);
         User user = converter.convertFromDto(userDto);
-        assertEquals("admin", user.getUserName(), "admin username is wrong");
-        assertEquals("adminpw", user.getPassword(), "admin password is wrong");
-        assertEquals("admin@ezgas.com", user.getEmail(), "admin email is wrong");
-        assertEquals((Integer)5, user.getReputation(), "admin reputation is wrong");
-        assertTrue(user.getAdmin(), "admin admin is wrong");
+        assertEquals("admin username is wrong", "admin", user.getUserName());
+        assertEquals("admin password is wrong", "adminpw", user.getPassword());
+        assertEquals( "admin email is wrong", "admin@ezgas.com", user.getEmail());
+        assertEquals( "admin reputation is wrong", (Integer)5, user.getReputation());
+        assertTrue("admin admin is wrong", user.getAdmin());
     }
 
     @Test
@@ -42,11 +42,11 @@ public class UserConverterTest {
         Converter<User, UserDto> converter = new UserConverter();
         UserDto userDto = new UserDto(1, "admin", "adminpw", "admin@ezgas.com", 5, true);
         User user = converter.convertFromDto(userDto);
-        assertEquals("admin", user.getUserName(), "admin username is wrong");
-        assertEquals("adminpw", user.getPassword(), "admin password is wrong");
-        assertEquals("admin@ezgas.com", user.getEmail(), "admin email is wrong");
-        assertEquals((Integer)5, user.getReputation(), "admin reputation is wrong");
-        assertTrue(user.getAdmin(), "admin admin is wrong");
+        assertEquals( "admin username is wrong", "admin", user.getUserName());
+        assertEquals( "admin password is wrong", "adminpw", user.getPassword());
+        assertEquals( "admin email is wrong", "admin@ezgas.com", user.getEmail());
+        assertEquals( "admin reputation is wrong", (Integer)5, user.getReputation());
+        assertTrue( "admin admin is wrong", user.getAdmin());
     }
 
     @Test
@@ -56,12 +56,12 @@ public class UserConverterTest {
         user.setAdmin(false);
         user.setUserId(10);
         UserDto userDto = converter.convertToDto(user);
-        assertEquals((Integer)10, userDto.getUserId(), "user dto userdId is wrong");
-        assertEquals("deadpool", userDto.getUserName(), "user dto username is wrong");
-        assertEquals("diehard", userDto.getPassword(), "user dto password is wrong");
-        assertEquals("deadpool@marvel.com", userDto.getEmail(), "user dto email is wrong");
-        assertEquals((Integer)(-3), userDto.getReputation(), "user dto reputation is wrong");
-        assertFalse(userDto.getAdmin(), "user dto admin is wrong");
+        assertEquals("user dto userdId is wrong", (Integer)10, userDto.getUserId());
+        assertEquals("user dto username is wrong", "deadpool", userDto.getUserName());
+        assertEquals("user dto password is wrong", "diehard", userDto.getPassword());
+        assertEquals("user dto email is wrong", "deadpool@marvel.com", userDto.getEmail());
+        assertEquals("user dto reputation is wrong", (Integer)(-3), userDto.getReputation());
+        assertFalse("user dto admin is wrong", userDto.getAdmin());
     }
 
     @Test
@@ -70,11 +70,11 @@ public class UserConverterTest {
         UserDto userDto = new UserDto(14, "Alter Bridge", "metalingus", "ab@rock.com", 4);
         userDto.setAdmin(false);
         User user = converter.convertFromDto(userDto);
-        assertEquals("Alter Bridge", user.getUserName(), "user username is wrong");
-        assertEquals("metalingus", user.getPassword(), "user password is wrong");
-        assertEquals("ab@rock.com", user.getEmail(), "user email is wrong");
-        assertEquals((Integer)4, user.getReputation(), "user reputation is wrong");
-        assertFalse(user.getAdmin(), "user admin is wrong");
+        assertEquals("user username is wrong", "Alter Bridge", user.getUserName());
+        assertEquals("user password is wrong", "metalingus", user.getPassword());
+        assertEquals("user email is wrong", "ab@rock.com", user.getEmail());
+        assertEquals( "user reputation is wrong", (Integer)4, user.getReputation());
+        assertFalse("user admin is wrong", user.getAdmin());
     }
 
     @Test
@@ -82,10 +82,10 @@ public class UserConverterTest {
         Converter<User, UserDto> converter = new UserConverter();
         UserDto userDto = new UserDto(1, "Jebedaiah Kerman", "MunCrash", "jeb@ksp.com", 0, false);
         User user = converter.convertFromDto(userDto);
-        assertEquals("Jebedaiah Kerman", user.getUserName(), "user username is wrong");
-        assertEquals("MunCrash", user.getPassword(), "user password is wrong");
-        assertEquals("jeb@ksp.com", user.getEmail(), "user email is wrong");
-        assertEquals((Integer)0, user.getReputation(), "user reputation is wrong");
-        assertFalse(user.getAdmin(), "user admin is wrong");
+        assertEquals("user username is wrong", "Jebedaiah Kerman", user.getUserName());
+        assertEquals("user password is wrong", "MunCrash", user.getPassword());
+        assertEquals( "user email is wrong", "jeb@ksp.com", user.getEmail());
+        assertEquals("user reputation is wrong", (Integer)0, user.getReputation());
+        assertFalse("user admin is wrong", user.getAdmin());
     }
 }

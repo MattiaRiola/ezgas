@@ -20,8 +20,6 @@ import exception.InvalidUserException;
 
 
 import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -38,10 +36,6 @@ public class UserServiceTest {
 	private User testUser0;
 	private User testUser2;
 	private User testUser3;
-//	private UserDto testUserDto;
-//	private UserDto testUserDto0;
-//	private UserDto testUserDto2;
-//	private UserDto testUserDto3;
 	
 	private IdPw credentials;
 	private IdPw credentials0;
@@ -76,12 +70,12 @@ public class UserServiceTest {
 			fail("Error - " + note + " : expected is null");
 			return;
 		}
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
-		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
-		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
-		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
-		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals("Error - " + note + ": user id is wrong", expected.getUserId(),actual.getUserId());
+		assertEquals("Error - "+ note + " : user admin is wrong", expected.getAdmin(),actual.getAdmin());
+		assertEquals("Error - "+ note + " : user Email is wrong", expected.getEmail(),actual.getEmail());
+		assertEquals("Error - "+ note + " : user UserName is wrong", expected.getUserName(),actual.getUserName());
+		assertEquals("Error -" + note + " : user password is wrong", expected.getPassword(),actual.getPassword());
+		assertEquals("Error - " + note + " : user reputation is wrong", expected.getReputation(),actual.getReputation());
 	}
 	private void compareUsers(UserDto expected,UserDto actual,String note) {
 		if(actual == null && expected == null) {
@@ -96,12 +90,12 @@ public class UserServiceTest {
 			fail("Error - " + note + " : expected is null");
 			return;
 		}
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
-		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
-		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
-		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
-		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals("Error - " + note + ": user id is wrong", expected.getUserId(),actual.getUserId());
+		assertEquals("Error - "+ note + " : user admin is wrong", expected.getAdmin(),actual.getAdmin());
+		assertEquals("Error - "+ note + " : user Email is wrong", expected.getEmail(),actual.getEmail());
+		assertEquals("Error - "+ note + " : user UserName is wrong", expected.getUserName(),actual.getUserName());
+		assertEquals("Error -" + note + " : user password is wrong", expected.getPassword(),actual.getPassword());
+		assertEquals("Error - " + note + " : user reputation is wrong", expected.getReputation(),actual.getReputation());
 	}
 	private void compareLogin(LoginDto expected, LoginDto actual,String note) {
 		if(actual == null && expected == null) {
@@ -116,11 +110,11 @@ public class UserServiceTest {
 			fail("Error - " + note + " : expected is null");
 			return;
 		}
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
-		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
-		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
-		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals("Error - " + note + ": user id is wrong", expected.getUserId(),actual.getUserId());
+		assertEquals("Error - "+ note + " : user admin is wrong", expected.getAdmin(),actual.getAdmin());
+		assertEquals("Error - "+ note + " : user Email is wrong", expected.getEmail(),actual.getEmail());
+		assertEquals("Error - "+ note + " : user UserName is wrong", expected.getUserName(),actual.getUserName());
+		assertEquals("Error - " + note + " : user reputation is wrong", expected.getReputation(),actual.getReputation());
 //		assertEquals(expected.getToken(),actual.getToken(),"Error - " + note + " : user token is wrong");
 	}
 	
@@ -129,29 +123,17 @@ public class UserServiceTest {
 		testUserService = new UserServiceimpl(userRep);
 		userConverter = new UserConverter();
 		
-		testUser = new User("test","password","test@test.test",-3);
-//		testUser.setUserId(6);
+		testUser = new User("test","password","test@test.test",-3);;
 		testUser.setAdmin(true);
-//		testUserDto = new UserDto(6,"test","password","test@test.test",-3);
-//		testUserDto.setAdmin(true);
 		
 		testUser0 = new User("test0","password0","test0@test0.test0",0);
-//		testUser0.setUserId(0);
 		testUser0.setAdmin(false);
-//		testUserDto0 = new UserDto(0,"test0","password0","test0@test0.test0",0);
-//		testUserDto0.setAdmin(false);
 		
 		testUser2 = new User("test2","password2","test2@test2.test2",2);
-//		testUser2.setUserId(2);
 		testUser2.setAdmin(false);
-//		testUserDto2 = new UserDto(2,"test2","password2","test2@test2.test2",2);
-//		testUserDto2.setAdmin(false);
 		
 		testUser3 = new User("test3","password3","test3@test3.test3",3);
-//		testUser3.setUserId(3);
 		testUser3.setAdmin(false);
-//		testUserDto3 = new UserDto(3,"test3","password3","test3@test3.test3",3);
-//		testUserDto3.setAdmin(false);
 		
 		credentials = new IdPw("test@test.test","password");
 		credentials0 = new IdPw("test0@test0.test0","password0");
@@ -229,19 +211,19 @@ public class UserServiceTest {
 	@Test
 	public void testGetAllUsers() {
 		userRep.deleteAll();
-		assertEquals(0,testUserService.getAllUsers().size(),"Error: not empty List");
+		assertEquals("Error: not empty List", 0,testUserService.getAllUsers().size());
 		testUserService.saveUser(userConverter.convertToDto(testUser));
-		assertEquals(1,testUserService.getAllUsers().size(),"Error: wrong size of the List");
+		assertEquals("Error: wrong size of the List", 1,testUserService.getAllUsers().size());
 		testUserService.saveUser(userConverter.convertToDto(testUser0));
 		testUserService.saveUser(userConverter.convertToDto(testUser2));
 		testUserService.saveUser(userConverter.convertToDto(testUser3));
 		Integer Id0 = userRep.findByEmail(testUser0.getEmail()).getUserId();
-		assertEquals(4,testUserService.getAllUsers().size(),"Error: wrong size of the List");
+		assertEquals("Error: wrong size of the List", 4,testUserService.getAllUsers().size());
 		userRep.delete(Id0);
-		assertEquals(3,testUserService.getAllUsers().size(),"Error: wrong size of the List");		
+		assertEquals("Error: wrong size of the List", 3,testUserService.getAllUsers().size());
 		
 		userRep.deleteAll();
-		assertEquals(0,testUserService.getAllUsers().size(),"Error: wrong size of the List");
+		assertEquals("Error: wrong size of the List", 0,testUserService.getAllUsers().size());
 		
 	}
 //	testUserService.deleteUser(Id0);
@@ -265,7 +247,7 @@ public class UserServiceTest {
 			assertEquals(0,0);
 		}
 		try { //Testing the method when there are no user in the repository with that Id
-			assertEquals(false,testUserService.deleteUser(generateNotExistingId()),"Error: User Id is valid but it isn't in the repository and the method doesn't return false");
+			assertEquals("Error: User Id is valid but it isn't in the repository and the method doesn't return false", false,testUserService.deleteUser(generateNotExistingId()));
 			
 		}catch (InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
@@ -273,7 +255,7 @@ public class UserServiceTest {
 		User u0 = userRep.findByEmail(testUser0.getEmail());
 		Integer id0 = u0.getUserId();
 		try {
-			assertEquals(true,testUserService.deleteUser(id0),"Error: User Id is valid but the method doesn't return true");
+			assertEquals("Error: User Id is valid but the method doesn't return true", true,testUserService.deleteUser(id0));
 		}catch (InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
@@ -282,12 +264,13 @@ public class UserServiceTest {
 		User u_email = userRep.findByEmail(testUser0.getEmail());
 		if(u_id != null && u_email != null) { //This is if the repository has some 
 			String note = "found the same user after the delete";
-			assertTrue(( 	u0.getUserId() == u_id.getUserId() &&
+			assertTrue("Error: " + note, (
+							u0.getUserId().equals(u_id.getUserId()) &&
 							u0.getAdmin() == u_id.getAdmin() &&
-							u0.getEmail() == u_id.getEmail() &&
-							u0.getUserName() == u_id.getUserName() &&
-							u0.getPassword() == u_id.getPassword() &&
-							u0.getReputation() == u_id.getReputation()),"Error: " + note );
+							u0.getEmail().equals(u_id.getEmail()) &&
+							u0.getUserName().equals(u_id.getUserName()) &&
+							u0.getPassword().equals(u_id.getPassword()) &&
+							u0.getReputation().equals(u_id.getReputation())));
 		}
 			
 		assertNull("Error: there is an user with that same id of the deleted user",u_id);
@@ -369,22 +352,22 @@ public class UserServiceTest {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser.getEmail()).getReputation()+1,testUserService.increaseUserReputation(id),"Error: the Reputation doesn't match");
+			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser.getEmail()).getReputation()+1, (int)testUserService.increaseUserReputation(id));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser0.getEmail()).getReputation()+1,testUserService.increaseUserReputation(id0),"Error: the Reputation doesn't match");
+			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser0.getEmail()).getReputation()+1, (int)testUserService.increaseUserReputation(id0));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser3.getEmail()).getReputation(),testUserService.increaseUserReputation(id3),"Error: the Reputation is at the max value and it doesn't have to increase");
+			assertEquals("Error: the Reputation is at the max value and it doesn't have to increase", (int)userRep.findByEmail(testUser3.getEmail()).getReputation(), (int)testUserService.increaseUserReputation(id3));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser2.getEmail()).getReputation()+1,testUserService.increaseUserReputation(id2),"Error: the Reputation doesn't match");
+			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser2.getEmail()).getReputation()+1, (int)testUserService.increaseUserReputation(id2));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
@@ -421,28 +404,24 @@ public class UserServiceTest {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser.getEmail()).getReputation()-1,testUserService.decreaseUserReputation(id),"Error: the Reputation doesn't match");
+			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser.getEmail()).getReputation()-1, (int)testUserService.decreaseUserReputation(id));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser0.getEmail()).getReputation()-1,testUserService.decreaseUserReputation(id0),"Error: the Reputation doesn't match");
+			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser0.getEmail()).getReputation()-1,(int)testUserService.decreaseUserReputation(id0));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser3.getEmail()).getReputation()-1,testUserService.decreaseUserReputation(id3),"Error: the Reputation doesn't match");
+			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser3.getEmail()).getReputation()-1, (int)testUserService.decreaseUserReputation(id3));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 		try {
-			assertEquals(userRep.findByEmail(testUser2.getEmail()).getReputation(),testUserService.decreaseUserReputation(id2),"Error: the Reputation is at the min value and it doesn't have to increase");
+			assertEquals("Error: the Reputation is at the min value and it doesn't have to increase", (int)userRep.findByEmail(testUser2.getEmail()).getReputation(), (int)testUserService.decreaseUserReputation(id2));
 		} catch(InvalidUserException invalidUserException) {
 			fail("Error: User Id is valid but the method throws the invalidUserException");
 		}
 	}
-	
-	
-	
-	
 }// END Class
