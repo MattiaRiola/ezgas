@@ -1,10 +1,12 @@
 package it.polito.ezgas;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -13,6 +15,7 @@ import static org.mockito.Mockito.*;
 import it.polito.ezgas.converter.impl.GasStationConverter;
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
+import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.GasStationService;
@@ -29,11 +32,9 @@ public class GasStationServiceTestMock {
 	private GasStationDto gsDto = new GasStationDto();
 	private String cs = "CarSharing";
 	
-	
 	@BeforeEach
 	public void setUp() {
 		this.testList = new ArrayList <GasStation>();
-		
 		this.gasRep = mock(GasStationRepository.class);
 		this.userRep = mock(UserRepository.class);
 		this.gasConverter = mock(GasStationConverter.class);

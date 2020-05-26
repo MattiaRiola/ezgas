@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import exception.GPSDataException;
+import exception.PriceException;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class GasStationServiceTest {
@@ -43,6 +46,7 @@ public class GasStationServiceTest {
 		gasStationRepository.save(gs);
 	}
 	
+	
 	@Test
 	public void TestGetGasStationById() {
 
@@ -62,11 +66,48 @@ public class GasStationServiceTest {
 		}
 	}//EndTest.
 	
+	@Test
+	public void TestsaveGasStation() {
+		GasStationDto gsDto = new GasStationDto();
+		gsDto.setGasStationId(1);
+		gsDto.setGasStationName("TestGas");
+		
+		//The exception was tested in the mockito test.
+		
+		try {
+			GasStationDto resGas = this.dut.saveGasStation(gsDto);
+			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
+		}catch (Exception e) {
+			//fail("Exception has been generated");
+		}
+	}//EndTest.
+	
 	@Test 
 	public void TestGetAllGasStation() {
 		List<GasStationDto> resList;
 		resList = dut.getAllGasStations();
 		assertEquals(resList.size(), 1,"Error");
+	}//EndTest.
+	
+	@Test
+	public void TestdeleteGasStation() {
+		GasStationDto gsDto = new GasStationDto();
+		gsDto.setGasStationId(2);
+		gsDto.setGasStationName("DelateGas");
+		//Add the gas station.
+		try {
+			GasStationDto resGas = this.dut.saveGasStation(gsDto);
+			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
+		}catch (Exception e) {
+			//fail("Exception has been generated");
+		}
+		
+		try {
+			Boolean res = this.dut.deleteGasStation(2);
+			assertTrue(res, "Error delating gas station");
+		}catch (Exception e) {
+			//fail("Exception has been generated");
+		}
 	}//EndTest.
 	
 	@Test
@@ -205,6 +246,34 @@ public class GasStationServiceTest {
 		try {
 			resList = this.dut.getGasStationsWithoutCoordinates("Diesel", "Car2Go");
 			assertEquals(resList.size(),1);
+		}catch (Exception e) {
+			//fail("Exception has been generated");
+		}
+	}//EndTest.
+	
+	@Test
+	public void setReport() {
+		GasStationDto gsDto = new GasStationDto();
+		gsDto.setGasStationId(3);
+		gsDto.setGasStationName("UpdateGas");
+		//Add the gas station.
+		try {
+			GasStationDto resGas = this.dut.saveGasStation(gsDto);
+			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
+		}catch (Exception e) {
+			//fail("Exception has been generated");
+		}
+		
+		//All the exception tested in mockito test.
+		
+		try {
+			this.dut.setReport(3, 1.0, 1.0, 1.0, 1.0, 1.0, 0);;
+			GasStationDto resDto = this.dut.getGasStationById(3);
+			assertEquals(resDto.getMethanePrice(), 1.0, "Error report");
+			assertEquals(resDto.getGasPrice(), 1.0, "Error report");
+			assertEquals(resDto.getSuperPrice(), 1.0, "Error report");
+			assertEquals(resDto.getSuperPlusPrice(), 1.0, "Error report");
+			assertEquals(resDto.getDieselPrice(), 1.0, "Error report");
 		}catch (Exception e) {
 			//fail("Exception has been generated");
 		}
