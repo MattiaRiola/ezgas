@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -91,21 +92,14 @@ public class GasStationServiceTest {
 	
 	@Test
 	public void TestdeleteGasStation() {
-		GasStationDto gsDto = new GasStationDto();
-		gsDto.setGasStationId(2);
-		gsDto.setGasStationName("DelateGas");
-		//Add the gas station.
+		List<GasStationDto> resList;
+		resList = dut.getAllGasStations();
+		GasStationDto gs = resList.get(0);
 		try {
-			GasStationDto resGas = this.dut.saveGasStation(gsDto);
-			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
-		}catch (Exception e) {
-			fail("Exception has been generated");
-		}
-		
-		try {
-			Boolean res = this.dut.deleteGasStation(2);
+			Boolean res = this.dut.deleteGasStation(gs.getGasStationId());
 			assertTrue(res, "Error delating gas station");
 		}catch (Exception e) {
+			e.printStackTrace();
 			fail("Exception has been generated");
 		}
 	}//EndTest.
@@ -253,22 +247,15 @@ public class GasStationServiceTest {
 	
 	@Test
 	public void setReport() {
-		GasStationDto gsDto = new GasStationDto();
-		gsDto.setGasStationId(3);
-		gsDto.setGasStationName("UpdateGas");
-		//Add the gas station.
-		try {
-			GasStationDto resGas = this.dut.saveGasStation(gsDto);
-			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
-		}catch (Exception e) {
-			fail("Exception has been generated");
-		}
-		
 		//All the exception tested in mockito test.
 		
+		List<GasStationDto> resList;
+		resList = dut.getAllGasStations();
+		GasStationDto gs = resList.get(0);
+		
 		try {
-			this.dut.setReport(3, 1.0, 1.0, 1.0, 1.0, 1.0, 0);;
-			GasStationDto resDto = this.dut.getGasStationById(3);
+			this.dut.setReport(gs.getGasStationId(), 1.0, 1.0, 1.0, 1.0, 1.0, 0);
+			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
 			assertEquals(resDto.getMethanePrice(), 1.0, "Error report");
 			assertEquals(resDto.getGasPrice(), 1.0, "Error report");
 			assertEquals(resDto.getSuperPrice(), 1.0, "Error report");
