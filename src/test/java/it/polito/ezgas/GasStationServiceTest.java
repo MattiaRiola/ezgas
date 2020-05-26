@@ -52,7 +52,7 @@ public class GasStationServiceTest {
 
 		try {
 			this.dut.getGasStationById(-1);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {		
 			assertEquals(0,0);
 		}
@@ -62,7 +62,7 @@ public class GasStationServiceTest {
 			GasStationDto testGs = this.dut.getGasStationById(id);
 			assertEquals(gs.getGasStationId(),testGs.getGasStationId(), "Error id");
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
@@ -78,7 +78,7 @@ public class GasStationServiceTest {
 			GasStationDto resGas = this.dut.saveGasStation(gsDto);
 			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
@@ -99,14 +99,14 @@ public class GasStationServiceTest {
 			GasStationDto resGas = this.dut.saveGasStation(gsDto);
 			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 		
 		try {
 			Boolean res = this.dut.deleteGasStation(2);
 			assertTrue(res, "Error delating gas station");
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
@@ -114,13 +114,13 @@ public class GasStationServiceTest {
 	public void TestGetGasStationsByGasolineType() {
 		try {
 			this.dut.getGasStationsByGasolineType(null);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsByGasolineType("");
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
@@ -137,7 +137,7 @@ public class GasStationServiceTest {
 			resList = this.dut.getGasStationsByGasolineType("Methane");
 			assertEquals(resList.size(), 1, "Error get gasoline by type");
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
@@ -145,25 +145,25 @@ public class GasStationServiceTest {
 	public void TestGetGasStationsByProximity() {
 		try {
 			this.dut.getGasStationsByProximity(-100, 0);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsByProximity(100, 0);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsByProximity(0, 200);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsByProximity(0, -200);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
@@ -174,7 +174,7 @@ public class GasStationServiceTest {
 			resList = this.dut.getGasStationsByProximity(10.32, -26.11);
 			assertEquals(resList.size(), 1);
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
@@ -182,37 +182,37 @@ public class GasStationServiceTest {
 	public void TestGetGasStationsWithCoordinates() {
 		try {
 			this.dut.getGasStationsWithCoordinates(-100, 0, "Diesel","Car2Go");
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsWithCoordinates(100, 0, "Diesel","Car2Go");
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsWithCoordinates(0, -200, "Diesel","Car2Go");
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsWithCoordinates(0, 200, "Diesel","Car2Go");
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsWithCoordinates(0, 0, null ,"Car2Go");
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsWithCoordinates(0, 0, "Diesel" ,null);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
@@ -222,7 +222,7 @@ public class GasStationServiceTest {
 			resList = this.dut.getGasStationsWithCoordinates(10.32, -26.11, "Diesel","Car2Go");
 			assertEquals(resList.size(), 1);
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 			
 		}
 	}//EndTest.
@@ -232,13 +232,13 @@ public class GasStationServiceTest {
 	public void TestGetGasStationsWithoutCoordinates() {
 		try {
 			this.dut.getGasStationsWithoutCoordinates("Diesel",null);
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
 			this.dut.getGasStationsWithoutCoordinates("","Car2Go");
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
@@ -247,7 +247,7 @@ public class GasStationServiceTest {
 			resList = this.dut.getGasStationsWithoutCoordinates("Diesel", "Car2Go");
 			assertEquals(resList.size(),1);
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
@@ -261,7 +261,7 @@ public class GasStationServiceTest {
 			GasStationDto resGas = this.dut.saveGasStation(gsDto);
 			assertEquals(gsDto.getGasStationName(),resGas.getGasStationName(), "Error saving gas station");
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 		
 		//All the exception tested in mockito test.
@@ -275,7 +275,7 @@ public class GasStationServiceTest {
 			assertEquals(resDto.getSuperPlusPrice(), 1.0, "Error report");
 			assertEquals(resDto.getDieselPrice(), 1.0, "Error report");
 		}catch (Exception e) {
-			//fail("Exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
@@ -287,7 +287,7 @@ public class GasStationServiceTest {
 			resList = this.dut.getGasStationByCarSharing("Car2Go");
 			assertEquals(resList.size(),1);
 		}catch (Exception e) {
-			//fail("No exception has been generated");
+			fail("No exception has been generated");
 		}
 	}//EndTest.
 	
