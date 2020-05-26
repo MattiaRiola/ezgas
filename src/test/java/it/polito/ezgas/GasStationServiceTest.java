@@ -6,7 +6,7 @@ import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.GasStationService;
 import it.polito.ezgas.service.impl.GasStationServiceimpl;
-import static org.junit.Assert.fail;
+//import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
