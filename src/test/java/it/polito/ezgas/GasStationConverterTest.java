@@ -34,7 +34,7 @@ public class GasStationConverterTest {
         assertEquals("dto gas price is wrong", -1, gasStationDto.getGasPrice(), 0.0);
         assertEquals("dto methane price is wrong", 1.3, gasStationDto.getMethanePrice(), 0.0);
         assertEquals("dto timestamp is wrong", "10/12/20", gasStationDto.getReportTimestamp());
-        assertEquals("dto dependability is wrong", 76, gasStationDto.getReportDependability());
+        assertEquals("dto dependability is wrong", (int)76, (int)gasStationDto.getReportDependability());
     }
 
     @Test
@@ -62,6 +62,6 @@ public class GasStationConverterTest {
         assertEquals("entity gas price is wrong", -1, gasStation.getGasPrice(), 0.0);
         assertEquals("entity methane price is wrong", 1.3, gasStation.getMethanePrice(), 0.0);
         assertEquals("entity timestamp is wrong", "10/12/20", gasStation.getReportTimestamp());
-        assertEquals("entity dependability is wrong", 76, gasStation.getReportDependability());
+        assertEquals("entity dependability is wrong", (int)76, (int)gasStation.getReportDependability());
     }
 }
