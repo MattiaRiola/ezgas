@@ -12,6 +12,7 @@ public class GasStationConverter implements Converter<GasStation, GasStationDto>
                 gasStationDto.getHasMethane(), gasStationDto.getCarSharing(), gasStationDto.getLat(), gasStationDto.getLon(),
                 gasStationDto.getDieselPrice(), gasStationDto.getSuperPrice(), gasStationDto.getSuperPlusPrice(), gasStationDto.getGasPrice(),
                 gasStationDto.getMethanePrice(), gasStationDto.getReportUser(), gasStationDto.getReportTimestamp(), gasStationDto.getReportDependability());
+        gasStation.setGasStationId(gasStationDto.getGasStationId());
         return gasStation;
     }
 

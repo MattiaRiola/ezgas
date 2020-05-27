@@ -36,13 +36,13 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Service
 public class GasStationServiceimpl implements GasStationService{
 
-	@Autowired
+	//@Autowired
 	private GasStationRepository gasRepo;
 
-	@Autowired
+	//@Autowired
 	private UserRepository userRepo;
 
-	private final Converter<GasStation, GasStationDto> gasConverter = new GasStationConverter();
+	private Converter<GasStation, GasStationDto> gasConverter = new GasStationConverter();
 
 	// TODO: the db could return empty lists or null "pointers", so to every call the return must be checked. If it corresponds to one of the two conditions described before we should act as the method specification requires
 	
@@ -58,8 +58,9 @@ public class GasStationServiceimpl implements GasStationService{
 	 * @param gasRepository
 	 * @param userRepository
 	 */
-	public GasStationServiceimpl(GasStationRepository gasRepository, UserRepository userRepository) {
+	public GasStationServiceimpl(GasStationRepository gasRepository, Converter<GasStation, GasStationDto> gc, UserRepository userRepository) {
 		this.gasRepo = gasRepository;
+		this.gasConverter = gc;
 		this.userRepo = userRepository;
 	}
 	
@@ -68,8 +69,9 @@ public class GasStationServiceimpl implements GasStationService{
 	 * @param gasRepository
 	 * @param userRepository
 	 */
-	public GasStationServiceimpl(GasStationRepository gasRepository) {
+	public GasStationServiceimpl(GasStationRepository gasRepository, UserRepository userRepository) {
 		this.gasRepo = gasRepository;
+		this.userRepo = userRepository;
 	}
 	
 	
@@ -208,7 +210,7 @@ public class GasStationServiceimpl implements GasStationService{
 
 	@Override
 	public List<GasStationDto> getGasStationsByProximity(double lat, double lon) throws GPSDataException {
-		if ((lat< -90 && lat > 90) || (lon< -180 && lon >= 180))
+		if ((lat< -90 || lat > 90) || (lon< -180 || lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
 
 		refreshDependability();
@@ -229,7 +231,7 @@ public class GasStationServiceimpl implements GasStationService{
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException {
-		if ((lat < -90 && lat > 90) || (lon < -180 && lon >= 180))
+		if ((lat < -90 || lat > 90) || (lon < -180 || lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
 
 		refreshDependability();

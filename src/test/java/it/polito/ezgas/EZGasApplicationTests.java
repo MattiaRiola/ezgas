@@ -1,5 +1,7 @@
 package it.polito.ezgas;
 
+import it.polito.ezgas.repository.GasStationRepository;
+import it.polito.ezgas.repository.UserRepository;
 import org.junit.Test;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.runner.RunWith;
@@ -8,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class) 
 @SpringBootTest
-@SelectClasses({GasStationEntityTest.class , UserEntityTest.class, HaversineTest.class})
+@SelectClasses({GasStationEntityTest.class , UserEntityTest.class, HaversineTest.class, GasStationConverterTest.class, UserConverterTest.class, GasStationRepository.class, UserRepository.class, UserServiceTestMock.class, GasStationServiceTestMock.class, UserServiceTest.class, GasStationServiceTest.class})
 public class EZGasApplicationTests {	
 	
 	@Test

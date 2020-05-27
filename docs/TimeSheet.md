@@ -1,4 +1,5 @@
 # Timesheet
+Upgrades: May 18-24 : Mattia
 
 Report in this table the effort (in person hours) spent per week, per activity, per team. 
 This means that you have to sum the working hours of each component of the team.
@@ -12,8 +13,8 @@ These figures will not be used to evaluate neither the project nor the team
 | apr 20 - 27| 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 
 | apr 28 - 3 | 0 | 12 | 0 | 0 | 0 | 0 | 18 | 1 | 
 | may 4 - 10 | 0 | 0 | 16 | 0 | 0 | 0 | 21 | 0 | 
-| may 11 - 17| 0 | 1 | 17 | 18 | 0 | 0 | 17 | 0 | 
-| may 18 - 24| | | | | | | | | 
+| may 11 - 17| 0 | 1 | 17 | 23 | 0 | 0 | 18 | 0 | 
+| may 18 - 24| 0 | 2.5 | 1.5 | 2 | 30 | 0 | 3 | 0 |
 | may 25 - 31| | | | | | | | | 
 | jun 1 -  7 | | | | | | | | | 
 | jun 8 - 14 | | | | | | | | | 

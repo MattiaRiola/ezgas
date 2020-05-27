@@ -2,9 +2,9 @@
 
 Authors: Group 21
 
-Date: 16/05/2020
+Date: 25/05/2020
 
-Version: 1
+Version: 2
 
 # Contents
 
@@ -236,6 +236,7 @@ NOTE: the result of the method is returned in meters
     <Add here the screenshot report of the statement and branch coverage obtained using
     the Eclemma tool. >
 
+![CodeCoverageReport](images/test_CodeCoverage.png)
 
 ### Loop coverage analysis
 

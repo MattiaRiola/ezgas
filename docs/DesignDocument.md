@@ -242,6 +242,9 @@ package "it.polito.ezgas.service"  as ps {
    }
    package "it.polito.ezgas.service.impl"{
         class "GasStationServiceimpl"{
+            -Converter gasConverter
+            -GasStationRepository gasRepo
+            -UserRepository userRepo
             +getGasStationById(gasStationId)
             +saveGasStation(gasStationDto)
             +getAllGasStations()
@@ -254,6 +257,10 @@ package "it.polito.ezgas.service"  as ps {
             +getGasStationByCarSharing(carSharing)
         }
         class "UserServiceimpl"{
+            -UserRepository userRepo
+            -Integer minReputation
+            -Integer maxReputation
+            -Converter userConverter
             +getUserById(userId)
             +saveUser(userDto)
             +getAllUsers()
@@ -305,13 +312,14 @@ package "it.polito.ezgas.controller" as pc{
 
 package "it.polito.ezgas.converter" {
    class "UserConverter"{
-      +tconvertToDto(user)
+      +convertToDto(user)
       +convertFromDto(userDto)
    }
    class "GasStationConverter"{
       +convertFromDto(gasStationDto)
       +convertToDto(gasStation)
    }
+   
 }
 
 package "it.polito.ezgas.dto" {
@@ -344,14 +352,6 @@ package "it.polito.ezgas.dto" {
       -userDto
       -reportTimestamp
       -reportDependability
-   }
-   class "PriceReportDto"{
-      -priceReportId
-      -user
-      -dieselPrice
-      -superPrice
-      -superPlusPrice
-      -gasPrice
    }
    class "LoginDto"{
       -userId
@@ -399,14 +399,6 @@ package "it.polito.ezgas.entity" {
       -reportDependability
 
    }
-   class "PriceReport"{
-      -priceReportId
-      -user
-      -dieselPrice
-      -superPrice
-      -superPlusPrice
-      -gasPrice
-   }
 
 }
 
@@ -432,7 +424,7 @@ package "it.polito.ezgas.repository" {
 "UserServiceimpl" "1"-----"1" "UserRepository"
 "UserServiceimpl" "1"-----"1" "UserConverter"
 "UserConverter" "1"-----"1" "UserDto"
-"UserConverter" "1"-----"1" "LoginDto"
+"UserServiceimpl" "1"-----"1" "LoginDto"
 "UserServiceimpl" "1"-----"1" "IdPw"
 
 
@@ -440,10 +432,18 @@ package "it.polito.ezgas.repository" {
 "GasStationServiceimpl" "1"-----"1" "GasStationRepository"
 "GasStationServiceimpl" "1"-----"1" "GasStationConverter"
 "GasStationConverter" "1"-----"1" "GasStationDto"
-
-"GasStationServiceimpl" "1"-----"1" "PriceReportConverter"
-"PriceReportConverter" "1"-----"1" "PriceReportDto"
-
+"GasStationController" "0..1" ----- "*" "GasStationDto"
+"GasStationServiceimpl" "0..1" ----- "*" "GasStationDto"
+"User" "1" ----- "0..1" "UserConverter"
+"UserController" "0..1" ----- "*" "LoginDto"
+"UserController" "0..1" ----- "*" "IdPw"
+"UserController" "0..1" ----- "0..1" "UserDto"
+"UserRepository" "1" ----- "1" "GasStationServiceimpl"
+"UserDto" "*" ----- "0..1" "UserServiceimpl"
+"User" "*" ----- "0..1" "UserServiceimpl"
+"User" "*" ----- "0..1" "GasStationServiceimpl"
+"User" "*" ----- "0..1" "UserRepository" 
+"GasStation" "*" ----- "1" "GasStationRepository"
 @enduml
 ```
 

@@ -1,10 +1,10 @@
 # CR - Change Request Poll
 
-Authors:
+Authors: Group 21
 
-Date:
+Date:26/05/2020
 
-Version:
+Version: 1
 
 
 
@@ -22,12 +22,11 @@ update of documents. Consider only effort on the back end (changes to all packag
 ### 
 
 |   CR          | Priority (1 lowest 5 highest)       |          Effort (person hours) |   
-| ----------- | ------------------------------- | ---------------------------- | 
-| CR1   | | |          
-| CR2   | | | 
-| CR3   | | | 
-| CR4   | | | 
-| CR5   | | | 
-| CR6   | | | 
-| CR7   | | | 
-| CR8   | | | 
+| ----------- | :-------------------------------: | :----------------------------: | 
+| CR1   | 4 | 12 |          
+| CR2   |2 | 14 | 
+| CR3   |2 | 15 | 
+| CR4   |4 | 6 | 
+| CR5   |2 | 19 | 
+| CR6   |1 | 24 | 
+| CR7   |5 | 4 | 

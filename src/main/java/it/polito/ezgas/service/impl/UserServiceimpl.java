@@ -1,5 +1,6 @@
 package it.polito.ezgas.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,22 +25,35 @@ import it.polito.ezgas.service.UserService;
 public class UserServiceimpl implements UserService {
 
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
 
 	private final Integer minReputation = -5;
 	private final Integer maxReputation = 5;
-
+	
+	private Converter<User,UserDto> userConverter = new UserConverter();
+	
 	/**
 	 * Default Constructor
 	 */
 	public UserServiceimpl() { }
+	
 	/**
-	 * Constructor for Mockito
+	 * Constructor for API
 	 * @param userRepository
 	 */
 	public UserServiceimpl(UserRepository userRepository) {
 		this.userRepo = userRepository;
 	}
+	
+	/**
+	 * Constructor for Mockito
+	 * @param userRepository
+	 */
+	public UserServiceimpl(UserRepository userRepository, Converter<User, UserDto> userConverter) {
+		this.userRepo = userRepository;
+		this.userConverter = userConverter;
+	}
+	
 	
 	@Override
 	public UserDto getUserById(Integer userId) throws InvalidUserException {
@@ -48,9 +62,10 @@ public class UserServiceimpl implements UserService {
 		if(userId < 0)
 			throw new InvalidUserException("Invalid User id: user id is < 0");
 		User user = userRepo.findById(userId);
-		if(user == null)
-			throw new InvalidUserException("Invalid User id: user id is not found");
-		Converter<User, UserDto> userConverter = new UserConverter();
+		if(user == null) {
+//			System.err.println("User not found");
+			return null;
+		}
 		return userConverter.convertToDto(user);
 	}
 
@@ -58,24 +73,24 @@ public class UserServiceimpl implements UserService {
 	public UserDto saveUser(UserDto userDto) {
 		if(userDto == null)
 			return null;
-		Converter<User, UserDto> userConverter = new UserConverter();
+		
 		User u = userRepo.findByEmail(userDto.getEmail());
-		if(u != null && !u.getUserId().equals(userDto.getUserId())) {
-			return null;
+		if(u==null) {
+			User user;
+			user = userRepo.save(userConverter.convertFromDto(userDto));
+			return userConverter.convertToDto(user);	
 		}
-
-		User user = userRepo.save(userConverter.convertFromDto(userDto));
-		return userConverter.convertToDto(user);
+		//It return null if the userRepo find an user with that email
+		return null;
 	}
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		Converter<User, UserDto> userConverter = new UserConverter();
 		List<User> listUser = userRepo.findAll();
-		if (listUser == null) {
-			return new LinkedList<>();
+		if (listUser == null || listUser.isEmpty()) {
+			return new ArrayList<>();
 		}
-		List<UserDto> listUserDto = new LinkedList<>();
+		List<UserDto> listUserDto = new ArrayList<>();
 		listUser.forEach( u -> {
 								UserDto uDto = userConverter.convertToDto(u);
 								listUserDto.add(uDto);
@@ -93,6 +108,7 @@ public class UserServiceimpl implements UserService {
 		User user = userRepo.findById(userId);
 		if(user == null){
 			//There aren't Users with that userId
+//			System.err.println("User not found");
 			return false;
 		}
 
@@ -124,6 +140,10 @@ public class UserServiceimpl implements UserService {
 				throw new InvalidUserException("Invalid User id: user id is < 0");
 
 			User u = userRepo.findById(userId);
+			if(u==null) {
+//				System.err.println("User not found");
+				return null;
+			}
 			if(u.getReputation() >= maxReputation) //if the user reached the max reputation
 				return u.getReputation();
 //			System.out.println("Reputation +1");
@@ -142,6 +162,10 @@ public class UserServiceimpl implements UserService {
 
 
 		User u = userRepo.findById(userId);
+		if(u==null) {
+//			System.err.println("User not found");
+			return null;
+		}
 		if(u.getReputation() <= minReputation)
 			return u.getReputation();
 
