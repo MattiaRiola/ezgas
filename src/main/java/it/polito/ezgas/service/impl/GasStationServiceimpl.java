@@ -36,10 +36,10 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Service
 public class GasStationServiceimpl implements GasStationService{
 
-	//@Autowired
+	@Autowired
 	private GasStationRepository gasRepo;
 
-	//@Autowired
+	@Autowired
 	private UserRepository userRepo;
 
 	private Converter<GasStation, GasStationDto> gasConverter = new GasStationConverter();
@@ -52,7 +52,8 @@ public class GasStationServiceimpl implements GasStationService{
 	 * @param userRepository
 	 */
 	public GasStationServiceimpl() {	}
-	
+
+
 	/**
 	 * constructor for Mockito
 	 * @param gasRepository
