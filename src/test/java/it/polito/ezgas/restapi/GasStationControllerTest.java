@@ -16,7 +16,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class GasStationController {
+public class GasStationControllerTest {
     @Test
     public void testGetAllGasStation() throws ClientProtocolException, IOException {
         HttpUriRequest request = new HttpGet("http://localhost:8080/gasstation/getAllGasStations");
