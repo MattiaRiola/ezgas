@@ -1,4 +1,4 @@
-package it.polito.ezgas.restapi;
+package it.polito.ezgas.controllertests;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
