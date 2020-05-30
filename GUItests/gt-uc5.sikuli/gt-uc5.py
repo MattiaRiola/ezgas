@@ -5,10 +5,9 @@
 # enter the admin page
 doubleClick("1590764890940.png") # doubleClick is used since click() doesn't seems to work with this kind of buttons
 
+wait(1) # wait that the page has loaded before scrolling
 #scroll down to reach the edit buttons of the gas station
-label = wait("1590765185960.png", 2) # take a point from where a scroll can start
-
-wheel(label, Button.WHEEL_UP, 40)
+wheel(Button.WHEEL_UP, 40)
 wait(1) # wait after a scroll to improve accuracy
 
 # pick the right gas station to be edited

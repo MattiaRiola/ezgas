@@ -1,7 +1,7 @@
 # USAGE: this script assumes that the user is already logged in and that there's a dummy gas station in the db to be modified
 
 # scroll down to see the gas station list
-wheel("1590772158128.png", Button.WHEEL_UP, 20) # scroll to see the gas stations list
+wheel(Button.WHEEL_UP, 20) # scroll to see the gas stations list
 wait(1) # wait a second to improve image recognition accuracy
 
 findAll("1590773667840.png") # find all the "New Report buttons"
@@ -17,7 +17,7 @@ for nr in sortedNewReports:
     i = i + 1
     
 doubleClick(newReport) # a double click must be performed since it seems that with some buttons just a click doesn't work
-wheel("1590772158128.png", Button.WHEEL_UP, 20) # scroll to see "Add price report form"
+wheel(Button.WHEEL_UP, 20) # scroll to see "Add price report form"
 
 # fill and submit the price report
 dieselPrice = wait(Pattern("1590773008414.png").similar(0.80).targetOffset(50,0), 1)
