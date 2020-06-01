@@ -2,9 +2,9 @@
 
 Authors: Group 21
 
-Date: 30/05/2020
+Date: 01/06/2020
 
-Version: 1
+Version: 3
 
 # GUI testing
 
@@ -45,11 +45,11 @@ Tests should cover each function of classes in the Controller package
 
 | class.method name | Functional Requirements covered |REST  API Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-|UserControllerTest.testSaveUser|FR1.1| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|     
-|UserControllerTest.testDeleteUser|FR1.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|    
+|UserControllerTest.testSaveDeleteUserWrapper|FR1.1 , FR1.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|     
+|UserControllerTest.testGetAllUserWrapper|FR1.3| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|            
 |UserControllerTest.testGetUserByIdWrapper|FR1.4| src.test.java.it.polito.ezgas.controllertests.UserControllerTest| 
-|UserControllerTest.testIncreaseUserReputation|FR5.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|              
-|UserControllerTest.testDecreaseUserReputation|FR5.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|            
+|UserControllerTest.testLoginWrapper|FR2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|              
+|UserControllerTest.testReputationWrapper|FR5.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|              
 |GasStationControllerTest.TestSaveGasStation|FR3.1| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest|            
 |GasStationControllerTest.TestDelateGasStation|FR3.2| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
 |GasStationControllerTest.TestGetAllGasStation|FR3.3| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
