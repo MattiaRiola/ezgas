@@ -26,9 +26,9 @@ This part of the document reports about testing at the GUI level. Tests are end 
 |UC4 - Create Gas Station| FR3.1 | GUItests.gt-uc10.1.sikuli.gt-uc4|      
 |UC5 - Modify Gas Station information| FR3.1 |GUItests.gt-uc10.1.sikuli.gt-uc5 |      
 |UC6 - Delete Gas Station| FR3.2 | GUItests.gt-uc10.1.sikuli.gt-uc6 |     
-|UC7 - Report fuel price for a gas station| FR4.3 | GUItests.gt-uc10.1.sikuli.gt-uc7|  
-|UC8 - Obtain price of fuel for gas stations in a certain geographic area| FR4.3 | GUItests.gt-uc10.1.sikuli.gt-uc8| 
-|UC9 - Update trust level of price list|FR5 | GUItests.gt-uc10.1.sikuli.gt-uc9| 
+|UC7 - Report fuel price for a gas station| FR5.1, FR5.2 | GUItests.gt-uc10.1.sikuli.gt-uc7|  
+|UC8 - Obtain price of fuel for gas stations in a certain geographic area| FR4.2, FR4.5 | GUItests.gt-uc10.1.sikuli.gt-uc8| 
+|UC9 - Update trust level of price list|FR5 | - | 
 |UC10 - Evaluate price| FR5.3 |GUItests.gt-uc10.1.sikuli.gt-uc10.1                           GUItests.gt-uc10.1.sikuli.gt-uc10.2|
            
 
