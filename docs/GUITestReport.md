@@ -46,10 +46,15 @@ Tests should cover each function of classes in the Controller package
 | class.method name | Functional Requirements covered |REST  API Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
 |UserControllerTest.testSaveUser|FR1.1| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|     
-|UserControllerTest.testDeleteUser|FR1.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|            
-|UserControllerTest.testIncreaseUserReputation|FR5.3| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|              
-|UserControllerTest.testDecreaseUserReputation|FR5.3| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|            
+|UserControllerTest.testDeleteUser|FR1.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|    
+|UserControllerTest.testGetUserByIdWrapper|FR1.4| src.test.java.it.polito.ezgas.controllertests.UserControllerTest| 
+|UserControllerTest.testIncreaseUserReputation|FR5.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|              
+|UserControllerTest.testDecreaseUserReputation|FR5.2| src.test.java.it.polito.ezgas.controllertests.UserControllerTest|            
 |GasStationControllerTest.TestSaveGasStation|FR3.1| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest|            
 |GasStationControllerTest.TestDelateGasStation|FR3.2| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
-|GasStationControllerTest.TTestSetReport|FR4.3| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
+|GasStationControllerTest.TestGetAllGasStation|FR3.3| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
+|GasStationControllerTest.TestGetGasStationsByProximity|FR4.1| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
+|GasStationControllerTest.TestGetGasStationsWithCoordinates|FR4.5| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
+|GasStationControllerTest.TestSetReport|FR5.1, FR5.3| src.test.java.it.polito.ezgas.controllertests.GasStationControllerTest| 
+
  
