@@ -46,7 +46,6 @@ public class UserControllerTest {
 //    private IdPw credentials;
 
 
-    //TODO : Find a way to find the user Id once saved in the db
     @Before
     public void setUp() throws  IOException {
         userTest0Email = "user100@user100.user100";
