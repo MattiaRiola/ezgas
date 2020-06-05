@@ -94,8 +94,8 @@ public class GasStationServiceimpl implements GasStationService{
 	public GasStationDto saveGasStation(GasStationDto gasStationDto) throws PriceException, GPSDataException {
 		if (gasStationDto == null)
 			throw new PriceException("Invalid prices in gas station");
-		if ((gasStationDto.getLat() < -90 && gasStationDto.getLat() > 90) ||
-				(gasStationDto.getLon() < -180 && gasStationDto.getLon() >= 180))
+		if ((gasStationDto.getLat() < -90 || gasStationDto.getLat() > 90) ||
+				(gasStationDto.getLon() < -180 || gasStationDto.getLon() >= 180))
 			throw new GPSDataException("Invalid gas station position");
 
 		if (gasStationDto.getDieselPrice() < -1 || (gasStationDto.getDieselPrice() > -1 && gasStationDto.getDieselPrice() < 0)) {
@@ -173,29 +173,24 @@ public class GasStationServiceimpl implements GasStationService{
 
 		refreshDependability();
 
-		try {
-			switch (gasolinetype) {
-				case "Diesel":
-					gasList = gasRepo.findByDiesel();
-					break;
-				case "Super":
-					gasList = gasRepo.findBySuper();
-					break;
-				case "SuperPlus":
-					gasList = gasRepo.findBySuperPlus();
-					break;
-				case "Gas":
-					gasList = gasRepo.findByGas();
-					break;
-				case "Methane":
-					gasList = gasRepo.findByMethane();
-					break;
-				default:
-					throw new InvalidGasTypeException("Invalid gasoline type");
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return new ArrayList<>();
+		switch (gasolinetype) {
+			case "Diesel":
+				gasList = gasRepo.findByDiesel();
+				break;
+			case "Super":
+				gasList = gasRepo.findBySuper();
+				break;
+			case "SuperPlus":
+				gasList = gasRepo.findBySuperPlus();
+				break;
+			case "Gas":
+				gasList = gasRepo.findByGas();
+				break;
+			case "Methane":
+				gasList = gasRepo.findByMethane();
+				break;
+			default:
+				throw new InvalidGasTypeException("Invalid gasoline type");
 		}
 
 		if (gasList == null || gasList.isEmpty()) {
