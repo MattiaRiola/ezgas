@@ -204,7 +204,6 @@ public class UserServiceTestMock {
 	public void testSaveUser(){
 		assertNull("Error: saved a null User and the saveUser method doesn't return null",testUserService.saveUser(null));
 		testUserList.add(testUser);
-//		assertNull("Error: saved an user with a duplicate email",testUserService.saveUser(testUserDto));
 		compareUsers(testUserDto0,testUserService.saveUser(testUserDto0),"saving user doesn't return the saved user");
 		
 	}
