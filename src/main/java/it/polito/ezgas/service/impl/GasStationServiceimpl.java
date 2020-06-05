@@ -128,6 +128,10 @@ public class GasStationServiceimpl implements GasStationService{
 			gasStationDto.setSuperPlusPrice(0); // Use 0 as a placeholder (no one gives free stuff)
 		}
 		
+		if (gasStationDto.getCarSharing().equals("null")) 
+			gasStationDto.setCarSharing(null);
+		
+		
 		GasStation gasStation = gasRepo.save(gasConverter.convertFromDto(gasStationDto));
 		refreshDependability();
 		return gasConverter.convertToDto(gasStation);
