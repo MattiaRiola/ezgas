@@ -5,6 +5,9 @@ import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
 
 public class GasStationConverter implements Converter<GasStation, GasStationDto> {
+	
+	UserConverter converter = new UserConverter();
+	
     @Override
     public GasStation convertFromDto(GasStationDto gasStationDto) {
         GasStation gasStation = new GasStation(gasStationDto.getGasStationName(), gasStationDto.getGasStationAddress(),
@@ -13,6 +16,8 @@ public class GasStationConverter implements Converter<GasStation, GasStationDto>
                 gasStationDto.getDieselPrice(), gasStationDto.getSuperPrice(), gasStationDto.getSuperPlusPrice(), gasStationDto.getGasPrice(),
                 gasStationDto.getMethanePrice(), gasStationDto.getReportUser(), gasStationDto.getReportTimestamp(), gasStationDto.getReportDependability());
         gasStation.setGasStationId(gasStationDto.getGasStationId());
+        if (gasStationDto.getUserDto() !=  null)
+        	gasStation.setUser(converter.convertFromDto(gasStationDto.getUserDto()));
         return gasStation;
     }
 
@@ -23,6 +28,8 @@ public class GasStationConverter implements Converter<GasStation, GasStationDto>
                 gasStation.getHasMethane(), gasStation.getCarSharing(), gasStation.getLat(), gasStation.getLon(),
                 gasStation.getDieselPrice(), gasStation.getSuperPrice(), gasStation.getSuperPlusPrice(), gasStation.getGasPrice(),
                 gasStation.getMethanePrice(), gasStation.getReportUser(), gasStation.getReportTimestamp(), gasStation.getReportDependability());
+        if (gasStation.getUser() !=  null)
+        	gasStationDto.setUserDto(converter.convertToDto(gasStation.getUser()));
         return gasStationDto;
     }
 }

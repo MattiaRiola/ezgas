@@ -341,8 +341,10 @@ public class GasStationServiceimpl implements GasStationService{
 			throw new InvalidUserException("Invalid user id");
 		} else {
 			gasStation.setReportUser(userId);
+			gasStation.setUser(userRepo.findById(userId));
 		}
-
+		
+		
 		gasStation.setReportTimestamp(LocalDateTime.now().toString());
 		gasRepo.save(gasStation);
 		//gasRepo.updateReport(dieselPrice, gasPrice, methanePrice, superPrice, superPlusPrice, userId, gasStationId);
