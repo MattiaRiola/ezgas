@@ -445,7 +445,7 @@ package "it.polito.ezgas.repository" {
 "User" "*" ----- "0..1" "UserRepository" 
 "GasStation" "*" ----- "1" "GasStationRepository"
 
-"UserConverter" "1" ----- "1" "GasStationConverter"
+"UserConverter" "1" ----- "0" "GasStationConverter"
 @enduml
 ```
 
