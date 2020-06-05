@@ -127,11 +127,7 @@ public class GasStationServiceimpl implements GasStationService{
 		} else if (gasStationDto.getSuperPlusPrice() == -1) {
 			gasStationDto.setSuperPlusPrice(0); // Use 0 as a placeholder (no one gives free stuff)
 		}
-
-		if (gasRepo.findById(gasStationDto.getGasStationId()) != null) {
-			gasRepo.delete(gasStationDto.getGasStationId());
-		}
-
+		
 		GasStation gasStation = gasRepo.save(gasConverter.convertFromDto(gasStationDto));
 		refreshDependability();
 		return gasConverter.convertToDto(gasStation);
