@@ -48,8 +48,6 @@ public class GasStationServiceimpl implements GasStationService{
 	
 	/**
 	 *  Standard constructor
-	 * @param gasRepository
-	 * @param userRepository
 	 */
 	public GasStationServiceimpl() {	}
 
@@ -131,7 +129,17 @@ public class GasStationServiceimpl implements GasStationService{
 		if (gasStationDto.getCarSharing().equals("null")) 
 			gasStationDto.setCarSharing(null);
 		
-		
+		/*
+		The internal representation of the report timestamp is different from the one used in the frontend.
+		Before saving the gas station in the db in case of an update load the correct timestamp from the db.
+		This is fine since the only moment in which the timestamp is updated is when a new report is done with the
+		appropriate method call
+		*/
+		GasStation gs = gasRepo.findById(gasStationDto.getGasStationId());
+		if (gs != null && gs.getReportTimestamp() != null && !gs.getReportTimestamp().isEmpty()) {
+			gasStationDto.setReportTimestamp(gs.getReportTimestamp());
+		}
+
 		GasStation gasStation = gasRepo.save(gasConverter.convertFromDto(gasStationDto));
 		refreshDependability();
 		return gasConverter.convertToDto(gasStation);
