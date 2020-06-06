@@ -125,9 +125,10 @@ public class GasStationServiceimpl implements GasStationService{
 		} else if (gasStationDto.getSuperPlusPrice() == -1) {
 			gasStationDto.setSuperPlusPrice(0); // Use 0 as a placeholder (no one gives free stuff)
 		}
-		
-		if (gasStationDto.getCarSharing().equals("null")) 
+
+		if (gasStationDto.getCarSharing() == null || gasStationDto.getCarSharing().equals("null"))
 			gasStationDto.setCarSharing(null);
+
 		
 		/*
 		The internal representation of the report timestamp is different from the one used in the frontend.
