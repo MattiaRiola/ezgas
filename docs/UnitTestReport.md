@@ -333,7 +333,7 @@ NOTE: the result of the method is returned in meters
 ||maxint-1|valid|T10 {setGasStationId(maxint-1); <br> getGasStationId() -> maxint-1}|-|
 
 
-The remaining Dto classes has been tested using the same criterias. The whole test suite documentation hasn't been reported in order to do not overload the document and take it more readable.
+The remaining Dto classes has been tested using the same criterias. The whole test suite documentation hasn't been reported in order to do not overload the document and make it more readable.
 
 
 # White Box Unit Tests
