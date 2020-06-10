@@ -48,8 +48,6 @@ public class GasStationServiceimpl implements GasStationService{
 	
 	/**
 	 *  Standard constructor
-	 * @param gasRepository
-	 * @param userRepository
 	 */
 	public GasStationServiceimpl() {	}
 
@@ -94,8 +92,8 @@ public class GasStationServiceimpl implements GasStationService{
 	public GasStationDto saveGasStation(GasStationDto gasStationDto) throws PriceException, GPSDataException {
 		if (gasStationDto == null)
 			throw new PriceException("Invalid prices in gas station");
-		if ((gasStationDto.getLat() < -90 && gasStationDto.getLat() > 90) ||
-				(gasStationDto.getLon() < -180 && gasStationDto.getLon() >= 180))
+		if ((gasStationDto.getLat() < -90 || gasStationDto.getLat() > 90) ||
+				(gasStationDto.getLon() < -180 || gasStationDto.getLon() >= 180))
 			throw new GPSDataException("Invalid gas station position");
 
 		if (gasStationDto.getDieselPrice() < -1 || (gasStationDto.getDieselPrice() > -1 && gasStationDto.getDieselPrice() < 0)) {
@@ -128,8 +126,19 @@ public class GasStationServiceimpl implements GasStationService{
 			gasStationDto.setSuperPlusPrice(0); // Use 0 as a placeholder (no one gives free stuff)
 		}
 
-		if (gasRepo.findById(gasStationDto.getGasStationId()) != null) {
-			gasRepo.delete(gasStationDto.getGasStationId());
+		if (gasStationDto.getCarSharing() == null || gasStationDto.getCarSharing().equals("null"))
+			gasStationDto.setCarSharing(null);
+
+		
+		/*
+		The internal representation of the report timestamp is different from the one used in the frontend.
+		Before saving the gas station in the db in case of an update load the correct timestamp from the db.
+		This is fine since the only moment in which the timestamp is updated is when a new report is done with the
+		appropriate method call
+		*/
+		GasStation gs = gasRepo.findById(gasStationDto.getGasStationId());
+		if (gs != null && gs.getReportTimestamp() != null && !gs.getReportTimestamp().isEmpty()) {
+			gasStationDto.setReportTimestamp(gs.getReportTimestamp());
 		}
 
 		GasStation gasStation = gasRepo.save(gasConverter.convertFromDto(gasStationDto));
@@ -173,29 +182,24 @@ public class GasStationServiceimpl implements GasStationService{
 
 		refreshDependability();
 
-		try {
-			switch (gasolinetype) {
-				case "Diesel":
-					gasList = gasRepo.findByDiesel();
-					break;
-				case "Super":
-					gasList = gasRepo.findBySuper();
-					break;
-				case "SuperPlus":
-					gasList = gasRepo.findBySuperPlus();
-					break;
-				case "Gas":
-					gasList = gasRepo.findByGas();
-					break;
-				case "Methane":
-					gasList = gasRepo.findByMethane();
-					break;
-				default:
-					throw new InvalidGasTypeException("Invalid gasoline type");
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return new ArrayList<>();
+		switch (gasolinetype) {
+			case "Diesel":
+				gasList = gasRepo.findByDiesel();
+				break;
+			case "Super":
+				gasList = gasRepo.findBySuper();
+				break;
+			case "SuperPlus":
+				gasList = gasRepo.findBySuperPlus();
+				break;
+			case "Gas":
+				gasList = gasRepo.findByGas();
+				break;
+			case "Methane":
+				gasList = gasRepo.findByMethane();
+				break;
+			default:
+				throw new InvalidGasTypeException("Invalid gasoline type");
 		}
 
 		if (gasList == null || gasList.isEmpty()) {
@@ -346,8 +350,10 @@ public class GasStationServiceimpl implements GasStationService{
 			throw new InvalidUserException("Invalid user id");
 		} else {
 			gasStation.setReportUser(userId);
+			gasStation.setUser(userRepo.findById(userId));
 		}
-
+		
+		
 		gasStation.setReportTimestamp(LocalDateTime.now().toString());
 		gasRepo.save(gasStation);
 		//gasRepo.updateReport(dieselPrice, gasPrice, methanePrice, superPrice, superPlusPrice, userId, gasStationId);

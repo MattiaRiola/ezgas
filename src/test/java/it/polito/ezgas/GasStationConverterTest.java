@@ -5,15 +5,30 @@ import it.polito.ezgas.converter.impl.GasStationConverter;
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
 import org.junit.Test;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class GasStationConverterTest {
     @Test
     public void testGasStationToDto() {
+        String timestamp = LocalDateTime.now().toString();
+        LocalDateTime localDateTime = LocalDateTime.parse(timestamp);
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+        Date date = Date.from(zonedDateTime.toInstant());
+        DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
+        String formattedDate = formatter.format(date);
+
         GasStation gasStation = new GasStation("Minmus", "Via Kerbal Space Program",
                 true, false, true, false, true, null,
                 10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
-                5, "10/12/20", 76);
+                5, timestamp, 76);
         gasStation.setGasStationId(1);
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
         GasStationDto gasStationDto = converter.convertToDto(gasStation);
@@ -33,16 +48,17 @@ public class GasStationConverterTest {
         assertEquals("dto superplus price is wrong", 1.2, gasStationDto.getSuperPlusPrice(), 0.0);
         assertEquals("dto gas price is wrong", -1, gasStationDto.getGasPrice(), 0.0);
         assertEquals("dto methane price is wrong", 1.3, gasStationDto.getMethanePrice(), 0.0);
-        assertEquals("dto timestamp is wrong", "10/12/20", gasStationDto.getReportTimestamp());
+        assertEquals("dto timestamp is wrong", formattedDate, gasStationDto.getReportTimestamp());
         assertEquals("dto dependability is wrong", (int)76, (int)gasStationDto.getReportDependability());
     }
 
     @Test
     public void testGasStationFromDto() {
+        String timestamp = LocalDateTime.now().toString();
         GasStationDto gasStationDto = new GasStationDto(10, "Minmus", "Via Kerbal Space Program",
                 true, false, true, false, true, null,
                 10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
-                5, "10/12/20", 76);
+                5, timestamp, 76);
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
         GasStation gasStation = converter.convertFromDto(gasStationDto);
         assertEquals((Integer)10, gasStation.getGasStationId());
@@ -61,7 +77,7 @@ public class GasStationConverterTest {
         assertEquals("entity superplus price is wrong", 1.2, gasStation.getSuperPlusPrice(), 0.0);
         assertEquals("entity gas price is wrong", -1, gasStation.getGasPrice(), 0.0);
         assertEquals("entity methane price is wrong", 1.3, gasStation.getMethanePrice(), 0.0);
-        assertEquals("entity timestamp is wrong", "10/12/20", gasStation.getReportTimestamp());
+        assertEquals("entity timestamp is wrong", timestamp, gasStation.getReportTimestamp());
         assertEquals("entity dependability is wrong", (int)76, (int)gasStation.getReportDependability());
     }
 }

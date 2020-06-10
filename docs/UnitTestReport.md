@@ -142,7 +142,7 @@ The other methods of the class User have been tested in a similar way, passing a
 ||minint+1|valid|T5 {setGasStationId(minint+1) -> Ok}|-|
 ||-1|valid|T6 {setGasStationId(-1) -> Ok}|-|
 ||0|valid|T7 {setGasStationId(0) -> Ok}|-|
-||10|valid|T8 {setGasStationId(10) -> Ok}|src.test.java.it.polito.ezgas.UserEntityTest.testUserId|
+||10|valid|T8 {setGasStationId(10) -> Ok}|src.test.java.it.polito.ezgas.GasStationEntityTest.testId|
 ||maxint|valid|T9 {setGasStationId(maxint) -> Ok}|-|
 ||maxint-1|valid|T10 {setGasStationId(maxint-1) -> Ok}|-|
 
@@ -213,7 +213,127 @@ NOTE: the result of the method is returned in meters
 ||-|invalid|T8 {distance(-500,800,600,-900) -> Error}|src.test.java.it.polito.ezgas.HaversineTest.testDistanceTest|
 ||-|Invalid|T9 {distance(-maxdouble,-maxdouble,maxdouble,,maxdouble) -> Error}|src.test.java.it.polito.ezgas.HaversineTest.testDistanceTest|
 
+ ### **Class *UserDto* - method *setUserId()***
 
+**Criteria for method *setUserId()*:**
+
+ - Type of parameter
+ - Value of parameter
+
+**Predicates for method *setUserId()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|Type of parameter        |int  |
+|                         |string|
+|                         |other|
+|Value of parameter       |[minint,-1]|
+|                         |[0,maxint]|
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+| Value of parameter | minint, minint+1, -1, 0, maxint-1, maxint |
+
+
+
+**Combination of predicates**:
+
+
+| Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+|string|-|Invalid|T1 {setUserId('0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong') -> Error}|-|
+|string|-|Invalid|T2 {setUserId("A") -> Error} |-|
+|double|-|Invalid|T3 {setUserId(2.1)-> Error}|-|
+|int|minint|valid|T4 {setUserId(minint) -> Ok}|-|
+||minint+1|valid|T5 {setUserId(minint+1) -> Ok}|-|
+||-1|valid|T6 {setUserId(-1) -> Ok}|-|
+||0|valid|T7 {setUserId(0) -> Ok}|-|
+||10|valid|T8 {setUserId(10) -> Ok}|src.test.java.it.polito.ezgas.UserDtoTest.testUserId|
+||maxint|valid|T9 {setUserId(maxint) -> Ok}|-|
+||maxint-1|valid|T10 {setUserId(maxint-1) -> Ok}|-|
+
+### **Class *UserDto* - method *getUserId()***
+
+
+**Combination of predicates**:
+
+| Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+|string|-|Invalid|T1 {setUserId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’); -> Error}|-|
+|string|-|Invalid|T2 {setUserId("A"); -> Error}|-|
+|double|-|Invalid|T3 {setUserId(2.1); -> Error}|-|
+|int|minint|valid|T4 {setUserId(minint); <br> getUserId() -> minint}|-|
+||minint+1|valid|T5 {setUserId(minint+1); <br> getUserId() -> minint+1}|-|
+||-1|valid|T6 {setUserId(-1); <br> getUserId(); -> -1}|-|
+||0|valid|T7 {setUserId(0); <br> getUserId() -> 0}|-|
+||10|valid|T8 {setUserId(10); <br> getUserId() -> 10}|src.test.java.it.polito.ezgas.UserDtoTest.testUserId|
+||maxint|valid|T9 {setUserId(maxint); <br> getUserId() -> maxint}|-|
+||maxint-1|valid|T10 {setUserId(maxint-1); <br> getUserId() -> maxint-1}|-|
+
+### **Class *GasStationDto* - method *setGasStationId()***
+
+**Criteria for method *setGasStationId()*:**
+
+ - Type of parameter
+ - Value of parameter
+
+
+**Predicates for method *setGasStationId()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|Type of parameter        |int  |
+|                         |string|
+|                         |other|
+|Value of parameter       |[minint,-1]|
+|                         |[0,maxint]|
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+| Value of parameter | minint, minint+1, -1, 0, maxint-1, maxint |
+
+
+
+**Combination of predicates**:
+
+
+| Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+|string|-|Invalid|T1 {setGasStationId('0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong') -> Error}|-|
+|string|-|Invalid|T2 {setGasStationId("A") -> Error} |-|
+|double|-|Invalid|T3 {setGasStationId(2.1)-> Error}|-|
+|int|minint|valid|T4 {setGasStationId(minint) -> Ok}|-|
+||minint+1|valid|T5 {setGasStationId(minint+1) -> Ok}|-|
+||-1|valid|T6 {setGasStationId(-1) -> Ok}|-|
+||0|valid|T7 {setGasStationId(0) -> Ok}|-|
+||10|valid|T8 {setGasStationId(10) -> Ok}|src.test.java.it.polito.ezgas.GasStationDtoTest.testId|
+||maxint|valid|T9 {setGasStationId(maxint) -> Ok}|-|
+||maxint-1|valid|T10 {setGasStationId(maxint-1) -> Ok}|-|
+
+### **Class *GasStationDto* - method *getGasStationId()***
+
+**Combination of predicates**:
+
+| Type of parameter | Value of parameter | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+|string|-|Invalid|T1 {setGasStationId(‘0E984725-C51C-4BF4-9960-E1C80E27ABA0wrong’); -> Error}|-|
+|string|-|Invalid|T2 {setGasStationId("A"); -> Error}|-|
+|double|-|Invalid|T3 {setGasStationId(2.1); -> Error}|-|
+|int|minint|valid|T4 {setGasStationId(minint); <br> getGasStationId() -> minint}|-|
+||minint+1|valid|T5 {setGasStationId(minint+1); <br> getGasStationId() -> minint+1}|-|
+||-1|valid|T6 {setGasStationId(-1); <br> getGasStationId(); -> -1}|-|
+||0|valid|T7 {setGasStationId(0); <br> getGasStationId() -> 0}|-|
+||10|valid|T8 {setGasStationId(10); <br> getGasStationId() -> 10}|src.test.java.it.polito.ezgas.GasStationDtoTest.testId|
+||maxint|valid|T9 {setGasStationId(maxint); <br> getGasStationId() -> maxint}|-|
+||maxint-1|valid|T10 {setGasStationId(maxint-1); <br> getGasStationId() -> maxint-1}|-|
+
+
+The remaining Dto classes has been tested using the same criterias. The whole test suite documentation hasn't been reported in order to do not overload the document and make it more readable.
 
 
 # White Box Unit Tests

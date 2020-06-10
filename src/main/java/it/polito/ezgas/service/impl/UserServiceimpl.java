@@ -81,7 +81,7 @@ public class UserServiceimpl implements UserService {
 			return userConverter.convertToDto(user);	
 		}
 		//It return null if the userRepo find an user with that email
-		return null;
+		return userConverter.convertToDto(u);
 	}
 
 	@Override

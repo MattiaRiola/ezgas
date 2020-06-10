@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class GasStationServiceTest {
 		gs = new GasStation("Not so much eco friendly", "Via",
                 true, false, true, false, true, "Car2Go",
                 10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
-                5, "10/12/20", 76);
+                5, LocalDateTime.now().toString(), 76);
 		gasStationRepository.save(gs);
 	}
 	
