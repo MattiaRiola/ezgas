@@ -36,8 +36,8 @@ public class GasStationControllerTest {
 		//Save a GasStation as setup.
         this.station = new GasStationDto(2, "MyTestStation",
                 "Via Bligny 11", true, true, true, true,
-                true, "Enjoy", 1.3, 2.0, 1.1, 1.1,
-                1.2, 1.3, 1.4, 1, LocalDateTime.now().toString(), 75.0);
+                true,true, "Enjoy", 1.3, 2.0, 1.1, 1.1,
+                1.2, 1.3, 1.4,1.5, 1, LocalDateTime.now().toString(), 75.0);
         //Save the gas station.
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(this.station);
@@ -86,8 +86,8 @@ public class GasStationControllerTest {
     public void TestSaveGasStation() throws ClientProtocolException, IOException {
         GasStationDto gasStation = new GasStationDto(1, "Gas n' Roll Test",
                 "Via Amba Aradam 10", true, true, true, true,
-                true, "A CarSharing Company Inc.", 1.0, 2.0, 1.0, 1.1,
-                1.2, 1.3, 1.4, 1, LocalDateTime.now().toString(), 75.0);
+                true,true, "A CarSharing Company Inc.", 1.0, 2.0, 1.0, 1.1,
+                1.2, 1.3, 1.4,1.5, 1, LocalDateTime.now().toString(), 75.0);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(gasStation);

@@ -247,7 +247,8 @@ public class GasStationServiceimpl implements GasStationService{
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, int radius, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException, InvalidCarSharingException {		
-		
+		if(radius <= 0)
+			radius = 1;
 		if ((lat < -90 || lat > 90) || (lon < -180 || lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
 		if (carsharing == null || carsharing.isEmpty()) {
@@ -374,6 +375,11 @@ public class GasStationServiceimpl implements GasStationService{
 			gasStation.setPremiumDieselPrice(premiumDieselPrice);
 		}
 		
+		if (premiumDieselPrice != null && premiumDieselPrice < 0.0) {
+			throw new PriceException("Invalid premiumDieselPrice price");
+		} else {
+			gasStation.setPremiumDieselPrice(premiumDieselPrice);
+		}
 		if (userId == null || userId < 0) {
 			throw new InvalidUserException("Invalid user id");
 		} else {

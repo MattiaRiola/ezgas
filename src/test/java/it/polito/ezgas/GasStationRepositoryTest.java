@@ -41,8 +41,8 @@ public class GasStationRepositoryTest {
     @Test
     public void findByIdTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                true, false, true, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, false, true, false, true, true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         GasStation gasStation = gasStationRepository.findById(54);
@@ -58,16 +58,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findByDieselTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                false, false, true, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, false, true, false, true, true,"Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findByDiesel();
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly", "Via",
-                true, false, true, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, false, true, false, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findByDiesel();
@@ -78,16 +78,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findBySuperTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                false, false, true, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, false, true, false, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findBySuper();
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly", "Via",
-                false, true, true, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, true, true, false, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findBySuper();
@@ -98,16 +98,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findBySuperPlusTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                false, true, false, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, true, false, false, true, true,"Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findBySuperPlus();
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly", "Via",
-                false, true, true, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, true, true, false, true, true,"Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findBySuperPlus();
@@ -118,16 +118,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findByGasTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                false, true, false, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, true, false, false, true, true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findByGas();
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly", "Via",
-                false, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, true, true, true, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findByGas();
@@ -138,16 +138,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findByMethaneTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                false, true, false, false, false, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, true, false, false, false, true,"Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findByMethane();
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly", "Via",
-                false, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                false, true, true, true, true, true,"Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findByMethane();
@@ -158,16 +158,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findByDieselAndCarSharingTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                true, true, true, true, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findByHasDieselAndCarSharing("Enjoy");
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly 2", "Via",
-                true, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findByHasDieselAndCarSharing("Car2Go");
@@ -178,16 +178,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findBySuperAndCarSharingTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                true, true, true, true, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findBySuperAndCarSharing("Enjoy");
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly 2", "Via",
-                true, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findBySuperAndCarSharing("Car2Go");
@@ -198,16 +198,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findBySuperPlusAndCarSharingTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                true, true, true, true, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findBySuperPlusAndCarSharing("Enjoy");
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly 2", "Via",
-                true, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findBySuperPlusAndCarSharing("Car2Go");
@@ -218,16 +218,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findByGasAndCarSharingTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                true, true, true, true, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findByGasAndCarSharing("Enjoy");
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly 2", "Via",
-                true, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findByGasAndCarSharing("Car2Go");
@@ -238,16 +238,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findByMethaneAndCarSharingTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                true, true, true, true, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+        		true, true, true, true, true,true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findByMethaneAndCarSharing("Enjoy");
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly 2", "Via",
-                true, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findByMethaneAndCarSharing("Car2Go");
@@ -258,16 +258,16 @@ public class GasStationRepositoryTest {
     @Test
     public void findByCarSharingTest() {
         GasStation expected = new GasStation("Not so much eco friendly", "Via",
-                true, true, true, true, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true,true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         List<GasStation> gasStationList = gasStationRepository.findByCarSharing("Enjoy");
         assertEquals("gas station should have been empty", 0, gasStationList.size());
 
         expected = new GasStation("Not so much eco friendly 2", "Via",
-                true, true, true, true, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, true, true, true, true, true,"Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, "10/12/20", 76);
         gasStationRepository.save(expected);
         gasStationList = gasStationRepository.findByCarSharing("Car2Go");
