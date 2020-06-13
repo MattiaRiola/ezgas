@@ -149,7 +149,7 @@ public class GasStationControllerTest {
     
     @Test
     public void TestGetGasStationsWithCoordinates() throws ClientProtocolException, IOException {
-    	HttpUriRequest getCoord = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/"+this.station.getLat()+"/"+ this.station.getLon()+"/0/"+"/Diesel/"+this.station.getCarSharing());
+    	HttpUriRequest getCoord = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/"+this.station.getLat()+"/"+ this.station.getLon()+"/0/Diesel/"+this.station.getCarSharing());
     	HttpResponse getCoordResponse = HttpClientBuilder.create().build().execute(getCoord);
     	
     	String jsonGetCoordResponse = EntityUtils.toString(getCoordResponse.getEntity());

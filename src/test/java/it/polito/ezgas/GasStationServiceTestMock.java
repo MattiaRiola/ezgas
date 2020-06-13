@@ -369,7 +369,7 @@ public class GasStationServiceTestMock {
 			this.dut.setReport(0, 1.0, 1.0, 1.0, 1.0, 1.0,1.0 ,0);
 			assertEquals(0,0);
 		}catch (Exception e) {
-			fail("No exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	

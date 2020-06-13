@@ -380,12 +380,12 @@ public class GasStationServiceTest {
 			Double price = 1.0;
 			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, lowRepUser.getUserId());
 			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
-			assertEquals(resDto.getMethanePrice().intValue(), price, "Error report");
-			assertEquals(resDto.getGasPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPlusPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getDieselPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getPremiumDieselPrice().intValue(), price, "Error report");
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
 		}catch (Exception e) {
 			fail("Low rep user couldn't add its report");
 		}
@@ -395,12 +395,12 @@ public class GasStationServiceTest {
 			Double price = 2.0;
 			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, highRepUser.getUserId());
 			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
-			assertEquals(resDto.getMethanePrice().intValue(), price, "Error report");
-			assertEquals(resDto.getGasPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPlusPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getDieselPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getPremiumDieselPrice().intValue(), price, "Error report");
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
 		}catch (Exception e) {
 			fail("High rep user couldn't add its report");
 		}
@@ -411,12 +411,12 @@ public class GasStationServiceTest {
 			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, lowRepUser.getUserId());
 			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
 			price = 2.0;
-			assertEquals(resDto.getMethanePrice().intValue(), price, "Error report");
-			assertEquals(resDto.getGasPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPlusPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getDieselPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getPremiumDieselPrice().intValue(), price, "Error report");
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
 		}catch (Exception e) {
 			fail("An exception in setReport has been caught");
 		}
@@ -432,12 +432,12 @@ public class GasStationServiceTest {
 			Double price = 3.0;
 			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, highRepUser.getUserId());
 			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
-			assertEquals(resDto.getMethanePrice().intValue(), price, "Error report");
-			assertEquals(resDto.getGasPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getSuperPlusPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getDieselPrice().intValue(), price, "Error report");
-			assertEquals(resDto.getPremiumDieselPrice().intValue(), price, "Error report");
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
 		}catch (Exception e) {
 			fail("Low rep user couldn't add its report after more than 4 days");
 		}
