@@ -361,7 +361,6 @@ public class GasStationServiceimpl implements GasStationService{
 		} else {
 			gasStation.setReportUser(userId);
 			gasStation.setUser(userRepo.findById(userId));
-			System.out.println("User for gasStation has id = " + userId + " and name = " + gasStation.getUser().getUserName());
 		}
 
 		LocalDateTime now = LocalDateTime.now();
