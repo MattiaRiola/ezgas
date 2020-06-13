@@ -97,18 +97,31 @@ public class GasStationServiceimpl implements GasStationService{
 				(gasStationDto.getLon() < -180 || gasStationDto.getLon() >= 180))
 			throw new GPSDataException("Invalid gas station position");
 		
-		/*if (gasStationDto.getDieselPrice() < 0.0) 
+		if (gasStationDto.getDieselPrice() != null && gasStationDto.getDieselPrice() < 0.0) 
 			throw new PriceException("Invalid Diesel price");
-		else if (gasStationDto.getGasPrice() == null) 
+		else if (gasStationDto.getGasPrice() != null && gasStationDto.getGasPrice() < 0.0) 
 			throw new PriceException("Invalid Gas price");
-		else if (gasStationDto.getMethanePrice() == null) 
+		else if (gasStationDto.getMethanePrice() != null && gasStationDto.getMethanePrice() < 0.0) 
 			throw new PriceException("Invalid Methane price");
-		else if (gasStationDto.getSuperPrice() == null) 
+		else if (gasStationDto.getSuperPrice() != null && gasStationDto.getSuperPrice() < 0.0) 
 			throw new PriceException("Invalid Super price");
-		else if (gasStationDto.getSuperPlusPrice() == null)
+		else if (gasStationDto.getSuperPlusPrice() != null && gasStationDto.getSuperPlusPrice()< 0.0)
 			throw new PriceException("Invalid SuperPlus price");
-		else if (gasStationDto.getPremiumDieselPrice() == null)
-			throw new PriceException("Invalid Premium diesel price");*/
+		else if (gasStationDto.getPremiumDieselPrice() != null && gasStationDto.getPremiumDieselPrice() < 0.0)
+			throw new PriceException("Invalid Premium diesel price");
+		
+		if (gasStationDto.getDieselPrice() == null)
+			gasStationDto.setHasDiesel(false);
+		if (gasStationDto.getGasPrice() == null)
+			gasStationDto.setHasGas(false);
+		if (gasStationDto.getMethanePrice() == null)
+			gasStationDto.setHasMethane(false);
+		if (gasStationDto.getSuperPrice() == null)
+			gasStationDto.setHasSuper(false);
+		if (gasStationDto.getSuperPlusPrice() == null)
+			gasStationDto.setHasSuperPlus(false);
+		if (gasStationDto.getPremiumDieselPrice() == null)
+			gasStationDto.setHasPremiumDiesel(false);
 		
 		if (gasStationDto.getCarSharing() == null || gasStationDto.getCarSharing().equals("null"))
 			gasStationDto.setCarSharing(null);
