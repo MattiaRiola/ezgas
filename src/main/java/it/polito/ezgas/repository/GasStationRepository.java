@@ -27,7 +27,10 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
 
     @Query(value = "SELECT * FROM GAS_STATION WHERE HAS_SUPER_PLUS = TRUE", nativeQuery = true)
     List<GasStation> findBySuperPlus();
-
+    //Add PremumDiesel
+    @Query(value = "SELECT * FROM GAS_STATION WHERE HAS_PREMIUM_DIESEL = TRUE", nativeQuery = true)
+    List<GasStation> findByPremiumDiesel();
+    
     @Query(value = "SELECT * FROM GAS_STATION WHERE CAR_SHARING = ?1", nativeQuery = true)
     List<GasStation> findByCarSharing (String carSharing);
 
@@ -45,4 +48,7 @@ public interface GasStationRepository extends JpaRepository<GasStation, Integer>
 
     @Query(value = "SELECT * FROM GAS_STATION WHERE HAS_SUPER_PLUS = TRUE AND CAR_SHARING=?1", nativeQuery = true)
     List<GasStation> findBySuperPlusAndCarSharing(String carSharing);
+    //Add PremumDiesel
+    @Query(value = "SELECT * FROM GAS_STATION WHERE HAS_PREMIUM_DIESEL = TRUE AND CAR_SHARING=?1", nativeQuery = true)
+    List<GasStation> findByPremiumDieselAndCarSharing(String carSharing);
 }

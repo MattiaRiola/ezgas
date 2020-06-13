@@ -18,6 +18,7 @@ import java.util.ListIterator;
 import org.springframework.stereotype.Service;
 
 import exception.GPSDataException;
+import exception.InvalidCarSharingException;
 import exception.InvalidGasStationException;
 import exception.InvalidGasTypeException;
 import exception.InvalidUserException;
@@ -95,37 +96,20 @@ public class GasStationServiceimpl implements GasStationService{
 		if ((gasStationDto.getLat() < -90 || gasStationDto.getLat() > 90) ||
 				(gasStationDto.getLon() < -180 || gasStationDto.getLon() >= 180))
 			throw new GPSDataException("Invalid gas station position");
-
-		if (gasStationDto.getDieselPrice() < -1 || (gasStationDto.getDieselPrice() > -1 && gasStationDto.getDieselPrice() < 0)) {
+		
+		/*if (gasStationDto.getDieselPrice() < 0.0) 
 			throw new PriceException("Invalid Diesel price");
-		} else if (gasStationDto.getDieselPrice() == -1) {
-			gasStationDto.setDieselPrice(0); // Use 0 as a placeholder (no one gives free stuff)
-		}
-
-		if (gasStationDto.getGasPrice() < -1 || (gasStationDto.getGasPrice() > -1 && gasStationDto.getGasPrice() < 0)) {
-			throw new PriceException("Invalid Diesel price");
-		} else if (gasStationDto.getGasPrice() == -1) {
-			gasStationDto.setGasPrice(0); // Use 0 as a placeholder (no one gives free stuff)
-		}
-
-		if (gasStationDto.getMethanePrice() < -1 || (gasStationDto.getMethanePrice() > -1 && gasStationDto.getMethanePrice() < 0)) {
-			throw new PriceException("Invalid Diesel price");
-		} else if (gasStationDto.getMethanePrice() == -1) {
-			gasStationDto.setMethanePrice(0); // Use 0 as a placeholder (no one gives free stuff)
-		}
-
-		if (gasStationDto.getSuperPrice() < -1 || (gasStationDto.getSuperPrice() > -1 && gasStationDto.getSuperPrice() < 0)) {
-			throw new PriceException("Invalid Diesel price");
-		} else if (gasStationDto.getSuperPrice() == -1) {
-			gasStationDto.setSuperPrice(0); // Use 0 as a placeholder (no one gives free stuff)
-		}
-
-		if (gasStationDto.getSuperPlusPrice() < -1 || (gasStationDto.getSuperPlusPrice() > -1 && gasStationDto.getSuperPlusPrice() < 0)) {
-			throw new PriceException("Invalid Diesel price");
-		} else if (gasStationDto.getSuperPlusPrice() == -1) {
-			gasStationDto.setSuperPlusPrice(0); // Use 0 as a placeholder (no one gives free stuff)
-		}
-
+		else if (gasStationDto.getGasPrice() == null) 
+			throw new PriceException("Invalid Gas price");
+		else if (gasStationDto.getMethanePrice() == null) 
+			throw new PriceException("Invalid Methane price");
+		else if (gasStationDto.getSuperPrice() == null) 
+			throw new PriceException("Invalid Super price");
+		else if (gasStationDto.getSuperPlusPrice() == null)
+			throw new PriceException("Invalid SuperPlus price");
+		else if (gasStationDto.getPremiumDieselPrice() == null)
+			throw new PriceException("Invalid Premium diesel price");*/
+		
 		if (gasStationDto.getCarSharing() == null || gasStationDto.getCarSharing().equals("null"))
 			gasStationDto.setCarSharing(null);
 
@@ -198,6 +182,9 @@ public class GasStationServiceimpl implements GasStationService{
 			case "Methane":
 				gasList = gasRepo.findByMethane();
 				break;
+			case "PremiumDiesel":
+				gasList = gasRepo.findByPremiumDiesel();
+				break;
 			default:
 				throw new InvalidGasTypeException("Invalid gasoline type");
 		}
@@ -234,11 +221,38 @@ public class GasStationServiceimpl implements GasStationService{
 	}
 	
 	@Override
-	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
-			String carsharing) throws InvalidGasTypeException, GPSDataException {
+	 public List<GasStationDto> getGasStationsByProximity(double lat, double lon, int radius) throws GPSDataException {
+		
+		if ((lat< -90 || lat > 90) || (lon< -180 || lon >= 180))
+			throw new GPSDataException("Invalid Coordinates");
+		
+		if (radius == 0)
+			return getGasStationsByProximity(lat, lon);
+		
+		refreshDependability();
+		List<GasStation> gasList = gasRepo.findAll();
+		if (gasList == null || gasList.isEmpty()) {
+			return new LinkedList<GasStationDto>();
+		}
+		
+		List<GasStationDto> DtoGasList= new ArrayList<>();
+		for (GasStation gas : gasList) {
+			if (Haversine.distance(lat, lon, gas.getLat(), gas.getLon()) < radius) {
+				DtoGasList.add(gasConverter.convertToDto(gas));
+			}
+		}
+		return DtoGasList; 	
+	}
+	
+	@Override
+	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, int radius, String gasolinetype,
+			String carsharing) throws InvalidGasTypeException, GPSDataException, InvalidCarSharingException {		
+		
 		if ((lat < -90 || lat > 90) || (lon < -180 || lon >= 180))
 			throw new GPSDataException("Invalid Coordinates");
-
+		if (carsharing == null || carsharing.isEmpty()) {
+			throw new InvalidCarSharingException("Invalid carsharing");
+		}
 		refreshDependability();
 		List<GasStationDto> dtoGasList = getGasStationsWithoutCoordinates(gasolinetype, carsharing);
 		if (dtoGasList == null || dtoGasList.isEmpty()) {
@@ -247,7 +261,7 @@ public class GasStationServiceimpl implements GasStationService{
 
 		List<GasStationDto> toReturn = new ArrayList<>();
 		for (GasStationDto dtoGas : dtoGasList) {
-			if (Haversine.distance(lat, lon, dtoGas.getLat(), dtoGas.getLon()) < 1.0) {
+			if (Haversine.distance(lat, lon, dtoGas.getLat(), dtoGas.getLon()) < radius) {
 				toReturn.add(dtoGas);
 			}
 		}
@@ -257,11 +271,14 @@ public class GasStationServiceimpl implements GasStationService{
 
 	@Override
 	public List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-			throws InvalidGasTypeException {
-		if (gasolinetype == null || carsharing == null || gasolinetype.isEmpty() || carsharing.isEmpty()) {
+			throws InvalidGasTypeException, InvalidCarSharingException {
+		if (gasolinetype == null || gasolinetype.isEmpty()) {
 			throw new InvalidGasTypeException("Invalid values"); // TODO: maybe it would be nice to have another exception? (we should open an issue then)
 		}
-
+		if (carsharing == null || carsharing.isEmpty()) {
+			throw new InvalidCarSharingException("Invalid carsharing");
+		}
+		
 		List<GasStation> gasList = null;
 		if (!gasolinetype.equals("null") && !carsharing.equals("null")) {
 			refreshDependability();
@@ -280,6 +297,9 @@ public class GasStationServiceimpl implements GasStationService{
 					break;
 				case "Methane":
 					gasList = gasRepo.findByMethaneAndCarSharing(carsharing);
+					break;
+				case "PremiumDiesel":
+					gasList = gasRepo.findByPremiumDieselAndCarSharing(carsharing);
 					break;
 				default:
 					throw new InvalidGasTypeException("Invalid gasoline type");
@@ -305,47 +325,55 @@ public class GasStationServiceimpl implements GasStationService{
 	}
 
 	@Override
-	public void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice,
-			double gasPrice, double methanePrice, Integer userId)
-			throws InvalidGasStationException, PriceException, InvalidUserException {
-		if (gasStationId == null || gasStationId < 0)
-			throw new InvalidGasStationException("No gas station corresponds to Id");
+	public void setReport(Integer gasStationId, Double dieselPrice, Double superPrice, Double superPlusPrice, 
+			Double gasPrice, Double methanePrice, Double premiumDieselPrice, Integer userId) 
+					throws InvalidGasStationException, PriceException, InvalidUserException {
+
+
+		if (userId == null || userId < 0)
+			throw new InvalidUserException("No user corresponds to Id");
 
 		GasStation gasStation = gasRepo.findById(gasStationId);
-		if (gasStation == null) {
+		if (gasStation == null || gasStationId.intValue() < 0) {
 			throw new InvalidGasStationException("No gas station corresponds to id");
 		}
 
-		if (dieselPrice < -1 || (dieselPrice > -1 && dieselPrice < 0)) {
+		if (dieselPrice != null && dieselPrice < 0.0) {
 			throw new PriceException("Invalid Diesel price");
 		} else {
 			gasStation.setDieselPrice(dieselPrice);
 		}
 
-		if (superPrice < -1 || (superPrice > -1 && superPrice < 0)) {
-			throw new PriceException("Invalid Diesel price");
+		if (superPrice != null && superPrice < 0.0) {
+			throw new PriceException("Invalid superPrice price");
 		} else {
 			gasStation.setSuperPrice(superPrice);
 		}
 
-		if (superPlusPrice < -1 || (superPlusPrice > -1 && superPlusPrice < 0)) {
-			throw new PriceException("Invalid Diesel price");
+		if (superPlusPrice != null && superPlusPrice < 0.0) {
+			throw new PriceException("Invalid superPlusPrice price");
 		} else {
 			gasStation.setSuperPlusPrice(superPlusPrice);
 		}
 
-		if (gasPrice < -1 || (gasPrice > -1 && gasPrice < 0)) {
-			throw new PriceException("Invalid Diesel price");
+		if (gasPrice != null && gasPrice < 0.0) {
+			throw new PriceException("Invalid gasPrice price");
 		} else {
 			gasStation.setGasPrice(gasPrice);
 		}
 
-		if (methanePrice < -1 || (methanePrice > -1 && methanePrice < 0)) {
-			throw new PriceException("Invalid Diesel price");
+		if (methanePrice != null && methanePrice < 0.0) {
+			throw new PriceException("Invalid methanePrice price");
 		} else {
 			gasStation.setMethanePrice(methanePrice);
 		}
-
+		
+		if (methanePrice != null && methanePrice < 0.0) {
+			throw new PriceException("Invalid premiumDieselPrice price");
+		} else {
+			gasStation.setPremiumDieselPrice(premiumDieselPrice);
+		}
+		
 		if (userId == null || userId < 0) {
 			throw new InvalidUserException("Invalid user id");
 		} else {
@@ -360,7 +388,6 @@ public class GasStationServiceimpl implements GasStationService{
 		refreshDependability();
 	}
 
-	//What to DO?.
 	@Override
 	public List<GasStationDto> getGasStationByCarSharing(String carSharing) {
 		// Aggiungere List<GasStationDto> findCarSharing(double radious, String carsharing)
