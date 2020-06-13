@@ -346,9 +346,10 @@ public class UserServiceTest {
 			assertEquals(0,0);
 		}
 		try {
-			assertNull("Error: User Id is valid but not in the repository and the method doesn't return null",testUserService.increaseUserReputation(generateNotExistingId()));
+			testUserService.increaseUserReputation(generateNotExistingId());
+			fail("Error: User Id is valid but not in the repository and an exception was not generated");
 		} catch(InvalidUserException invalidUserException) {
-			fail("Error: User Id is valid but the method throws the invalidUserException");
+			assertTrue(true);
 		}
 		try {
 			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser.getEmail()).getReputation()+1, (int)testUserService.increaseUserReputation(id));
@@ -398,9 +399,10 @@ public class UserServiceTest {
 			assertEquals(0,0);
 		}
 		try {
-			assertNull("Error: User Id is valid but not in the repository and the method doesn't return null",testUserService.decreaseUserReputation(generateNotExistingId()));
+			testUserService.decreaseUserReputation(generateNotExistingId());
+			fail("Error: the User Id is valid but not in the repository and an exception was not launched");
 		} catch(InvalidUserException invalidUserException) {
-			fail("Error: User Id is valid but the method throws the invalidUserException");
+			assertTrue(true);
 		}
 		try {
 			assertEquals("Error: the Reputation doesn't match", (int)userRep.findByEmail(testUser.getEmail()).getReputation()-1, (int)testUserService.decreaseUserReputation(id));

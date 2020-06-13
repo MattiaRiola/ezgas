@@ -311,9 +311,10 @@ public class UserServiceTestMock {
 			assertEquals(0,0);
 		}
 		try {
-			assertNull("Error: User Id is valid but not in the repository and the method doesn't return null",testUserService.increaseUserReputation(3));
+			testUserService.increaseUserReputation(3);
+			fail("User Id is valid but not in the repository and an exception was not launched");
 		} catch(InvalidUserException invalidUserException) {
-			fail("Error: User Id is valid but the method throws the invalidUserException");
+			assertEquals(0, 0);
 		}
 		try {
 			assertEquals((int)testUser.getReputation()+1, (int)testUserService.increaseUserReputation(6),"Error: the Reputation doesn't match");
@@ -358,9 +359,10 @@ public class UserServiceTestMock {
 			assertEquals(0,0);
 		}
 		try {
-			assertNull("Error: User Id is valid but not in the repository and the method doesn't return null",testUserService.decreaseUserReputation(3));
+			testUserService.decreaseUserReputation(3);
+			fail("User Id is valid but not in the repository and an exception was not thrown");
 		} catch(InvalidUserException invalidUserException) {
-			fail("Error: User Id is valid but the method throws the invalidUserException");
+			assertEquals(0, 0);
 		}
 		try {
 			assertEquals((int)testUser.getReputation()-1,(int)testUserService.decreaseUserReputation(6),"Error: the Reputation doesn't match");
