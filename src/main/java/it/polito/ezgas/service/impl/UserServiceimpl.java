@@ -63,7 +63,6 @@ public class UserServiceimpl implements UserService {
 			throw new InvalidUserException("Invalid User id: user id is < 0");
 		User user = userRepo.findById(userId);
 		if(user == null) {
-//			System.err.println("User not found");
 			return null;
 		}
 		return userConverter.convertToDto(user);
@@ -108,7 +107,6 @@ public class UserServiceimpl implements UserService {
 		User user = userRepo.findById(userId);
 		if(user == null){
 			//There aren't Users with that userId
-//			System.err.println("User not found");
 			return false;
 		}
 
@@ -143,10 +141,9 @@ public class UserServiceimpl implements UserService {
 			if(u == null) {
 				throw new InvalidUserException("User id not valid");
 			}
-			
+
 			if(u.getReputation() >= maxReputation) //if the user reached the max reputation
 				return u.getReputation();
-//			System.out.println("Reputation +1");
 			u.setReputation(u.getReputation() + 1);
 			//I've to save the change of the user's reputation in the Repository
 			userRepo.save(u);
@@ -168,8 +165,7 @@ public class UserServiceimpl implements UserService {
 
 		if(u.getReputation() <= minReputation)
 			return u.getReputation();
-
-//			System.out.println("Reputation -1");
+		
 		u.setReputation(u.getReputation() - 1);
 		//I've to save the change of the user's reputation in the Repository
 		userRepo.save(u);
