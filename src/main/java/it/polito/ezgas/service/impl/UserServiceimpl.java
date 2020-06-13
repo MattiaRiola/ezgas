@@ -140,10 +140,10 @@ public class UserServiceimpl implements UserService {
 				throw new InvalidUserException("Invalid User id: user id is < 0");
 
 			User u = userRepo.findById(userId);
-			if(u==null) {
-//				System.err.println("User not found");
-				return null;
+			if(u == null) {
+				throw new InvalidUserException("User id not valid");
 			}
+			
 			if(u.getReputation() >= maxReputation) //if the user reached the max reputation
 				return u.getReputation();
 //			System.out.println("Reputation +1");
@@ -162,10 +162,10 @@ public class UserServiceimpl implements UserService {
 
 
 		User u = userRepo.findById(userId);
-		if(u==null) {
-//			System.err.println("User not found");
-			return null;
+		if(u == null) {
+			throw new InvalidUserException("User id not valid");
 		}
+
 		if(u.getReputation() <= minReputation)
 			return u.getReputation();
 
