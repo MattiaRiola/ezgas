@@ -54,27 +54,27 @@ public class UserServiceTestMock {
 	private UserService testUserService;
 	
 	private void compareUsers(User expected,User actual, String note) {
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getUserId().intValue(),actual.getUserId().intValue(),"Error - " + note + ": user id is wrong");
 		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
 		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
 		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
 		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals(expected.getReputation().intValue(),actual.getReputation().intValue(),"Error - " + note + " : user reputation is wrong");
 	}
 	private void compareUsers(UserDto expected,UserDto actual,String note) {
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getUserId().intValue(),actual.getUserId().intValue(),"Error - " + note + ": user id is wrong");
 		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
 		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
 		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
 		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals(expected.getReputation().intValue(),actual.getReputation().intValue(),"Error - " + note + " : user reputation is wrong");
 	}
 	private void compareLogin(LoginDto expected, LoginDto actual,String note) {
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getUserId().intValue(),actual.getUserId().intValue(),"Error - " + note + ": user id is wrong");
 		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
 		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
 		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals(expected.getReputation().intValue(),actual.getReputation().intValue(),"Error - " + note + " : user reputation is wrong");
 //		assertEquals(expected.getToken(),actual.getToken(),"Error - " + note + " : user token is wrong");
 	}
 	

@@ -32,7 +32,7 @@ public class GasStationControllerTest {
 	public void setUpDataBase() throws ClientProtocolException, IOException{
 		//Delete all the gas station.
 		TestDelateGasStation();
-		
+	
 		//Save a GasStation as setup.
         this.station = new GasStationDto(2, "MyTestStation",
                 "Via Bligny 11", true, true, true, true,
@@ -139,17 +139,17 @@ public class GasStationControllerTest {
     
     @Test 
     public void TestGetGasStationsByProximity() throws ClientProtocolException, IOException {
-    	HttpUriRequest getProx = new HttpGet("http://localhost:8080/gasstation/searchGasStationByProximity/"+this.station.getLat()+"/"+ this.station.getLon());
+    	HttpUriRequest getProx = new HttpGet("http://localhost:8080/gasstation/searchGasStationByProximity/"+this.station.getLat()+"/"+ this.station.getLon()+"/0/");
     	HttpResponse getProxResponse = HttpClientBuilder.create().build().execute(getProx);
     	
     	String jsonGetProxResponse = EntityUtils.toString(getProxResponse.getEntity());
-    	
+    	System.out.println (jsonGetProxResponse);
     	assert (jsonGetProxResponse.contains(this.station.getGasStationName()));
     }//EndTest.
     
     @Test
     public void TestGetGasStationsWithCoordinates() throws ClientProtocolException, IOException {
-    	HttpUriRequest getCoord = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/"+this.station.getLat()+"/"+ this.station.getLon()+"/Diesel/"+"/"+this.station.getCarSharing());
+    	HttpUriRequest getCoord = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/"+this.station.getLat()+"/"+ this.station.getLon()+"/0/"+"/Diesel/"+this.station.getCarSharing());
     	HttpResponse getCoordResponse = HttpClientBuilder.create().build().execute(getCoord);
     	
     	String jsonGetCoordResponse = EntityUtils.toString(getCoordResponse.getEntity());
@@ -195,7 +195,7 @@ public class GasStationControllerTest {
         	}
         }
         //Write Report request using gasId and userId.
-        HttpUriRequest reportRequest = new HttpPost("http://localhost:8080/gasstation/setGasStationReport/"+gasId.toString()+"/5.0/5.0/5.0/5.0/5.0/"+userId.toString());
+        HttpUriRequest reportRequest = new HttpPost("http://localhost:8080/gasstation/setGasStationReport/"+gasId.toString()+"/5.0/5.0/5.0/5.0/5.0/5.0/"+userId.toString());
     	HttpResponse reportResponse = HttpClientBuilder.create().build().execute(reportRequest);
     	assert (reportResponse.getStatusLine().getStatusCode() == HTTP_OK);
     	//Check the report result.

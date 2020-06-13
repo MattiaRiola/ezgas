@@ -26,7 +26,7 @@ public class UserEntityTest {
 	public void testUserId() {
 			this.usr = new User (this.userName,this.password,this.email,this.reputation);
 			this.usr.setUserId(userId);
-			assertEquals(this.userId,this.usr.getUserId(),"Error: User Entity - get/set UserId issue"); 
+			assertEquals(this.userId.intValue(),this.usr.getUserId().intValue(),"Error: User Entity - get/set UserId issue"); 
 	}
 	@Test
 	public void testUserName() {
@@ -53,9 +53,9 @@ public class UserEntityTest {
 	@Test
 	public void testReputation() {
 		this.usr = new User (this.userName,this.password,this.email,this.reputation);
-		assertEquals(this.reputation,this.usr.getReputation(),"Error: User Entity - get/costructor reputation issue"); 
+		assertEquals(this.reputation.intValue(),this.usr.getReputation().intValue(),"Error: User Entity - get/costructor reputation issue"); 
 		this.usr.setReputation(reputation_new);
-		assertEquals(this.reputation_new,this.usr.getReputation(),"Error: User Entity - get/set reputation issue"); 
+		assertEquals(this.reputation_new.intValue(),this.usr.getReputation().intValue(),"Error: User Entity - get/set reputation issue"); 
 		
 	}
 	@Test

@@ -52,11 +52,11 @@ public class GasStationEntityTest {
 	@Test
 	public void testReportUser() {
 		this.dut = new GasStation (this.gasStationName,this.gasStationAddress,this.hasDiesel,this.hasSuper,this.hasSuperPlus,this.hasGas,this.hasMethane,this.hasPremiumDiesel,carSharing,this.lat,this.lon,this.dieselPrice,this.superPrice,this.superPlusPrice,this.gasPrice,this.methanePrice,this.premiumDieselPrice,this.reportUser,this.reportTimestamp,this.reportDependability);
-		assertEquals(this.reportUser, dut.getReportUser(), "Error: GasStation Entity - get reportUser issue");
+		assertEquals(this.reportUser.intValue(), dut.getReportUser().intValue(), "Error: GasStation Entity - get reportUser issue");
 		
 		Integer newUser = new Integer(this.reportUser.intValue()*2);
 		this.dut.setReportUser(newUser);
-		assertEquals(newUser, this.dut.getReportUser(), "Error: GasStation Entity - set reportUser issue");
+		assertEquals(newUser.intValue(), this.dut.getReportUser().intValue(), "Error: GasStation Entity - set reportUser issue");
 	}
 	
 	@Test
@@ -126,12 +126,12 @@ public class GasStationEntityTest {
 	public void testPrices() {
 		this.dut = new GasStation (this.gasStationName,this.gasStationAddress,this.hasDiesel,this.hasSuper,this.hasSuperPlus,this.hasGas,this.hasMethane,this.hasPremiumDiesel,carSharing,this.lat,this.lon,this.dieselPrice,this.superPrice,this.superPlusPrice,this.gasPrice,this.methanePrice,this.premiumDieselPrice,this.reportUser,this.reportTimestamp,this.reportDependability);
 		
-		assertEquals(this.dieselPrice, this.dut.getDieselPrice(), "Error: GasStation Entity - get price issue");
-		assertEquals(this.superPrice, this.dut.getSuperPrice(), "Error: GasStation Entity - get price issue");
-		assertEquals(this.methanePrice, this.dut.getMethanePrice(), "Error: GasStation Entity - get price issue");
-		assertEquals(this.gasPrice, this.dut.getGasPrice(), "Error: GasStation Entity - get price issue");
-		assertEquals(this.superPlusPrice, this.dut.getSuperPlusPrice(), "Error: GasStation Entity - get price issue");
-		assertEquals(this.premiumDieselPrice, this.dut.getPremiumDieselPrice(), "Error: GasStation Entity - get price issue");
+		assertEquals(this.dieselPrice, this.dut.getDieselPrice().doubleValue(), "Error: GasStation Entity - get price issue");
+		assertEquals(this.superPrice, this.dut.getSuperPrice().doubleValue(), "Error: GasStation Entity - get price issue");
+		assertEquals(this.methanePrice, this.dut.getMethanePrice().doubleValue(), "Error: GasStation Entity - get price issue");
+		assertEquals(this.gasPrice, this.dut.getGasPrice().doubleValue(), "Error: GasStation Entity - get price issue");
+		assertEquals(this.superPlusPrice, this.dut.getSuperPlusPrice().doubleValue(), "Error: GasStation Entity - get price issue");
+		assertEquals(this.premiumDieselPrice, this.dut.getPremiumDieselPrice().doubleValue(), "Error: GasStation Entity - get price issue");
 		double newDieselPrice = this.dieselPrice*2;
 		double newSuperPrice = this.superPrice*2;
 		double newMethanePrice = this.methanePrice*2;
@@ -144,12 +144,12 @@ public class GasStationEntityTest {
 		this.dut.setGasPrice(newGasPrice);
 		this.dut.setSuperPlusPrice(newSuperPlusPrice);
 		this.dut.setPremiumDieselPrice(newPremiumDieselPrice);
-		assertEquals(newDieselPrice, this.dut.getDieselPrice(), "Error: GasStation Entity - set price issue");
-		assertEquals(newSuperPrice, this.dut.getSuperPrice(), "Error: GasStation Entity - set price issue");
-		assertEquals(newMethanePrice, this.dut.getMethanePrice(), "Error: GasStation Entity - set price issue");
-		assertEquals(newGasPrice, this.dut.getGasPrice(), "Error: GasStation Entity - set price issue");
-		assertEquals(newSuperPlusPrice, this.dut.getSuperPlusPrice(), "Error: GasStation Entity - set price issue");
-		assertEquals(newPremiumDieselPrice, this.dut.getPremiumDieselPrice(), "Error: GasStation Entity - set price issue");
+		assertEquals(newDieselPrice, this.dut.getDieselPrice().doubleValue(), "Error: GasStation Entity - set price issue");
+		assertEquals(newSuperPrice, this.dut.getSuperPrice().doubleValue(), "Error: GasStation Entity - set price issue");
+		assertEquals(newMethanePrice, this.dut.getMethanePrice().doubleValue(), "Error: GasStation Entity - set price issue");
+		assertEquals(newGasPrice, this.dut.getGasPrice().doubleValue(), "Error: GasStation Entity - set price issue");
+		assertEquals(newSuperPlusPrice, this.dut.getSuperPlusPrice().doubleValue(), "Error: GasStation Entity - set price issue");
+		assertEquals(newPremiumDieselPrice, this.dut.getPremiumDieselPrice().doubleValue(), "Error: GasStation Entity - set price issue");
 	}
 	
 	@Test
@@ -166,7 +166,7 @@ public class GasStationEntityTest {
 		this.dut = new GasStation (this.gasStationName,this.gasStationAddress,this.hasDiesel,this.hasSuper,this.hasSuperPlus,this.hasGas,this.hasMethane,this.hasPremiumDiesel,carSharing,this.lat,this.lon,this.dieselPrice,this.superPrice,this.superPlusPrice,this.gasPrice,this.methanePrice,this.premiumDieselPrice,this.reportUser,this.reportTimestamp,this.reportDependability);
 		Integer ID = 1;
 		this.dut.setGasStationId(ID);
-		assertEquals(ID, this.dut.getGasStationId(), "Error: GasStation Entity - set/get id issue");
+		assertEquals(ID.intValue(), this.dut.getGasStationId().intValue(), "Error: GasStation Entity - set/get id issue");
 	}
 	
 	@Test 

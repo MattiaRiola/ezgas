@@ -62,7 +62,7 @@ public class GasStationServiceTest {
         Integer id = l.get(0).getGasStationId();
 		try {
 			GasStationDto testGs = this.dut.getGasStationById(id);
-			assertEquals(gs.getGasStationId(),testGs.getGasStationId(), "Error id");
+			assertEquals(gs.getGasStationId().intValue(),testGs.getGasStationId().intValue(), "Error id");
 		}catch (Exception e) {
 			fail("Exception has been generated");
 		}
@@ -165,7 +165,19 @@ public class GasStationServiceTest {
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
+		try {
+			this.dut.getGasStationsByProximity(-100, 0, 0);
+			fail("No exception has been generated");
+		}catch (Exception e) {
+			assertEquals(0,0);
+		}
 		
+		try {
+			this.dut.getGasStationsByProximity(-100, 0, 5);
+			fail("No exception has been generated");
+		}catch (Exception e) {
+			assertEquals(0,0);
+		}
 		List<GasStationDto> resList;
 		
 		try {
@@ -174,6 +186,8 @@ public class GasStationServiceTest {
 		}catch (Exception e) {
 			fail("Exception has been generated");
 		}
+		
+		
 	}//EndTest.
 	
 	@Test
@@ -351,12 +365,12 @@ public class GasStationServiceTest {
 		try {
 			this.dut.setReport(gs.getGasStationId(), 1.0, 1.0, 1.0, 1.0, 1.0,1.0, 0);
 			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
-			assertEquals(resDto.getMethanePrice(), 1.0, "Error report");
-			assertEquals(resDto.getGasPrice(), 1.0, "Error report");
-			assertEquals(resDto.getSuperPrice(), 1.0, "Error report");
-			assertEquals(resDto.getSuperPlusPrice(), 1.0, "Error report");
-			assertEquals(resDto.getDieselPrice(), 1.0, "Error report");
-			assertEquals(resDto.getPremiumDieselPrice(), 1.0, "Error report");
+			assertEquals(resDto.getMethanePrice().intValue(), 1.0, "Error report");
+			assertEquals(resDto.getGasPrice().intValue(), 1.0, "Error report");
+			assertEquals(resDto.getSuperPrice().intValue(), 1.0, "Error report");
+			assertEquals(resDto.getSuperPlusPrice().intValue(), 1.0, "Error report");
+			assertEquals(resDto.getDieselPrice().intValue(), 1.0, "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().intValue(), 1.0, "Error report");
 		}catch (Exception e) {
 			fail("Exception has been generated");
 		}
