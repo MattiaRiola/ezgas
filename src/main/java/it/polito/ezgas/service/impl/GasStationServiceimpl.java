@@ -343,13 +343,39 @@ public class GasStationServiceimpl implements GasStationService{
 			Double gasPrice, Double methanePrice, Double premiumDieselPrice, Integer userId) 
 					throws InvalidGasStationException, PriceException, InvalidUserException {
 
-
-		if (userId == null || userId < 0)
-			throw new InvalidUserException("No user corresponds to Id");
+		if (gasStationId == null || gasStationId < 0) {
+			throw new InvalidGasStationException("Invalid gas station id");
+		}
 
 		GasStation gasStation = gasRepo.findById(gasStationId);
-		if (gasStation == null || gasStationId.intValue() < 0) {
+		if (gasStation == null) {
 			throw new InvalidGasStationException("No gas station corresponds to id");
+		}
+
+		// Cache the user who did the previous report (if any) and its timestamp
+		// This had to be done since spring returns always the same object even if two different read to the db are perfomed
+		User previousUser = gasStation.getUser();
+		String previousTimestamp = gasStation.getReportTimestamp();
+		if (userId == null || userId < 0) {
+			throw new InvalidUserException("Invalid user id");
+		} else {
+			gasStation.setReportUser(userId);
+			gasStation.setUser(userRepo.findById(userId));
+			System.out.println("User for gasStation has id = " + userId + " and name = " + gasStation.getUser().getUserName());
+		}
+
+		LocalDateTime now = LocalDateTime.now();
+		if (previousUser != null && previousTimestamp != null && !previousTimestamp.isEmpty()) {
+			System.out.println("User for gs has id = " + previousUser.getUserId() + " and name = " + previousUser.getUserName());
+			LocalDateTime reportDate = LocalDateTime.parse(previousTimestamp);
+			if (gasStation.getUser().getReputation() < previousUser.getReputation()) {
+				if (DAYS.between(reportDate, now) <= 4) {
+					// Rollback the changes to the gas station (Spring keeps a wrong copy of the object otherwise, even if we don't save it)
+					gasStation.setReportUser(previousUser.getUserId());
+					gasStation.setUser(previousUser);
+					return;
+				}
+			}
 		}
 
 		if (dieselPrice != null && dieselPrice < 0.0) {
@@ -381,29 +407,25 @@ public class GasStationServiceimpl implements GasStationService{
 		} else {
 			gasStation.setMethanePrice(methanePrice);
 		}
-		
+
 		if (methanePrice != null && methanePrice < 0.0) {
 			throw new PriceException("Invalid premiumDieselPrice price");
 		} else {
 			gasStation.setPremiumDieselPrice(premiumDieselPrice);
 		}
-		
+
 		if (premiumDieselPrice != null && premiumDieselPrice < 0.0) {
 			throw new PriceException("Invalid premiumDieselPrice price");
 		} else {
 			gasStation.setPremiumDieselPrice(premiumDieselPrice);
 		}
-		if (userId == null || userId < 0) {
-			throw new InvalidUserException("Invalid user id");
-		} else {
-			gasStation.setReportUser(userId);
-			gasStation.setUser(userRepo.findById(userId));
-		}
-		
-		
-		gasStation.setReportTimestamp(LocalDateTime.now().toString());
+
+		/*
+		 * If the user has either a reputation equal or higher than the one who set the report or
+		 * the user has less reputation and the last report has been made more than 4 days ago we can update it
+		 */
+		gasStation.setReportTimestamp(now.toString());
 		gasRepo.save(gasStation);
-		//gasRepo.updateReport(dieselPrice, gasPrice, methanePrice, superPrice, superPlusPrice, userId, gasStationId);
 		refreshDependability();
 	}
 
