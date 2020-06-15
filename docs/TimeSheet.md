@@ -1,5 +1,5 @@
 # Timesheet
-Upgrades: May 18-24 : Mattia
+
 
 Report in this table the effort (in person hours) spent per week, per activity, per team. 
 This means that you have to sum the working hours of each component of the team.
