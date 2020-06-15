@@ -174,24 +174,28 @@ public class GasStationDtoTest {
 		assertEquals(this.methanePrice, this.dut.getMethanePrice().doubleValue(), "Error: GasStation dto - get price issue");
 		assertEquals(this.gasPrice, this.dut.getGasPrice().doubleValue(), "Error: GasStation dto - get price issue");
 		assertEquals(this.superPlusPrice, this.dut.getSuperPlusPrice().doubleValue(), "Error: GasStation dto - get price issue");
+		assertEquals(this.premiumDieselPrice, this.dut.getPremiumDieselPrice().doubleValue(), "Error: GasStation dto - get price issue");
 		
 		double newDieselPrice = this.dieselPrice*2;
 		double newSuperPrice = this.superPrice*2;
 		double newMethanePrice = this.methanePrice*2;
 		double newGasPrice = this.gasPrice*2;
 		double newSuperPlusPrice = this.superPlusPrice*2;
+		double newPremiumDieselPrice = this.premiumDieselPrice*2;
 		
 		this.dut.setDieselPrice(newDieselPrice);
 		this.dut.setSuperPrice(newSuperPrice);
 		this.dut.setMethanePrice(newMethanePrice);
 		this.dut.setGasPrice(newGasPrice);
 		this.dut.setSuperPlusPrice(newSuperPlusPrice);
+		this.dut.setPremiumDieselPrice(newPremiumDieselPrice);
 		
 		assertEquals(newDieselPrice, this.dut.getDieselPrice().doubleValue(), "Error: GasStation dto - set price issue");
 		assertEquals(newSuperPrice, this.dut.getSuperPrice().doubleValue(), "Error: GasStation dto - set price issue");
 		assertEquals(newMethanePrice, this.dut.getMethanePrice().doubleValue(), "Error: GasStation dto - set price issue");
 		assertEquals(newGasPrice, this.dut.getGasPrice().doubleValue(), "Error: GasStation dto - set price issue");
 		assertEquals(newSuperPlusPrice, this.dut.getSuperPlusPrice().doubleValue(), "Error: GasStation dto - set price issue");
+		assertEquals(newPremiumDieselPrice, this.dut.getPremiumDieselPrice().doubleValue(), "Error: GasStation dto - get price issue");
 	}
 	
 	@Test
