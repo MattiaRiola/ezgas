@@ -234,7 +234,15 @@ public class GasStationServiceTestMock {
 		List<GasStationDto> resList;
 		
 		try {
-			resList = this.dut.getGasStationsByProximity(50, 50);
+			resList = this.dut.getGasStationsByProximity(50, 50, 0);
+			assertEquals(resList.size(),this.testList.size());
+		}catch (Exception e) {
+			fail("Exception has been generated");
+			
+		}
+		
+		try {
+			resList = this.dut.getGasStationsByProximity(50, 50, 5);
 			assertEquals(resList.size(),this.testList.size());
 		}catch (Exception e) {
 			fail("Exception has been generated");
