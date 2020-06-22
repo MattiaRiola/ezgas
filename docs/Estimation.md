@@ -22,12 +22,12 @@ Version: 1.0
 
 | Parameter            | Estimate                        |             
 | ----------- | ------------------------------- |  
-| NC | 15 classes|                             |             
+| NC | 12 classes|                             |             
 |  A | 100 LOC/class      |                            | 
-| S | 1500 LOC | |
-| E | 150 person hour  |                                      |   
-| C | 4500€ | | 
-| Estimated calendar time| 1 week |                    |               
+| S | 1200 LOC | |
+| E | 350 person hour  |                                      |   
+| C | 10500€ | | 
+| Estimated calendar time| 3 week |                    |               
 
 
 # Estimate by activity decomposition
@@ -38,12 +38,12 @@ Version: 1.0
 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| Requirement | 33 |
-| Design | 90 |
-| Coding | 150 |
-| Unit testing | 100 |
-| Integration testing | 140 |
-| System testing | 170 |
+| Requirement | 25 |
+| Design | 40 |
+| Coding | 100 |
+| Unit testing | 15 |
+| Integration testing | 80 |
+| System testing | 90 |
 
 
 ###
@@ -51,19 +51,19 @@ Version: 1.0
 @startuml
 [Requirements] lasts 1 days
 
-[Design] lasts 3 days
+[Design] lasts 2 days
 [Design] starts at [Requirements]'s end
 
-[Coding] lasts 5 days
+[Coding] lasts 4 days
 [Coding] starts at [Design]'s end
 
-[Unit testing] lasts 3 days
+[Unit testing] lasts 1 days
 [Unit testing] starts at [Coding]'s end
 
-[Integration testing] lasts 4 days
+[Integration testing] lasts 3 days
 [Integration testing] starts at [Unit testing]'s end
 
-[System testing] lasts 6 days
+[System testing] lasts 3 days
 [System testing] starts at [Integration testing]'s end
 
 @enduml
