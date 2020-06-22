@@ -3,6 +3,7 @@ package it.polito.ezgas.controllertests;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ezgas.dto.GasStationDto;
+import it.polito.ezgas.dto.PriceReportDto;
 import it.polito.ezgas.dto.UserDto;
 
 import org.apache.http.HttpResponse;
@@ -195,7 +196,13 @@ public class GasStationControllerTest {
         	}
         }
         //Write Report request using gasId and userId.
-        HttpUriRequest reportRequest = new HttpPost("http://localhost:8080/gasstation/setGasStationReport/"+gasId.toString()+"/5.0/5.0/5.0/5.0/5.0/5.0/"+userId.toString());
+        PriceReportDto priceReportDto = new PriceReportDto(5, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5);
+        ObjectMapper reportMapper = new ObjectMapper();
+        String reportJson = reportMapper.writeValueAsString(priceReportDto);
+        HttpPost reportRequest = new HttpPost("http://localhost:8080/gasstation/setGasStationReport/");
+        StringEntity reportEntity = new StringEntity(reportJson);
+        reportRequest.addHeader("content-type", "application/json");
+        reportRequest.setEntity(reportEntity);
     	HttpResponse reportResponse = HttpClientBuilder.create().build().execute(reportRequest);
     	assert (reportResponse.getStatusLine().getStatusCode() == HTTP_OK);
     	//Check the report result.
