@@ -109,20 +109,7 @@ public class GasStationServiceimpl implements GasStationService{
 			throw new PriceException("Invalid SuperPlus price");
 		else if (gasStationDto.getPremiumDieselPrice() != null && gasStationDto.getPremiumDieselPrice() < 0.0)
 			throw new PriceException("Invalid Premium diesel price");
-		
-		if (gasStationDto.getDieselPrice() == null)
-			gasStationDto.setHasDiesel(false);
-		if (gasStationDto.getGasPrice() == null)
-			gasStationDto.setHasGas(false);
-		if (gasStationDto.getMethanePrice() == null)
-			gasStationDto.setHasMethane(false);
-		if (gasStationDto.getSuperPrice() == null)
-			gasStationDto.setHasSuper(false);
-		if (gasStationDto.getSuperPlusPrice() == null)
-			gasStationDto.setHasSuperPlus(false);
-		if (gasStationDto.getPremiumDieselPrice() == null)
-			gasStationDto.setHasPremiumDiesel(false);
-		
+
 		if (gasStationDto.getCarSharing() == null || gasStationDto.getCarSharing().equals("null"))
 			gasStationDto.setCarSharing(null);
 
