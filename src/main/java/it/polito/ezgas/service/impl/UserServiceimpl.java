@@ -73,14 +73,16 @@ public class UserServiceimpl implements UserService {
 		if(userDto == null)
 			return null;
 		
-		User u = userRepo.findByEmail(userDto.getEmail());
-		if(u==null) {
+//		User u = userRepo.findByEmail(userDto.getEmail());
+		
+		
+//		if(u==null) { //check if there is another user with the given email
 			User user;
 			user = userRepo.save(userConverter.convertFromDto(userDto));
-			return userConverter.convertToDto(user);	
-		}
+//			return userConverter.convertToDto(user);	
+//		}
 		//It return null if the userRepo find an user with that email
-		return userConverter.convertToDto(u);
+		return userConverter.convertToDto(user);
 	}
 
 	@Override
