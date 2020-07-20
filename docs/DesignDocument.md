@@ -3,9 +3,9 @@
 
 Authors: Group 21
 
-Date: 30/04/20
+Date: 17/06/2020
 
-Version: 1
+Version: 2
 
 
 # Contents
@@ -228,7 +228,7 @@ package "it.polito.ezgas.service"  as ps {
       +getGasStationsByProximity(lat,lon)
       +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
       +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
-      +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+      +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,premiumDieselPrice,userId)
       +getGasStationByCarSharing(carSharing)
    }
    interface "UserService"{
@@ -251,9 +251,9 @@ package "it.polito.ezgas.service"  as ps {
             +deleteGasStation(gasStationId)
             +getGasStationsByGasolineType(gasolinetype)
             +getGasStationsByProximity(lat,lon)
-            +getGasStationsWithCoordinates(lat,lon,gasolinetype,carsharing)
+            +getGasStationsWithCoordinates(lat,lon,radius,gasolinetype,carsharing)
             +getGasStationsWithoutCoordinates(gasolinetype,carsharing)
-            +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+            +setReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,premiumDieselPrice,userId)
             +getGasStationByCarSharing(carSharing)
         }
         class "UserServiceimpl"{
@@ -298,7 +298,7 @@ package "it.polito.ezgas.controller" as pc{
       +getGasStationsByGasolineType(gasolinetype)
       +getGasStationsByProximity(myLat,myLon)
       +getGasStationsWithCoordinates(myLat,myLon,gasolineType,carSharing)
-      +setGasStationReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,userId)
+      +setGasStationReport(gasStationId,dieselPrice,superPrice,superPlusPrice,gasPrice,methanePrice,premiumDieselPrice,userId)
    }
    class "HomeController"{
       +admin()
@@ -340,6 +340,7 @@ package "it.polito.ezgas.dto" {
       -hasSuperPlus
       -hasGas
       -hasMethane
+      -hasPremiumDiesel
       -carSharing
       -lat
       -lon
@@ -348,6 +349,7 @@ package "it.polito.ezgas.dto" {
       -superPlusPrice
       -gasPrice
       -methanePrice
+      -premiumDieselPrice
       -reportUser
       -userDto
       -reportTimestamp
@@ -386,12 +388,14 @@ package "it.polito.ezgas.entity" {
       -hasSuperPlus
       -hasGas
       -hasMethane
+      -hasPremiumDiesel
       -carSharing
       -lat
       -lon
       -dieselPrice
       -superPrice
       -superPlusPrice
+      -premiumDieselPrice
       -gasPrice
       -methanePrice
       -reportUser
@@ -411,9 +415,9 @@ package "it.polito.ezgas.repository" {
    }
    class "GasStationRepository"{
       +findById(id)
-      +updateReport(dieselPrice,gasPrice,methanePrice,superPrice,superPlusPrice,reportUser,gasStationId)
-      +findByGasolineType(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus)
-      +findWithoutCoordinates(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus,carSharing)
+      +updateReport(dieselPrice,gasPrice,methanePrice,superPrice,superPlusPrice,premiumDieselPrice,reportUser,gasStationId)
+      +findByGasolineType(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus,hasPremiumDiese)
+      +findWithoutCoordinates(hasDiesel,hasGas,hasMethane,hasSuper,hasSuperPlus,hasPremiumDiesel,carSharing)
       +findByCarSharing (carSharing)
    }
 }

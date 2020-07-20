@@ -54,27 +54,27 @@ public class UserServiceTestMock {
 	private UserService testUserService;
 	
 	private void compareUsers(User expected,User actual, String note) {
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getUserId().intValue(),actual.getUserId().intValue(),"Error - " + note + ": user id is wrong");
 		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
 		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
 		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
 		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals(expected.getReputation().intValue(),actual.getReputation().intValue(),"Error - " + note + " : user reputation is wrong");
 	}
 	private void compareUsers(UserDto expected,UserDto actual,String note) {
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getUserId().intValue(),actual.getUserId().intValue(),"Error - " + note + ": user id is wrong");
 		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
 		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
 		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
 		assertEquals(expected.getPassword(),actual.getPassword(),"Error -" + note + " : user password is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals(expected.getReputation().intValue(),actual.getReputation().intValue(),"Error - " + note + " : user reputation is wrong");
 	}
 	private void compareLogin(LoginDto expected, LoginDto actual,String note) {
-		assertEquals(expected.getUserId(),actual.getUserId(),"Error - " + note + ": user id is wrong");
+		assertEquals(expected.getUserId().intValue(),actual.getUserId().intValue(),"Error - " + note + ": user id is wrong");
 		assertEquals(expected.getAdmin(),actual.getAdmin(),"Error - "+ note + " : user admin is wrong");
 		assertEquals(expected.getEmail(),actual.getEmail(),"Error - "+ note + " : user Email is wrong");
 		assertEquals(expected.getUserName(),actual.getUserName(),"Error - "+ note + " : user UserName is wrong");
-		assertEquals(expected.getReputation(),actual.getReputation(),"Error - " + note + " : user reputation is wrong");
+		assertEquals(expected.getReputation().intValue(),actual.getReputation().intValue(),"Error - " + note + " : user reputation is wrong");
 //		assertEquals(expected.getToken(),actual.getToken(),"Error - " + note + " : user token is wrong");
 	}
 	
@@ -311,9 +311,10 @@ public class UserServiceTestMock {
 			assertEquals(0,0);
 		}
 		try {
-			assertNull("Error: User Id is valid but not in the repository and the method doesn't return null",testUserService.increaseUserReputation(3));
+			testUserService.increaseUserReputation(3);
+			fail("User Id is valid but not in the repository and an exception was not launched");
 		} catch(InvalidUserException invalidUserException) {
-			fail("Error: User Id is valid but the method throws the invalidUserException");
+			assertEquals(0, 0);
 		}
 		try {
 			assertEquals((int)testUser.getReputation()+1, (int)testUserService.increaseUserReputation(6),"Error: the Reputation doesn't match");
@@ -358,9 +359,10 @@ public class UserServiceTestMock {
 			assertEquals(0,0);
 		}
 		try {
-			assertNull("Error: User Id is valid but not in the repository and the method doesn't return null",testUserService.decreaseUserReputation(3));
+			testUserService.decreaseUserReputation(3);
+			fail("User Id is valid but not in the repository and an exception was not thrown");
 		} catch(InvalidUserException invalidUserException) {
-			fail("Error: User Id is valid but the method throws the invalidUserException");
+			assertEquals(0, 0);
 		}
 		try {
 			assertEquals((int)testUser.getReputation()-1,(int)testUserService.decreaseUserReputation(6),"Error: the Reputation doesn't match");

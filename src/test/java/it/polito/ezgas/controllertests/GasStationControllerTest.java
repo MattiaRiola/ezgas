@@ -3,6 +3,7 @@ package it.polito.ezgas.controllertests;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ezgas.dto.GasStationDto;
+import it.polito.ezgas.dto.PriceReportDto;
 import it.polito.ezgas.dto.UserDto;
 
 import org.apache.http.HttpResponse;
@@ -32,12 +33,12 @@ public class GasStationControllerTest {
 	public void setUpDataBase() throws ClientProtocolException, IOException{
 		//Delete all the gas station.
 		TestDelateGasStation();
-		
+	
 		//Save a GasStation as setup.
         this.station = new GasStationDto(2, "MyTestStation",
                 "Via Bligny 11", true, true, true, true,
-                true, "Enjoy", 1.3, 2.0, 1.1, 1.1,
-                1.2, 1.3, 1.4, 1, LocalDateTime.now().toString(), 75.0);
+                true,true, "Enjoy", 1.3, 2.0, 1.1, 1.1,
+                1.2, 1.3, 1.4,1.5, 1, LocalDateTime.now().toString(), 75.0);
         //Save the gas station.
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(this.station);
@@ -86,8 +87,8 @@ public class GasStationControllerTest {
     public void TestSaveGasStation() throws ClientProtocolException, IOException {
         GasStationDto gasStation = new GasStationDto(1, "Gas n' Roll Test",
                 "Via Amba Aradam 10", true, true, true, true,
-                true, "A CarSharing Company Inc.", 1.0, 2.0, 1.0, 1.1,
-                1.2, 1.3, 1.4, 1, LocalDateTime.now().toString(), 75.0);
+                true,true, "A CarSharing Company Inc.", 1.0, 2.0, 1.0, 1.1,
+                1.2, 1.3, 1.4,1.5, 1, LocalDateTime.now().toString(), 75.0);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(gasStation);
@@ -139,17 +140,17 @@ public class GasStationControllerTest {
     
     @Test 
     public void TestGetGasStationsByProximity() throws ClientProtocolException, IOException {
-    	HttpUriRequest getProx = new HttpGet("http://localhost:8080/gasstation/searchGasStationByProximity/"+this.station.getLat()+"/"+ this.station.getLon());
+    	HttpUriRequest getProx = new HttpGet("http://localhost:8080/gasstation/searchGasStationByProximity/"+this.station.getLat()+"/"+ this.station.getLon()+"/0/");
     	HttpResponse getProxResponse = HttpClientBuilder.create().build().execute(getProx);
     	
     	String jsonGetProxResponse = EntityUtils.toString(getProxResponse.getEntity());
-    	
+    	System.out.println (jsonGetProxResponse);
     	assert (jsonGetProxResponse.contains(this.station.getGasStationName()));
     }//EndTest.
     
     @Test
     public void TestGetGasStationsWithCoordinates() throws ClientProtocolException, IOException {
-    	HttpUriRequest getCoord = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/"+this.station.getLat()+"/"+ this.station.getLon()+"/Diesel/"+"/"+this.station.getCarSharing());
+    	HttpUriRequest getCoord = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/"+this.station.getLat()+"/"+ this.station.getLon()+"/0/Diesel/"+this.station.getCarSharing());
     	HttpResponse getCoordResponse = HttpClientBuilder.create().build().execute(getCoord);
     	
     	String jsonGetCoordResponse = EntityUtils.toString(getCoordResponse.getEntity());
@@ -195,7 +196,13 @@ public class GasStationControllerTest {
         	}
         }
         //Write Report request using gasId and userId.
-        HttpUriRequest reportRequest = new HttpPost("http://localhost:8080/gasstation/setGasStationReport/"+gasId.toString()+"/5.0/5.0/5.0/5.0/5.0/"+userId.toString());
+        PriceReportDto priceReportDto = new PriceReportDto(5, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5);
+        ObjectMapper reportMapper = new ObjectMapper();
+        String reportJson = reportMapper.writeValueAsString(priceReportDto);
+        HttpPost reportRequest = new HttpPost("http://localhost:8080/gasstation/setGasStationReport/");
+        StringEntity reportEntity = new StringEntity(reportJson);
+        reportRequest.addHeader("content-type", "application/json");
+        reportRequest.setEntity(reportEntity);
     	HttpResponse reportResponse = HttpClientBuilder.create().build().execute(reportRequest);
     	assert (reportResponse.getStatusLine().getStatusCode() == HTTP_OK);
     	//Check the report result.

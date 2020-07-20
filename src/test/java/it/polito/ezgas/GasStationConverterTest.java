@@ -25,9 +25,10 @@ public class GasStationConverterTest {
         DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
         String formattedDate = formatter.format(date);
 
-        GasStation gasStation = new GasStation("Minmus", "Via Kerbal Space Program",
-                true, false, true, false, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+        GasStation gasStation = new GasStation(
+        		"Minmus", "Via Kerbal Space Program",
+                true, false, true, false, true, true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, timestamp, 76);
         gasStation.setGasStationId(1);
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
@@ -56,8 +57,8 @@ public class GasStationConverterTest {
     public void testGasStationFromDto() {
         String timestamp = LocalDateTime.now().toString();
         GasStationDto gasStationDto = new GasStationDto(10, "Minmus", "Via Kerbal Space Program",
-                true, false, true, false, true, null,
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, false, true, false, true, true, null,
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3, 1.4,
                 5, timestamp, 76);
         Converter<GasStation, GasStationDto> converter = new GasStationConverter();
         GasStation gasStation = converter.convertFromDto(gasStationDto);

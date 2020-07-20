@@ -1,7 +1,10 @@
 package it.polito.ezgas;
 
+import it.polito.ezgas.converter.Converter;
+import it.polito.ezgas.converter.impl.GasStationConverter;
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
+import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.GasStationService;
@@ -35,6 +38,9 @@ public class GasStationServiceTest {
 	
 	private GasStationService dut;
 	private GasStation gs;
+
+	private User highRepUser;
+	private User lowRepUser;
 	
 	@Before
 	public void setUp() {
@@ -42,10 +48,17 @@ public class GasStationServiceTest {
 		//The fail should be decommented in your code (have been commented due to problem with my eclipse settings).
 		this.dut = new GasStationServiceimpl(this.gasStationRepository, this.userRepository);
 		gs = new GasStation("Not so much eco friendly", "Via",
-                true, false, true, false, true, "Car2Go",
-                10.32, -26.11, 1.1, -1, 1.2, -1, 1.3,
+                true, false, true, false, true,true, "Car2Go",
+                10.32, -26.11, 1.1, -1.0, 1.2, -1.0, 1.3,1.4,
                 5, LocalDateTime.now().toString(), 76);
 		gasStationRepository.save(gs);
+		highRepUser = new User("High rep", "reputation", "highrep@ezgas.com", 5);
+		lowRepUser = new User("Low rep", "noreputation", "lowrep@ezgas.com", -5);
+		userRepository.save(highRepUser);
+		userRepository.save(lowRepUser);
+		// Read the users id from the db
+		highRepUser = userRepository.findByEmail("highrep@ezgas.com");
+		lowRepUser = userRepository.findByEmail("lowrep@ezgas.com");
 	}
 	
 	
@@ -62,7 +75,7 @@ public class GasStationServiceTest {
         Integer id = l.get(0).getGasStationId();
 		try {
 			GasStationDto testGs = this.dut.getGasStationById(id);
-			assertEquals(gs.getGasStationId(),testGs.getGasStationId(), "Error id");
+			assertEquals(gs.getGasStationId().intValue(),testGs.getGasStationId().intValue(), "Error id");
 		}catch (Exception e) {
 			fail("Exception has been generated");
 		}
@@ -92,7 +105,7 @@ public class GasStationServiceTest {
 	}//EndTest.
 	
 	@Test
-	public void TestdeleteGasStation() {
+	public void TestDeleteGasStation() {
 		List<GasStationDto> resList;
 		resList = dut.getAllGasStations();
 		GasStationDto gs = resList.get(0);
@@ -131,6 +144,9 @@ public class GasStationServiceTest {
 			assertEquals(resList.size(), 0, "Error get gasoline by type");
 			resList = this.dut.getGasStationsByGasolineType("Methane");
 			assertEquals(resList.size(), 1, "Error get gasoline by type");
+			resList = this.dut.getGasStationsByGasolineType("PremiumDiesel");
+			assertEquals(resList.size(),1,"Error get gasoline by type");
+			
 		}catch (Exception e) {
 			fail("Exception has been generated");
 		}
@@ -162,7 +178,19 @@ public class GasStationServiceTest {
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
+		try {
+			this.dut.getGasStationsByProximity(-100, 0, 0);
+			fail("No exception has been generated");
+		}catch (Exception e) {
+			assertEquals(0,0);
+		}
 		
+		try {
+			this.dut.getGasStationsByProximity(-100, 0, 5);
+			fail("No exception has been generated");
+		}catch (Exception e) {
+			assertEquals(0,0);
+		}
 		List<GasStationDto> resList;
 		
 		try {
@@ -171,42 +199,44 @@ public class GasStationServiceTest {
 		}catch (Exception e) {
 			fail("Exception has been generated");
 		}
+		
+		
 	}//EndTest.
 	
 	@Test
 	public void TestGetGasStationsWithCoordinates() {
 		try {
-			this.dut.getGasStationsWithCoordinates(-100, 0, "Diesel","Car2Go");
+			this.dut.getGasStationsWithCoordinates(-100, 0, 0, "Diesel","Car2Go");
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(100, 0, "Diesel","Car2Go");
+			this.dut.getGasStationsWithCoordinates(100, 0, 0, "Diesel","Car2Go");
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, -200, "Diesel","Car2Go");
+			this.dut.getGasStationsWithCoordinates(0, -200, 0,"Diesel","Car2Go");
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, 200, "Diesel","Car2Go");
+			this.dut.getGasStationsWithCoordinates(0, 200, 0, "Diesel","Car2Go");
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, 0, null ,"Car2Go");
+			this.dut.getGasStationsWithCoordinates(0, 0, 0, null ,"Car2Go");
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, 0, "Diesel" ,null);
+			this.dut.getGasStationsWithCoordinates(0, 0, 0, "Diesel" ,null);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
@@ -214,12 +244,103 @@ public class GasStationServiceTest {
 		List<GasStationDto> resList;
 		
 		try {
-			resList = this.dut.getGasStationsWithCoordinates(10.32, -26.11, "Diesel","Car2Go");
+			resList = this.dut.getGasStationsWithCoordinates(10.32, -26.11, 0,"Diesel","Car2Go");
 			assertEquals(resList.size(), 1);
 		}catch (Exception e) {
 			fail("Exception has been generated");
 			
 		}
+		
+		try {
+			resList = this.dut.getGasStationsWithCoordinates(10.32, -26.11, -1,"Diesel","Car2Go");
+			assertEquals(resList.size(), 1);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		try {
+			resList = this.dut.getGasStationsWithCoordinates(10.32, -26.11, -1000,"Diesel","Car2Go");
+			assertEquals(resList.size(), 1);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		
+		//Distance from 10.32, -26.11 to 10.33, -26.11 = 1.112km
+		
+		try { //Distance from 10.32, -26.11 to 10.33, -26.11 = 1.112km
+			resList = this.dut.getGasStationsWithCoordinates(10.33, -26.11, 2,"Diesel","Car2Go");
+			assertEquals(resList.size(), 1);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		
+		try { //Distance from 10.32, -26.11 to 10.33, -26.11 = 1.112km
+			resList = this.dut.getGasStationsWithCoordinates(10.33, -26.11, 500,"Diesel","Car2Go");
+			assertEquals(resList.size(), 1);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		
+		try { //Distance from 10.32, -26.11 to 10.33, -26.11 = 1.112km
+			resList = this.dut.getGasStationsWithCoordinates(10.33, -26.11, 1,"Diesel","Car2Go");
+			assertEquals(resList.size(), 0);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		
+		try { //Distance from 10.32, -26.11 to 10.33, -26.11 = 1.112km
+			resList = this.dut.getGasStationsWithCoordinates(10.33, -26.11, -100,"Diesel","Car2Go");
+			assertEquals(resList.size(), 0);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		
+		try { //Distance from 10.32, -26.11 to 10.33, -26.11 = 1.112km
+			resList = this.dut.getGasStationsWithCoordinates(10.33, -26.11, 0,"Diesel","Car2Go");
+			assertEquals(resList.size(), 0);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		
+		//Distance from 10.32, -26.11 to 10.40, -26.50 = 43.577km
+		
+		try { 
+			resList = this.dut.getGasStationsWithCoordinates(10.40, -26.50, 0,"Diesel","Car2Go");
+			assertEquals(resList.size(), 0);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		try { 
+			resList = this.dut.getGasStationsWithCoordinates(10.40, -26.50, 1,"Diesel","Car2Go");
+			assertEquals(resList.size(), 0);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		try { 
+			resList = this.dut.getGasStationsWithCoordinates(10.40, -26.50, 41,"Diesel","Car2Go");
+			assertEquals(resList.size(), 0);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		try { 
+			resList = this.dut.getGasStationsWithCoordinates(10.40, -26.50, 43,"Diesel","Car2Go");
+			assertEquals(resList.size(), 0);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		try { 
+			resList = this.dut.getGasStationsWithCoordinates(10.40, -26.50, 44,"Diesel","Car2Go");
+			assertEquals(resList.size(), 1);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+		try { 
+			resList = this.dut.getGasStationsWithCoordinates(10.40, -26.50, 200,"Diesel","Car2Go");
+			assertEquals(resList.size(), 1);
+		}catch (Exception e) {
+			fail("Exception has been generated");
+		}
+	
+		
 	}//EndTest.
 	
 	
@@ -253,17 +374,72 @@ public class GasStationServiceTest {
 		List<GasStationDto> resList;
 		resList = dut.getAllGasStations();
 		GasStationDto gs = resList.get(0);
-		
+
+		// Test that the low rep user can add its report
 		try {
-			this.dut.setReport(gs.getGasStationId(), 1.0, 1.0, 1.0, 1.0, 1.0, 0);
+			Double price = 1.0;
+			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, lowRepUser.getUserId());
 			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
-			assertEquals(resDto.getMethanePrice(), 1.0, "Error report");
-			assertEquals(resDto.getGasPrice(), 1.0, "Error report");
-			assertEquals(resDto.getSuperPrice(), 1.0, "Error report");
-			assertEquals(resDto.getSuperPlusPrice(), 1.0, "Error report");
-			assertEquals(resDto.getDieselPrice(), 1.0, "Error report");
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
 		}catch (Exception e) {
-			fail("Exception has been generated");
+			fail("Low rep user couldn't add its report");
+		}
+
+		// Test that the high rep user can add its report, overwriting the low rep user's one
+		try {
+			Double price = 2.0;
+			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, highRepUser.getUserId());
+			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+		}catch (Exception e) {
+			fail("High rep user couldn't add its report");
+		}
+
+		// Test that the low rep user cannot add its report
+		try {
+			Double price = 3.0;
+			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, lowRepUser.getUserId());
+			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
+			price = 2.0;
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+		}catch (Exception e) {
+			fail("An exception in setReport has been caught");
+		}
+
+		// Change the timestamp of the report to make it stagnate for more than 4 days
+		LocalDateTime dateTime = LocalDateTime.now().plusDays(4).plusSeconds(1);
+		gs.setReportTimestamp(dateTime.toString());
+		Converter<GasStation, GasStationDto> converter = new GasStationConverter();
+		gasStationRepository.save(converter.convertFromDto(gs));
+
+		// Test that the low rep user can add its report after more than 4 days, overwriting the high rep user's one
+		try {
+			Double price = 3.0;
+			this.dut.setReport(gs.getGasStationId(), price, price, price, price, price,price, highRepUser.getUserId());
+			GasStationDto resDto = this.dut.getGasStationById(gs.getGasStationId());
+			assertEquals(resDto.getMethanePrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getGasPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getSuperPlusPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+			assertEquals(resDto.getPremiumDieselPrice().doubleValue(), price.doubleValue(), "Error report");
+		}catch (Exception e) {
+			fail("Low rep user couldn't add its report after more than 4 days");
 		}
 	}//EndTest.
 	
@@ -277,6 +453,7 @@ public class GasStationServiceTest {
 		}catch (Exception e) {
 			fail("No exception has been generated");
 		}
+		
 	}//EndTest.
 	
 }

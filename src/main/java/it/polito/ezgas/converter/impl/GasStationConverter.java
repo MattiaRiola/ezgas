@@ -18,11 +18,12 @@ public class GasStationConverter implements Converter<GasStation, GasStationDto>
     
     @Override
     public GasStation convertFromDto(GasStationDto gasStationDto) {
+
         GasStation gasStation = new GasStation(gasStationDto.getGasStationName(), gasStationDto.getGasStationAddress(),
                 gasStationDto.getHasDiesel(), gasStationDto.getHasSuper(), gasStationDto.getHasSuperPlus(), gasStationDto.getHasGas(),
-                gasStationDto.getHasMethane(), gasStationDto.getCarSharing(), gasStationDto.getLat(), gasStationDto.getLon(),
+                gasStationDto.getHasMethane(),gasStationDto.getHasPremiumDiesel() , gasStationDto.getCarSharing(), gasStationDto.getLat(), gasStationDto.getLon(),
                 gasStationDto.getDieselPrice(), gasStationDto.getSuperPrice(), gasStationDto.getSuperPlusPrice(), gasStationDto.getGasPrice(),
-                gasStationDto.getMethanePrice(), gasStationDto.getReportUser(), gasStationDto.getReportTimestamp(), gasStationDto.getReportDependability());
+                gasStationDto.getMethanePrice(), gasStationDto.getPremiumDieselPrice() ,gasStationDto.getReportUser(), gasStationDto.getReportTimestamp(), gasStationDto.getReportDependability());
         gasStation.setGasStationId(gasStationDto.getGasStationId());
         if (gasStationDto.getUserDto() !=  null)
             gasStation.setUser(converter.convertFromDto(gasStationDto.getUserDto()));
@@ -39,11 +40,12 @@ public class GasStationConverter implements Converter<GasStation, GasStationDto>
             formattedDate = formatter.format(date);
         }
 
-        GasStationDto gasStationDto = new GasStationDto(gasStation.getGasStationId(), gasStation.getGasStationName(), gasStation.getGasStationAddress(),
+        GasStationDto gasStationDto = new GasStationDto (gasStation.getGasStationId(), gasStation.getGasStationName(), gasStation.getGasStationAddress(),
                 gasStation.getHasDiesel(), gasStation.getHasSuper(), gasStation.getHasSuperPlus(), gasStation.getHasGas(),
-                gasStation.getHasMethane(), gasStation.getCarSharing(), gasStation.getLat(), gasStation.getLon(),
+                gasStation.getHasMethane(),gasStation.getHasPremiumDiesel() ,gasStation.getCarSharing(), gasStation.getLat(), gasStation.getLon(),
                 gasStation.getDieselPrice(), gasStation.getSuperPrice(), gasStation.getSuperPlusPrice(), gasStation.getGasPrice(),
-                gasStation.getMethanePrice(), gasStation.getReportUser(), formattedDate, gasStation.getReportDependability());
+                gasStation.getMethanePrice(), gasStation.getPremiumDieselPrice() ,gasStation.getReportUser(), formattedDate, gasStation.getReportDependability());
+        gasStation.setGasStationId(gasStationDto.getGasStationId());
         if (gasStation.getUser() !=  null)
             gasStationDto.setUserDto(converter.convertToDto(gasStation.getUser()));
         return gasStationDto;

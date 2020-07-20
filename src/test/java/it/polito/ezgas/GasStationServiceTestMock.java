@@ -94,43 +94,43 @@ public class GasStationServiceTestMock {
 			assertEquals(0,0);
 		}
 		GasStationDto testDto = new GasStationDto();
-		testDto.setDieselPrice(-2);
-		testDto.setGasPrice(1);
-		testDto.setMethanePrice(1);
-		testDto.setSuperPlusPrice(1);
-		testDto.setSuperPrice(1);
+		testDto.setDieselPrice(-2.0);
+		testDto.setGasPrice(1.0);
+		testDto.setMethanePrice(1.0);
+		testDto.setSuperPlusPrice(1.0);
+		testDto.setSuperPrice(1.0);
 		try {
 			this.dut.saveGasStation(testDto);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
-		testDto.setDieselPrice(1);
-		testDto.setGasPrice(-2);
+		testDto.setDieselPrice(1.0);
+		testDto.setGasPrice(-2.0);
 		try {
 			this.dut.saveGasStation(testDto);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
-		testDto.setGasPrice(1);
-		testDto.setMethanePrice(-2);
+		testDto.setGasPrice(1.0);
+		testDto.setMethanePrice(-2.0);
 		try {
 			this.dut.saveGasStation(testDto);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
-		testDto.setMethanePrice(1);
-		testDto.setSuperPlusPrice(-2);
+		testDto.setMethanePrice(1.0);
+		testDto.setSuperPlusPrice(-2.0);
 		try {
 			this.dut.saveGasStation(testDto);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
-		testDto.setSuperPlusPrice(1);
-		testDto.setSuperPrice(-2);
+		testDto.setSuperPlusPrice(1.0);
+		testDto.setSuperPrice(-2.0);
 		try {
 			this.dut.saveGasStation(testDto);
 			fail("No exception has been generated");
@@ -234,7 +234,15 @@ public class GasStationServiceTestMock {
 		List<GasStationDto> resList;
 		
 		try {
-			resList = this.dut.getGasStationsByProximity(50, 50);
+			resList = this.dut.getGasStationsByProximity(50, 50, 0);
+			assertEquals(resList.size(),this.testList.size());
+		}catch (Exception e) {
+			fail("Exception has been generated");
+			
+		}
+		
+		try {
+			resList = this.dut.getGasStationsByProximity(50, 50, 5);
 			assertEquals(resList.size(),this.testList.size());
 		}catch (Exception e) {
 			fail("Exception has been generated");
@@ -245,37 +253,37 @@ public class GasStationServiceTestMock {
 	@Test
 	public void TestGetGasStationsWithCoordinates() {
 		try {
-			this.dut.getGasStationsWithCoordinates(-100, 0, "Diesel",this.cs);
+			this.dut.getGasStationsWithCoordinates(-100, 0, 0, "Diesel",this.cs);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(100, 0, "Diesel",this.cs);
+			this.dut.getGasStationsWithCoordinates(100, 0, 0,"Diesel",this.cs);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, -200, "Diesel",this.cs);
+			this.dut.getGasStationsWithCoordinates(0, -200, 0, "Diesel",this.cs);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, 200, "Diesel",this.cs);
+			this.dut.getGasStationsWithCoordinates(0, 200, 0, "Diesel",this.cs);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, 0, null ,this.cs);
+			this.dut.getGasStationsWithCoordinates(0, 0, 0, null ,this.cs);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.getGasStationsWithCoordinates(0, 0, "Diesel" ,null);
+			this.dut.getGasStationsWithCoordinates(0, 0, 0, "Diesel" ,null);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
@@ -283,7 +291,7 @@ public class GasStationServiceTestMock {
 		List<GasStationDto> resList;
 		
 		try {
-			resList = this.dut.getGasStationsWithCoordinates(50, 50, "Diesel",this.cs);
+			resList = this.dut.getGasStationsWithCoordinates(50, 50, 0, "Diesel",this.cs);
 			assertEquals(resList.size(),this.testList.size());
 		}catch (Exception e) {
 			fail("Exception has been generated");
@@ -317,53 +325,59 @@ public class GasStationServiceTestMock {
 	@Test
 	public void TestSetReport() {
 		try {
-			this.dut.setReport(-1, 0, 0, 0, 0, 0, 0);
+			this.dut.setReport(-1, 0.0,0.0,0.0,0.0,0.0,0.0,0);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.setReport(0, -2, 0, 0, 0, 0, 0);
+			this.dut.setReport(0,-2.0,0.0,0.0,0.0,0.0,0.0,0);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.setReport(0, 0, -2, 0, 0, 0, 0);
+			this.dut.setReport(0,0.0,-2.0,0.0,0.0,0.0,0.0,0);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.setReport(0, 0, 0, -2, 0, 0, 0);
+			this.dut.setReport(0,0.0,0.0,-2.0,0.0,0.0,0.0,0);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.setReport(0, 0, 0, 0, -2, 0, 0);
+			this.dut.setReport(0,0.0,0.0,0.0,-2.0,0.0,0.0,0);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.setReport(0, 0, 0, 0, 0, -2, 0);
+			this.dut.setReport(0,0.0,0.0,0.0,0.0,-2.0,0.0,0);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		try {
-			this.dut.setReport(0, 0, 0, 0, 0, 0, -1);
+			this.dut.setReport(0,0.0,0.0,0.0,0.0,0.0,-2.0,0);
+			fail("No exception has been generated");
+		}catch (Exception e) {
+			assertEquals(0,0);
+		}
+		try {
+			this.dut.setReport(0,0.0,0.0,0.0,0.0,0.0,0.0, -1);
 			fail("No exception has been generated");
 		}catch (Exception e) {
 			assertEquals(0,0);
 		}
 		
 		try {
-			this.dut.setReport(0, 1, 1, 1, 1, 1, 0);
+			this.dut.setReport(0, 1.0, 1.0, 1.0, 1.0, 1.0,1.0 ,0);
 			assertEquals(0,0);
 		}catch (Exception e) {
-			fail("No exception has been generated");
+			fail("Exception has been generated");
 		}
 	}//EndTest.
 	
