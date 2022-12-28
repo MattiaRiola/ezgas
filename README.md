@@ -7,3 +7,10 @@ EZGas is a crowdsourcing service that allows users to:
 * locate gas stations in an area, along with the prices they practice.
 
 EZGas is supported by a web application (accessible both via smartphone or PC)
+
+## Available default users
+
+| Username         | Password |
+|------------------|----------|
+| admin@ezgas.com  | admin    |
+
